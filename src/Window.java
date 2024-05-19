@@ -60,7 +60,6 @@ public class Window extends JFrame implements Runnable {
         Graphics dbg = dbImage.getGraphics();
         this.draw(dbg);
         getGraphics().drawImage(dbImage, 0, 0, this);
-
         currentScene.update(dt);
     }
 
@@ -78,7 +77,7 @@ public class Window extends JFrame implements Runnable {
                 double deltaTime = Duration.between(lastFrameTime, time).toNanos() * 10E-10;
                 lastFrameTime = Instant.now();
 
-                double deltaWanted = 0.0167;
+                double deltaWanted = 0.2167;
                 update(deltaWanted);
                 long msToSleep = (long)((deltaWanted - deltaTime) * 1000);
                 if (msToSleep > 0) {

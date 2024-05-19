@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
-
 public class GameScene extends Scene {
     Rect background, foreground;
     Snake snake;
@@ -12,7 +11,7 @@ public class GameScene extends Scene {
     public GameScene(KL keyListener) {
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         foreground = new Rect(24, 48, Constants.TILE_WIDTH * 31, Constants.TILE_WIDTH * 22);
-        snake = new Snake(20, 48, 48 + 24, 24, 24, foreground);
+        snake = new Snake(5, 48, 48 + 24, 24, 24, foreground);
         this.keyListener = keyListener;
         food = new Food(foreground, snake, 12, 12, Color.GREEN);
         food.spawn();

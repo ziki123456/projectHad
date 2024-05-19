@@ -17,7 +17,7 @@ public class MenuScene extends Scene {
         this.mouseListener = mouseListener;
 
         try {
-            BufferedImage spritesheet = ImageIO.read(new File("assets/menuSprite.png"));
+            BufferedImage spritesheet = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\menuSprite.png"));
             title = spritesheet.getSubimage(0, 242, 960, 240);
             play = spritesheet.getSubimage(0, 121, 261, 121);
             playPressed = spritesheet.getSubimage(264, 121, 261, 121);
