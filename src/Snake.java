@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 public class Snake {
     public Rect[] body = new Rect[30];
@@ -68,9 +69,13 @@ public class Snake {
             newY = body[head].y + bodyHeight;
         }
 
+        System.out.println(body[head].x + "-" + body[head].y);
+        //System.out.println(body.length);
+        //System.out.println(tail);
         body[(head + 1) % body.length] = body[tail];
         body[tail] = null;
         head = (head + 1) % body.length;
+        //System.out.println(head);
         tail = (tail + 1) % body.length;
 
         body[head].x = newX;
@@ -130,10 +135,10 @@ public class Snake {
             double subHeight = (piece.height - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
-            g2.fill(new Rectangle2D.Double(piece.x + 2.0, piece.y + 2.0, subWidth, subHeight));
-            g2.fill(new Rectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 2.0, subWidth, subHeight));
-            g2.fill(new Rectangle2D.Double(piece.x + 2.0, piece.y + 4.0 + subHeight, subWidth, subHeight));
-            g2.fill(new Rectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 4.0 + subHeight, subWidth, subHeight));
+            g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 2.0, piece.width-2, piece.height-2, 2, 2));
+            //g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 2.0, subWidth, subHeight, 5, 5));
+          //  g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 4.0 + subHeight, subWidth, subHeight,5 ,5));
+           // g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 4.0 + subHeight, subWidth, subHeight, 5, 5));
         }
     }
 }
