@@ -1,8 +1,16 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Snake {
+
+    public BufferedImage headN, headS, headE, headW, bodyImg;
     public Rect[] body = new Rect[30];
     public double bodyWidth, bodyHeight;
 
@@ -29,6 +37,37 @@ public class Snake {
             head++;
         }
         head--;
+        try {
+            BufferedImage snakeImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
+            //headN = snakeImages.getSubimage(0, 0, 230, 190);
+           // headS = headN.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            //headE = spritesheet.getSubimage(0, 0, 230, 190);
+           // headW = spritesheet.getSubimage(0, 0, 230, 190);
+            Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            bodyImg = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = bodyImg.createGraphics();
+            g2d.drawImage(tmp, 0, 0, null);
+            g2d.dispose();
+
+            tmp = snakeImages.getSubimage(0, 0, 230, 190).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            headE = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
+
+            g2d = headE.createGraphics();
+            g2d.drawImage(tmp, 0, 0, null);
+            g2d.dispose();
+
+            AffineTransform tx = new AffineTransform();
+            tx.rotate(3.14/2, headE.getWidth() / 2, headE.getHeight() / 2);
+
+            AffineTransformOp op = new AffineTransformOp(tx,
+                    AffineTransformOp.TYPE_BILINEAR);
+            headS = op.filter(headE, null);
+            headW = op.filter(headS, null);
+            headN = op.filter(headW, null);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void changeDirecton(Direction newDirection) {
@@ -135,7 +174,19 @@ public class Snake {
             double subHeight = (piece.height - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
-            g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 2.0, piece.width-2, piece.height-2, 2, 2));
+            //g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 2.0, piece.width-2, piece.height-2, 2, 2));
+            if(i==head-1) {
+                if (direction == Direction.RIGHT) {
+                    g2.drawImage(this.headE, (int)piece.x ,(int)piece.y,null);
+                } else if (direction == Direction.LEFT) {
+                    g2.drawImage(this.headW, (int)piece.x ,(int)piece.y,null);
+                } else if (direction == Direction.UP) {
+                    g2.drawImage(this.headN, (int)piece.x ,(int)piece.y,null);
+                } else if (direction == Direction.DOWN) {
+                    g2.drawImage(this.headS, (int)piece.x ,(int)piece.y,null);
+                }
+
+            } else g2.drawImage(this.bodyImg, (int)piece.x ,(int)piece.y,null);
             //g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 2.0, subWidth, subHeight, 5, 5));
           //  g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 4.0 + subHeight, subWidth, subHeight,5 ,5));
            // g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 4.0 + subHeight, subWidth, subHeight, 5, 5));
