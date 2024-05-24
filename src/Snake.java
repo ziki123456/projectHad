@@ -7,16 +7,21 @@ import java.awt.image.AffineTransformOp;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Snake {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
-    public Rect[] body = new Rect[30];
+   // public Rect[] body = new Rect[30];
+     List<BodyPiece> body = new ArrayList<>();
+     BodyPiece  headPiece, tailPiece;
     public double bodyWidth, bodyHeight;
 
     public int size;
-    public int tail = 0;
-    public int head = 0;
+   // public int tail = 0;
+    //public int head = 0;
+    private boolean shouldGrow = false;
 
     public Direction direction = Direction.RIGHT;
 
@@ -32,11 +37,14 @@ public class Snake {
         this.background = background;
 
         for (int i=0; i <= size; i++) {
-            Rect bodyPiece = new Rect(startX + i * bodyWidth, startY, bodyWidth, bodyHeight);
-            body[i] = bodyPiece;
-            head++;
+            BodyPiece bodyPiece = new BodyPiece(new Rect(startX + i * bodyWidth, startY, bodyWidth, bodyHeight));
+            if (i==0) this.tailPiece = bodyPiece;
+            if (i==size) this.headPiece = bodyPiece;
+            body.add(bodyPiece);
+          //  head++;
         }
-        head--;
+       // head--;
+        //System.out.println(printBody());
         try {
             BufferedImage snakeImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
             //headN = snakeImages.getSubimage(0, 0, 230, 190);
@@ -70,6 +78,17 @@ public class Snake {
         }
     }
 
+    public String printBody() {
+        String text = "-------------"+ "\n";
+        text += "size :"+body.size() + "\n";
+        text += "head :"+body.get(body.size()-1) + "\n";
+        text += "tail :"+body.get(0) + "\n";
+        for(int i = 0; i < body.size(); i++) {
+
+            text +=  body.get(i).rect.x + " " + body.get(i).rect.y + "\n";
+        }
+        return text;
+    }
     public void changeDirecton(Direction newDirection) {
         if (newDirection == Direction.RIGHT && direction != Direction.LEFT)
             direction = newDirection;
@@ -87,6 +106,7 @@ public class Snake {
             return;
         }
         if (intersectingWithSelf()) {
+           // System.out.println("intersec");
             Window.getWindow().changeState(0);
         }
 
@@ -95,40 +115,49 @@ public class Snake {
         double newY = 0;
 
         if (direction == Direction.RIGHT) {
-            newX = body[head].x + bodyWidth;
-            newY = body[head].y;
+            newX = body.get(body.size()-1).rect.x + bodyWidth;
+            newY = body.get(body.size()-1).rect.y;
         } else if (direction == Direction.LEFT) {
-            newX = body[head].x - bodyWidth;
-            newY = body[head].y;
+            newX = body.get(body.size()-1).rect.x - bodyWidth;
+            newY = body.get(body.size()-1).rect.y;
         } else if (direction == Direction.UP) {
-            newX = body[head].x;
-            newY = body[head].y - bodyHeight;
+            newX = body.get(body.size()-1).rect.x;
+            newY = body.get(body.size()-1).rect.y - bodyHeight;
         } else if (direction == Direction.DOWN) {
-            newX = body[head].x;
-            newY = body[head].y + bodyHeight;
+            newX = body.get(body.size()-1).rect.x;
+            newY = body.get(body.size()-1).rect.y + bodyHeight;
         }
 
-        System.out.println(body[head].x + "-" + body[head].y);
+       // System.out.println(body.get(head).rect.x + "-" + body.get(head).rect.y);
         //System.out.println(body.length);
         //System.out.println(tail);
-        body[(head + 1) % body.length] = body[tail];
-        body[tail] = null;
-        head = (head + 1) % body.length;
-        //System.out.println(head);
-        tail = (tail + 1) % body.length;
+        //body[(head + 1) % body.length] = body[tail];
 
-        body[head].x = newX;
-        body[head].y = newY;
+        if (this.shouldGrow) {
+            this.shouldGrow = false;
+          //  System.out.println("at neroste");
+        } else body.remove(0);
+
+        BodyPiece bodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
+        body.add(bodyPiece);
+
+        //head = (head + 1) % body.length;
+        //System.out.println(head);
+        //tail = (tail + 1) % body.size();
+
+        // body..get(head).rect.x = newX;
+        //body.get(head).rect.y = newY;
+      //  System.out.println(printBody());
     }
 
     public boolean intersectingWithSelf() {
-        Rect headR = body[head];
+        Rect headR = body.get(body.size()-1).rect;
         return intersectingWithRect(headR) || intersectingWithScreenBoundaries(headR);
     }
 
     public boolean intersectingWithRect(Rect rect) {
-        for (int i = tail; i != head; i = (i + 1) % body.length) {
-            if (intersecting(rect, body[i])) return true;
+        for(int i = 0; i < body.size()-1; i++)    {
+            if (intersecting(rect, body.get(i).rect)) return true;
         }
         return false;
     }
@@ -140,53 +169,55 @@ public class Snake {
 
     public boolean intersectingWithScreenBoundaries(Rect head) {
         return (head.x < background.x || (head.x + head.width) > background.x + background.width ||
-                head.y < background.y || (head.y + head.height) > background.y + background.height);
+                head.y < background.x || (head.y + head.height) > background.y + background.height);
     }
 
     public void grow() {
-        double newX = 0;
+
+        this.shouldGrow = true;
+   /*     double newX = 0;
         double newY = 0;
 
         if (direction == Direction.RIGHT) {
-            newX = body[tail].x - bodyWidth;
-            newY = body[tail].y;
+            newX = body.get(tail).rect.x - bodyWidth;
+            newY = body.get(tail).rect.y;
         } else if (direction == Direction.LEFT) {
-            newX = body[tail].x + bodyWidth;
-            newY = body[tail].y;
+            newX = body.get(tail).rect.x + bodyWidth;
+            newY = body.get(tail).rect.y;
         } else if (direction == Direction.UP) {
-            newX = body[tail].x;
-            newY = body[tail].y + bodyHeight;
+            newX = body.get(tail).rect.x;
+            newY = body.get(tail).rect.y + bodyHeight;
         } else if (direction == Direction.DOWN) {
-            newX = body[tail].x;
-            newY = body[tail].y - bodyHeight;
-        }
-
-        Rect newBodyPiece = new Rect(newX, newY, bodyWidth, bodyHeight);
-
-        tail = (tail - 1) % body.length;
-        body[tail] = newBodyPiece;
+            newX = body.get(tail).rect.x;
+            newY = body.get(tail).rect.y - bodyHeight;
+        }*/
+      //  BodyPiece newBodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
+       // tail = (tail - 1) % body.size();
+        //body.get(tail) = newBodyPiece;
     }
 
     public void draw(Graphics2D g2) {
-        for (int i = tail; i != head; i = (i + 1) % body.length) {
-            Rect piece = body[i];
-            double subWidth = (piece.width - 6.0) / 2.0;
-            double subHeight = (piece.height - 6.0) / 2.0;
+
+        for(int i = 0; i < body.size(); i++)   {
+
+            BodyPiece piece = body.get(i);
+            double subWidth = (piece.rect.width - 6.0) / 2.0;
+            double subHeight = (piece.rect.height - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
             //g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 2.0, piece.width-2, piece.height-2, 2, 2));
-            if(i==head-1) {
+            if(i==body.size()-1) {
                 if (direction == Direction.RIGHT) {
-                    g2.drawImage(this.headE, (int)piece.x ,(int)piece.y,null);
+                    g2.drawImage(this.headE, (int)piece.rect.x ,(int)piece.rect.y,null);
                 } else if (direction == Direction.LEFT) {
-                    g2.drawImage(this.headW, (int)piece.x ,(int)piece.y,null);
+                    g2.drawImage(this.headW, (int)piece.rect.x ,(int)piece.rect.y,null);
                 } else if (direction == Direction.UP) {
-                    g2.drawImage(this.headN, (int)piece.x ,(int)piece.y,null);
+                    g2.drawImage(this.headN, (int)piece.rect.x ,(int)piece.rect.y,null);
                 } else if (direction == Direction.DOWN) {
-                    g2.drawImage(this.headS, (int)piece.x ,(int)piece.y,null);
+                    g2.drawImage(this.headS, (int)piece.rect.x ,(int)piece.rect.y,null);
                 }
 
-            } else g2.drawImage(this.bodyImg, (int)piece.x ,(int)piece.y,null);
+            } else g2.drawImage(this.bodyImg, (int)piece.rect.x ,(int)piece.rect.y,null);
             //g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 2.0, subWidth, subHeight, 5, 5));
           //  g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 4.0 + subHeight, subWidth, subHeight,5 ,5));
            // g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 4.0 + subHeight, subWidth, subHeight, 5, 5));

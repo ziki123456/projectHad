@@ -77,7 +77,7 @@ public class Window extends JFrame implements Runnable {
                 double deltaTime = Duration.between(lastFrameTime, time).toNanos() * 10E-10;
                 lastFrameTime = Instant.now();
 
-                double deltaWanted = 0.2167;
+                double deltaWanted = 0.02167;
                 update(deltaWanted);
                 long msToSleep = (long)((deltaWanted - deltaTime) * 1000);
                 if (msToSleep > 0) {

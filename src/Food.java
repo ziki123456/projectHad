@@ -33,15 +33,19 @@ public class Food {
     }
 
     public void update(double dt) {
+
         if (snake.intersectingWithRect(this.rect)) {
+
             snake.grow();
             this.rect.x = -100;
             this.rect.y = -100;
             isSpawned = false;
         }
+
     }
 
     public void draw(Graphics2D g2) {
+
         g2.setColor(color);
         g2.fillRect((int)this.rect.x + xPadding, (int)this.rect.y + xPadding, width, height);
     }
