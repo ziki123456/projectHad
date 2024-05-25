@@ -27,8 +27,8 @@ public class MenuScene extends Scene {
         this.mouseListener = mouseListener;
 
         try {
-            BufferedImage spritesheet = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\menuSprite.png"));
-            title = spritesheet.getSubimage(0, 242, 960, 240);
+            BufferedImage spritesheet = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakeMenu.png"));
+            title = spritesheet.getSubimage(320, 120, 760, 200);
             play = spritesheet.getSubimage(0, 121, 261, 121);
             playPressed = spritesheet.getSubimage(264, 121, 261, 121);
             exit = spritesheet.getSubimage(0, 0, 233, 93);
