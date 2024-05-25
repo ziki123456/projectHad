@@ -3,6 +3,11 @@ import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * Represents the main window of the application.
+ * Extends JFrame and implements Runnable for running the game loop.
+ */
+
 public class Window extends JFrame implements Runnable {
     public static Window window = null;
     public boolean isRunning;
@@ -12,6 +17,13 @@ public class Window extends JFrame implements Runnable {
 
     public KeyL keyListener = new KeyL();
     public MouseL mouseListener = new MouseL();
+
+    /**
+     * Constructs the game window.
+     * @param width The width of the window.
+     * @param height The height of the window.
+     * @param title The title of the window.
+     */
 
     public Window(int width, int height, String title) {
         setSize(width, height);
@@ -27,6 +39,11 @@ public class Window extends JFrame implements Runnable {
         changeState(0);
     }
 
+    /**
+     * Gets the singleton instance of the Window class.
+     * @return The Window instance.
+     */
+
     public static Window getWindow() {
         if (Window.window == null) {
             Window.window = new Window(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, Constants.SCREEN_TITLE);
@@ -38,6 +55,11 @@ public class Window extends JFrame implements Runnable {
     public void close() {
         isRunning = false;
     }
+
+    /**
+     * Changes the state of the game to the specified state.
+     * @param newState The new state of the game.
+     */
 
     public void changeState(int newState) {
         currentState = newState;
@@ -55,6 +77,11 @@ public class Window extends JFrame implements Runnable {
         }
     }
 
+    /**
+     * Updates the game logic.
+     * @param dt The time elapsed since the last frame.
+     */
+
     public void update(double dt) {
         Image dbImage = createImage(getWidth(), getHeight());
         Graphics dbg = dbImage.getGraphics();
@@ -63,10 +90,20 @@ public class Window extends JFrame implements Runnable {
         currentScene.update(dt);
     }
 
+    /**
+     * Draws the current scene.
+     * @param g The graphics context.
+     */
+
     public void draw(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         currentScene.draw(g);
     }
+
+    /**
+     * Runs the game loop.
+     * It updates the game logic and redraws the scene at a fixed time step.
+     */
 
     @Override
     public void run() {

@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/**
+ * Represents the main menu scene of the game.
+ */
+
 public class MenuScene extends Scene {
 
     public KeyL keyListener;
@@ -11,6 +15,12 @@ public class MenuScene extends Scene {
     public Rect playRect, exitRect, titleRect;
 
     public BufferedImage playCurrentImage, exitCurrentImage;
+
+    /**
+     * Constructs a new MenuScene with the specified key and mouse listeners.
+     * @param keyListener the key listener for handling keyboard input
+     * @param mouseListener the mouse listener for handling mouse input
+     */
 
     public MenuScene(KeyL keyListener, MouseL mouseListener) {
         this.keyListener = keyListener;
@@ -36,6 +46,11 @@ public class MenuScene extends Scene {
         exitRect = new Rect(318, 355, 130, 55);
     }
 
+    /**
+     * Updates the main menu scene based on the elapsed time and user input.
+     * @param dt the time elapsed since the last update in seconds
+     */
+
     @Override
     public void update(double dt) {
         if (mouseListener.getX() >= playRect.x && mouseListener.getX() <= playRect.x + playRect.width &&
@@ -58,6 +73,11 @@ public class MenuScene extends Scene {
             exitCurrentImage = exit;
         }
     }
+
+    /**
+     * Draws the main menu scene.
+     * @param g the Graphics object used for drawing
+     */
 
     @Override
     public void draw(Graphics g) {

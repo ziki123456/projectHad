@@ -10,7 +10,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the snake in the game.
+ */
+
 public class Snake {
+
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
      List<BodyPiece> body = new ArrayList<>();
@@ -26,6 +31,16 @@ public class Snake {
     public double waitTimeLeft = ogWaitBetweenUpdates;
 
     public Rect background;
+
+    /**
+     * Constructs a new snake with the specified parameters.
+     * @param size The size of the snake.
+     * @param startX The starting x-coordinate of the snake.
+     * @param startY The starting y-coordinate of the snake.
+     * @param bodyWidth The width of each body piece.
+     * @param bodyHeight The height of each body piece.
+     * @param background The background rectangle of the game.
+     */
 
     public Snake(int size, double startX, double startY, double bodyWidth, double bodyHeight, Rect background) {
         this.size = size;
@@ -69,6 +84,11 @@ public class Snake {
         }
     }
 
+    /**
+     * Prints information about the snake's body.
+     * @return A string containing information about the snake's body.
+     */
+
     public String printBody() {
         String text = "-------------"+ "\n";
         text += "size :"+body.size() + "\n";
@@ -80,6 +100,12 @@ public class Snake {
         }
         return text;
     }
+
+    /**
+     * Changes the direction of the snake.
+     * @param newDirection The new direction of the snake.
+     */
+
     public void changeDirecton(Direction newDirection) {
         if (newDirection == Direction.RIGHT && direction != Direction.LEFT)
             direction = newDirection;
@@ -90,6 +116,11 @@ public class Snake {
         else if (newDirection == Direction.DOWN && direction != Direction.UP)
             direction = newDirection;
     }
+
+    /**
+     * Updates the snake's position.
+     * @param dt The time elapsed since the last update.
+     */
 
     public void update(double dt) {
         if (waitTimeLeft > 0) {
@@ -118,7 +149,6 @@ public class Snake {
             newY = body.get(body.size()-1).rect.y + bodyHeight;
         }
 
-
         if (this.shouldGrow) {
             this.shouldGrow = false;
         } else body.remove(0);
@@ -126,19 +156,18 @@ public class Snake {
         BodyPiece bodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
         body.add(bodyPiece);
 
-        //head = (head + 1) % body.length;
-        //System.out.println(head);
-        //tail = (tail + 1) % body.size();
-
-        // body..get(head).rect.x = newX;
-        //body.get(head).rect.y = newY;
-      //  System.out.println(printBody());
     }
-
+    /**
+     * Checks if the snake is intersecting with itself.
+     */
     public boolean intersectingWithSelf() {
         Rect headR = body.get(body.size()-1).rect;
         return intersectingWithRect(headR) || intersectingWithScreenBoundaries(headR);
     }
+
+    /**
+     * Checks if the snake is intersecting with a given rectangle.
+     */
 
     public boolean intersectingWithRect(Rect rect) {
         for(int i = 0; i < body.size()-1; i++)    {
@@ -147,20 +176,37 @@ public class Snake {
         return false;
     }
 
+    /**
+     * Checks if two rectangles are intersecting.
+     */
+
     public boolean intersecting(Rect r1, Rect r2) {
         return (r1.x >= r2.x && r1.x + r1.width <= r2.x + r2.width &&
                 r1.y >= r2.y && r1.y + r1.height <= r2.y + r2.height);
     }
+
+    /**
+     * Checks if the snake is intersecting with the screen boundaries.
+     */
 
     public boolean intersectingWithScreenBoundaries(Rect head) {
         return (head.x < background.x || (head.x + head.width) > background.x + background.width ||
                 head.y < background.x || (head.y + head.height) > background.y + background.height);
     }
 
+    /**
+     * Makes the snake grow.
+     */
+
     public void grow() {
 
         this.shouldGrow = true;
     }
+
+    /**
+     * Draws the snake on the graphics context.
+     * @param g2 The graphics context to draw on.
+     */
 
     public void draw(Graphics2D g2) {
 
