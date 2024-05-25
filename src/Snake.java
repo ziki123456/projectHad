@@ -121,7 +121,7 @@ public class Snake {
 
         if (this.shouldGrow) {
             this.shouldGrow = false;
-        }
+        } else body.remove(0);
 
         BodyPiece bodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
         body.add(bodyPiece);
