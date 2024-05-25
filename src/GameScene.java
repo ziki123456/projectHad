@@ -1,5 +1,8 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+/**
+ * Represents the game scene where gameplay takes place.
+ */
 
 public class GameScene extends Scene {
     Rect background, foreground;
@@ -7,6 +10,11 @@ public class GameScene extends Scene {
     KeyL keyListener;
 
     public Food food;
+
+    /**
+     * Constructs a new GameScene with the specified key listener.
+     * @param keyListener the key listener for handling user input
+     */
 
     public GameScene(KeyL keyListener) {
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -16,6 +24,11 @@ public class GameScene extends Scene {
         food = new Food(foreground, snake, 24, 24, Color.GREEN);
         food.spawn();
     }
+
+    /**
+     * Updates the game scene based on the elapsed time.
+     * @param dt the time elapsed since the last update in seconds
+     */
 
     @Override
     public void update(double dt) {
@@ -36,6 +49,11 @@ public class GameScene extends Scene {
         snake.update(dt);
 
     }
+
+    /**
+     * Draws the game scene.
+     * @param g the Graphics object used for drawing
+     */
 
     @Override
     public void draw(Graphics g) {
