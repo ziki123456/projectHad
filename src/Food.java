@@ -5,6 +5,10 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/**
+ * Represents the food item in the game.
+ */
+
 public class Food {
     public Rect background;
     public Snake snake;
@@ -16,6 +20,10 @@ public class Food {
     public int xPadding;
 
     public boolean isSpawned = false;
+
+/**
+ * Constructs a new Food object with the specified parameters.
+ */
 
     public Food(Rect background, Snake snake, int width, int height, Color color) {
 
@@ -43,6 +51,10 @@ public class Food {
         xPadding = (int) ((Constants.TILE_WIDTH - this.width) / 2.0);
     }
 
+    /**
+     * Spawns the food item at a random position on the game background.
+     */
+
     public void spawn() {
         do {
             double randX = (int) (Math.random() * (int) (background.width / Constants.TILE_WIDTH)) * Constants.TILE_WIDTH + background.x;
@@ -52,6 +64,10 @@ public class Food {
         } while (snake.intersectingWithRect(this.rect));
         this.isSpawned = true;
     }
+    /**
+     * Updates the state of the food item.
+     * @param dt the time elapsed since the last update in seconds
+     */
 
     public void update(double dt) {
 
@@ -64,6 +80,11 @@ public class Food {
         }
 
     }
+
+    /**
+     * Draws the food item on the game screen.
+     * @param g2 the Graphics2D object used for drawing
+     */
 
     public void draw(Graphics2D g2) {
 
