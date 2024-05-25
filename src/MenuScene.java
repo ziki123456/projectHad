@@ -5,14 +5,14 @@ import java.io.File;
 
 public class MenuScene extends Scene {
 
-    public KL keyListener;
-    public ML mouseListener;
+    public KeyL keyListener;
+    public MouseL mouseListener;
     public BufferedImage title, play, playPressed, exit, exitPressed;
     public Rect playRect, exitRect, titleRect;
 
     public BufferedImage playCurrentImage, exitCurrentImage;
 
-    public MenuScene(KL keyListener, ML mouseListener) {
+    public MenuScene(KeyL keyListener, MouseL mouseListener) {
         this.keyListener = keyListener;
         this.mouseListener = mouseListener;
 

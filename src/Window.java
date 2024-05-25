@@ -10,8 +10,8 @@ public class Window extends JFrame implements Runnable {
     public int currentState;
     public Scene currentScene;
 
-    public KL keyListener = new KL();
-    public ML mouseListener = new ML();
+    public KeyL keyListener = new KeyL();
+    public MouseL mouseListener = new MouseL();
 
     public Window(int width, int height, String title) {
         setSize(width, height);

@@ -13,19 +13,16 @@ import java.util.List;
 public class Snake {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
-   // public Rect[] body = new Rect[30];
      List<BodyPiece> body = new ArrayList<>();
      BodyPiece  headPiece, tailPiece;
     public double bodyWidth, bodyHeight;
 
     public int size;
-   // public int tail = 0;
-    //public int head = 0;
     private boolean shouldGrow = false;
 
     public Direction direction = Direction.RIGHT;
 
-    public double ogWaitBetweenUpdates = 0.1f;
+    public double ogWaitBetweenUpdates = 0.51f;
     public double waitTimeLeft = ogWaitBetweenUpdates;
 
     public Rect background;
@@ -41,16 +38,10 @@ public class Snake {
             if (i==0) this.tailPiece = bodyPiece;
             if (i==size) this.headPiece = bodyPiece;
             body.add(bodyPiece);
-          //  head++;
         }
-       // head--;
-        //System.out.println(printBody());
+
         try {
             BufferedImage snakeImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
-            //headN = snakeImages.getSubimage(0, 0, 230, 190);
-           // headS = headN.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            //headE = spritesheet.getSubimage(0, 0, 230, 190);
-           // headW = spritesheet.getSubimage(0, 0, 230, 190);
             Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
             bodyImg = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = bodyImg.createGraphics();
@@ -106,7 +97,6 @@ public class Snake {
             return;
         }
         if (intersectingWithSelf()) {
-           // System.out.println("intersec");
             Window.getWindow().changeState(0);
         }
 
@@ -128,15 +118,10 @@ public class Snake {
             newY = body.get(body.size()-1).rect.y + bodyHeight;
         }
 
-       // System.out.println(body.get(head).rect.x + "-" + body.get(head).rect.y);
-        //System.out.println(body.length);
-        //System.out.println(tail);
-        //body[(head + 1) % body.length] = body[tail];
 
         if (this.shouldGrow) {
             this.shouldGrow = false;
-          //  System.out.println("at neroste");
-        } else body.remove(0);
+        }
 
         BodyPiece bodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
         body.add(bodyPiece);
@@ -175,25 +160,6 @@ public class Snake {
     public void grow() {
 
         this.shouldGrow = true;
-   /*     double newX = 0;
-        double newY = 0;
-
-        if (direction == Direction.RIGHT) {
-            newX = body.get(tail).rect.x - bodyWidth;
-            newY = body.get(tail).rect.y;
-        } else if (direction == Direction.LEFT) {
-            newX = body.get(tail).rect.x + bodyWidth;
-            newY = body.get(tail).rect.y;
-        } else if (direction == Direction.UP) {
-            newX = body.get(tail).rect.x;
-            newY = body.get(tail).rect.y + bodyHeight;
-        } else if (direction == Direction.DOWN) {
-            newX = body.get(tail).rect.x;
-            newY = body.get(tail).rect.y - bodyHeight;
-        }*/
-      //  BodyPiece newBodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
-       // tail = (tail - 1) % body.size();
-        //body.get(tail) = newBodyPiece;
     }
 
     public void draw(Graphics2D g2) {
@@ -205,7 +171,6 @@ public class Snake {
             double subHeight = (piece.rect.height - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
-            //g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 2.0, piece.width-2, piece.height-2, 2, 2));
             if(i==body.size()-1) {
                 if (direction == Direction.RIGHT) {
                     g2.drawImage(this.headE, (int)piece.rect.x ,(int)piece.rect.y,null);
@@ -218,9 +183,6 @@ public class Snake {
                 }
 
             } else g2.drawImage(this.bodyImg, (int)piece.rect.x ,(int)piece.rect.y,null);
-            //g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 2.0, subWidth, subHeight, 5, 5));
-          //  g2.fill(new RoundRectangle2D.Double(piece.x + 2.0, piece.y + 4.0 + subHeight, subWidth, subHeight,5 ,5));
-           // g2.fill(new RoundRectangle2D.Double(piece.x + 4.0 + subWidth, piece.y + 4.0 + subHeight, subWidth, subHeight, 5, 5));
         }
     }
 }
