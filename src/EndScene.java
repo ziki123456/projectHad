@@ -29,6 +29,8 @@ public class EndScene extends Scene {
 
     @Override
     public void update(double dt) {
-
+        if (lastScore > highScore) {
+            highScore = lastScore;
+        }
     }
 }
