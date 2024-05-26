@@ -57,14 +57,14 @@ public class Snake {
 
         try {
             BufferedImage snakeImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
-            Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            bodyImg = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
+            Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
+            bodyImg = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = bodyImg.createGraphics();
             g2d.drawImage(tmp, 0, 0, null);
             g2d.dispose();
 
-            tmp = snakeImages.getSubimage(0, 0, 230, 190).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            headE = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
+            tmp = snakeImages.getSubimage(0, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
+            headE = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
 
             g2d = headE.createGraphics();
             g2d.drawImage(tmp, 0, 0, null);
@@ -196,11 +196,12 @@ public class Snake {
 
     /**
      * Makes the snake grow.
+     * Makes the snake faster after eating food.
      */
 
     public void grow() {
-
         this.shouldGrow = true;
+        this.ogWaitBetweenUpdates *= 0.9;
     }
 
     /**

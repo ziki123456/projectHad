@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
+
 /**
  * Represents the game scene where gameplay takes place.
  */
@@ -19,9 +21,9 @@ public class GameScene extends Scene {
     public GameScene(KeyL keyListener) {
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         foreground = new Rect(24, 48, Constants.TILE_WIDTH * 31, Constants.TILE_WIDTH * 22);
-        snake = new Snake(1, 48, 48 + 24, 24, 24, foreground);
+        snake = new Snake(1, 48, 48 + 24, Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         this.keyListener = keyListener;
-        food = new Food(foreground, snake, 24, 24, Color.GREEN);
+        food = new Food(foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
         food.spawn();
     }
 
@@ -59,10 +61,10 @@ public class GameScene extends Scene {
     public void draw(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.BLACK);
-       // g2.fill(new Rectangle2D.Double(background.x, background.y, background.width, background.height));
+        g2.fill(new Rectangle2D.Double(background.x, background.y, background.width, background.height));
 
-        g2.setColor(Color.WHITE);
-      //  g2.fill(new Rectangle2D.Double(foreground.x, foreground.y, foreground.width, foreground.height));
+        g2.setColor(Color.GREEN);
+        g2.fill(new Rectangle2D.Double(foreground.x, foreground.y, foreground.width, foreground.height));
 
         snake.draw(g2);
         food.draw(g2);

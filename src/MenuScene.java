@@ -81,7 +81,7 @@ public class MenuScene extends Scene {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(new Color(176, 248, 255));
+        g.setColor(new Color(10, 220, 215));
         g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
         g.drawImage(title, (int)titleRect.x, (int)titleRect.y, (int)titleRect.width, (int)titleRect.height, null);
