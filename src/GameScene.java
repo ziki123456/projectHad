@@ -25,6 +25,7 @@ public class GameScene extends Scene {
         this.keyListener = keyListener;
         food = new Food(foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
         food.spawn();
+
     }
 
     /**
@@ -46,10 +47,10 @@ public class GameScene extends Scene {
 
         if (!food.isSpawned) food.spawn();
 
-        food.update(dt);
+
 
         snake.update(dt);
-
+        food.update(dt);
     }
 
     /**
@@ -66,7 +67,17 @@ public class GameScene extends Scene {
         g2.setColor(new Color(131,250,101));
         g2.fill(new Rectangle2D.Double(foreground.x, foreground.y, foreground.width, foreground.height));
 
-        snake.draw(g2);
         food.draw(g2);
+        snake.draw(g2);
+
+        Font font = new Font("Arial", Font.BOLD, 20);
+        FontMetrics metrics = g2.getFontMetrics(font);
+        String scoreText = "Score: " + snake.score;
+        g2.setFont(font);
+        g2.setColor(Color.WHITE);
+        g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 50);
+
+
+
     }
 }

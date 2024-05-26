@@ -23,7 +23,7 @@ public class Snake {
     public double bodyWidth, bodyHeight;
 
     public int size;
-    private boolean shouldGrow = false;
+    public boolean shouldGrow = false;
 
     public Direction direction = Direction.RIGHT;
 
@@ -31,6 +31,8 @@ public class Snake {
     public double waitTimeLeft = ogWaitBetweenUpdates;
 
     public Rect background;
+
+    public int score = 0;
 
     /**
      * Constructs a new snake with the specified parameters.
@@ -202,6 +204,7 @@ public class Snake {
     public void grow() {
         this.shouldGrow = true;
         this.ogWaitBetweenUpdates *= 0.9;
+        this.score++;
     }
 
     /**

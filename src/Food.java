@@ -88,7 +88,7 @@ public class Food {
 
     public void draw(Graphics2D g2) {
 
-        g2.drawImage(this.foodImage, (int) this.rect.x + xPadding, (int) this.rect.y, null);
+      if (!snake.shouldGrow)  g2.drawImage(this.foodImage, (int) this.rect.x + xPadding, (int) this.rect.y, null);
 
     }
 }
