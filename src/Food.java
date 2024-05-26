@@ -30,8 +30,8 @@ public class Food {
         try {
 
             BufferedImage foodImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
-            Image tmp = foodImages.getSubimage(710, 0, 230, 190).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            foodImage = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
+            Image tmp = foodImages.getSubimage(710, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
+            foodImage = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = foodImage.createGraphics();
             g2d.drawImage(tmp, 0, 0, null);
             g2d.dispose();

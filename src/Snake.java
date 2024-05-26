@@ -191,7 +191,7 @@ public class Snake {
 
     public boolean intersectingWithScreenBoundaries(Rect head) {
         return (head.x < background.x || (head.x + head.width) > background.x + background.width ||
-                head.y < background.x || (head.y + head.height) > background.y + background.height);
+                head.y < background.y || (head.y + head.height) > background.y + background.height);
     }
 
     /**
