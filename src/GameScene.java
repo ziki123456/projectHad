@@ -63,7 +63,7 @@ public class GameScene extends Scene {
         g2.setColor(Color.BLACK);
         g2.fill(new Rectangle2D.Double(background.x, background.y, background.width, background.height));
 
-        g2.setColor(Color.GREEN);
+        g2.setColor(new Color(131,250,101));
         g2.fill(new Rectangle2D.Double(foreground.x, foreground.y, foreground.width, foreground.height));
 
         snake.draw(g2);
