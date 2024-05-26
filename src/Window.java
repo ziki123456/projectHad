@@ -9,6 +9,8 @@ import java.time.Instant;
  */
 
 public class Window extends JFrame implements Runnable {
+    public int lastScore = 0;
+    public int bestScore = 0;
     public static Window window = null;
     public boolean isRunning;
 
@@ -70,7 +72,9 @@ public class Window extends JFrame implements Runnable {
             case 1:
                 currentScene = new GameScene(keyListener);
                 break;
-            default:
+            case 2:
+                currentScene = new EndScene(this.lastScore,this.bestScore);
+                break;            default:
                 System.out.println("Unknown scene.");
                 currentScene = null;
                 break;

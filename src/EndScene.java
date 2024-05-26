@@ -1,33 +1,34 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
-public class EndScene extends JFrame {
+public class EndScene extends Scene {
+
+    private int lastScore;
+    private int highScore;
 
     public EndScene(int score, int highestScore) {
-        setTitle("Game Over");
-        setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.lastScore = score;
+        this.highScore = highestScore;
+    }
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    @Override
+    public void draw(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
 
-        JLabel scoreLabel = new JLabel("Score: " + score);
-        JLabel highestScoreLabel = new JLabel("Highest Score: " + highestScore);
-        JButton restartButton = new JButton("Restart Game");
+        g.setColor(new Color(10, 220, 215));
+        g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        Font font = new Font("Arial", Font.BOLD, 40);
+        FontMetrics metrics = g2.getFontMetrics(font);
+        String scoreText = "Score: " + lastScore;
+        String highScoreText = "High score: " + highScore;
+        g2.setFont(font);
+        g2.setColor(Color.WHITE);
+        g2.drawString(highScoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(highScoreText) / 2), Constants.SCREEN_HEIGHT - 50);
+        g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 150);
 
-        restartButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+    }
 
-        panel.add(scoreLabel);
-        panel.add(highestScoreLabel);
-        panel.add(restartButton);
+    @Override
+    public void update(double dt) {
 
-        getContentPane().add(panel);
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 }

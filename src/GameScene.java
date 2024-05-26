@@ -70,7 +70,7 @@ public class GameScene extends Scene {
         food.draw(g2);
         snake.draw(g2);
 
-        Font font = new Font("Arial", Font.BOLD, 20);
+        Font font = new Font("Arial", Font.BOLD, 40);
         FontMetrics metrics = g2.getFontMetrics(font);
         String scoreText = "Score: " + snake.score;
         g2.setFont(font);
