@@ -28,11 +28,11 @@ public class MenuScene extends Scene {
 
         try {
             BufferedImage spritesheet = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakeMenu.png"));
-            title = spritesheet.getSubimage(320, 120, 760, 200);
-            play = spritesheet.getSubimage(0, 121, 261, 121);
-            playPressed = spritesheet.getSubimage(264, 121, 261, 121);
-            exit = spritesheet.getSubimage(0, 0, 233, 93);
-            exitPressed = spritesheet.getSubimage(264, 0, 233, 93);
+            title = spritesheet.getSubimage(170, 40, 320, 70);
+            play = spritesheet.getSubimage(130, 130, 410, 40);
+            playPressed = spritesheet.getSubimage(130, 185, 410, 40);
+            exit = spritesheet.getSubimage(180, 240, 310, 40);
+            exitPressed = spritesheet.getSubimage(180, 295, 310, 40);
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -41,9 +41,9 @@ public class MenuScene extends Scene {
         playCurrentImage = play;
         exitCurrentImage = exit;
 
-        titleRect = new Rect(230, 100, 320, 100);
-        playRect = new Rect(310, 280, 150, 70);
-        exitRect = new Rect(318, 355, 130, 55);
+        titleRect = new Rect(240, 100, 320, 70);
+        playRect = new Rect(195, 280, 410, 40);
+        exitRect = new Rect(245, 355, 310, 40);
     }
 
     /**
