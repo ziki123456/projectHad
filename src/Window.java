@@ -20,6 +20,8 @@ public class Window extends JFrame implements Runnable {
     public KeyL keyListener = new KeyL();
     public MouseL mouseListener = new MouseL();
 
+    public String nickname;
+
     /**
      * Constructs the game window.
      * @param width The width of the window.
@@ -111,6 +113,7 @@ public class Window extends JFrame implements Runnable {
 
     @Override
     public void run() {
+        this.nickname = NicknameDialog.showDialog(this);
         Instant lastFrameTime = Instant.now();
         try {
             while (isRunning) {
