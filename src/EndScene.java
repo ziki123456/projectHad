@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class EndScene extends Scene {
 
@@ -25,6 +27,19 @@ public class EndScene extends Scene {
         g2.drawString(highScoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(highScoreText) / 2), Constants.SCREEN_HEIGHT - 50);
         g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 150);
 
+        String nicknameText = "Congrats " + Window.getWindow().nickname;
+        g2.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 550);
+
+        Map<String, Integer> scores = FileUtils.loadPlayerScores();
+        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(scores.entrySet());
+        sortedScores.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
+
+        int yPosition = Constants.SCREEN_HEIGHT / 2 - 50;
+        for (Map.Entry<String, Integer> entry : sortedScores) {
+            String scoreEntry = entry.getKey() + ": " + entry.getValue();
+            g2.drawString(scoreEntry, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreEntry) / 2), yPosition);
+            yPosition += 50;
+        }
     }
 
     @Override

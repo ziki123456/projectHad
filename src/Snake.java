@@ -131,6 +131,7 @@ public class Snake {
         }
         if (intersectingWithSelf()) {
             Window.getWindow().lastScore = this.score;
+            FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
             Window.getWindow().changeState(2);
 
         }
