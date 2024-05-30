@@ -11,8 +11,8 @@ public class FileUtils {
 
         List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(scores.entrySet());
         sortedScores.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
-        if (sortedScores.size() > 10) {
-            sortedScores = sortedScores.subList(0, 10);
+        if (sortedScores.size() > 3) {
+            sortedScores = sortedScores.subList(0, 3);
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME))) {

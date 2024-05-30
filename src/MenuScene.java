@@ -89,7 +89,7 @@ public class MenuScene extends Scene {
         g.drawImage(title, (int)titleRect.x, (int)titleRect.y, (int)titleRect.width, (int)titleRect.height, null);
         g.drawImage(playCurrentImage, (int)playRect.x, (int)playRect.y, (int)playRect.width, (int)playRect.height, null);
         g.drawImage(exitCurrentImage, (int)exitRect.x, (int)exitRect.y, (int)exitRect.width, (int)exitRect.height, null);
-        Font font = new Font("Arial", Font.BOLD, 18);
+        Font font = new Font("Tahoma", Font.BOLD, 18);
         FontMetrics metrics = g.getFontMetrics(font);
         String nicknameText = "Your nickname: " + Window.getWindow().nickname;
         g.setFont(font);

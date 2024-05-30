@@ -18,17 +18,17 @@ public class EndScene extends Scene {
 
         g.setColor(new Color(10, 220, 215));
         g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        Font font = new Font("Arial", Font.BOLD, 40);
+        Font font = new Font("Tahoma", Font.BOLD, 40);
         FontMetrics metrics = g2.getFontMetrics(font);
         String scoreText = "Score: " + lastScore;
         String highScoreText = "High score: " + highScore;
         g2.setFont(font);
-        g2.setColor(Color.WHITE);
-        g2.drawString(highScoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(highScoreText) / 2), Constants.SCREEN_HEIGHT - 50);
-        g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 150);
+        g2.setColor(Color.BLACK);
+        //g2.drawString(highScoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(highScoreText) / 2), Constants.SCREEN_HEIGHT - 50);
+        g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 500);
 
-        String nicknameText = "Congrats " + Window.getWindow().nickname;
-        g2.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 550);
+        String nicknameText = "Well played " + Window.getWindow().nickname;
+        g2.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 600);
 
         Map<String, Integer> scores = FileUtils.loadPlayerScores();
         List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(scores.entrySet());
