@@ -2,6 +2,11 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+/**
+ * EndScene is a class representing the end screen of the game where the final score and
+ * high score are displayed.
+ */
+
 public class EndScene extends Scene {
 
     private int lastScore;
@@ -17,6 +22,12 @@ public class EndScene extends Scene {
         this.mouseListener = mouseListener;
 
     }
+
+    /**
+     * Draws the end screen with the player's score, high score, and a congratulatory message.
+     *
+     * @param g The Graphics object used for drawing.
+     */
 
     @Override
     public void draw(Graphics g) {
@@ -55,6 +66,12 @@ public class EndScene extends Scene {
         g2.drawString("click anywhere to get back to menu",  270, Constants.SCREEN_HEIGHT - 50);
 
     }
+
+    /**
+     * Updates the high score if the last score is greater, and changes the state to the menu if the mouse is pressed.
+     *
+     * @param dt The delta time since the last update.
+     */
 
     @Override
     public void update(double dt) {
