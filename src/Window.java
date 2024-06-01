@@ -9,8 +9,10 @@ import java.time.Instant;
  */
 
 public class Window extends JFrame implements Runnable {
+
     public int lastScore = 0;
     public int bestScore = 0;
+
     public static Window window = null;
     public boolean isRunning;
 
@@ -30,6 +32,7 @@ public class Window extends JFrame implements Runnable {
      */
 
     public Window(int width, int height, String title) {
+
         setSize(width, height);
         setTitle(title);
         setResizable(false);
@@ -38,9 +41,9 @@ public class Window extends JFrame implements Runnable {
         addKeyListener(keyListener);
         addMouseListener(mouseListener);
         addMouseMotionListener(mouseListener);
-
         isRunning = true;
         changeState(0);
+
     }
 
     /**
@@ -49,6 +52,7 @@ public class Window extends JFrame implements Runnable {
      */
 
     public static Window getWindow() {
+
         if (Window.window == null) {
             Window.window = new Window(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, Constants.SCREEN_TITLE);
         }
@@ -66,8 +70,11 @@ public class Window extends JFrame implements Runnable {
      */
 
     public void changeState(int newState) {
+
         currentState = newState;
+
         switch(currentState) {
+
             case 0:
                 currentScene = new MenuScene(keyListener, mouseListener);
                 break;
@@ -80,6 +87,7 @@ public class Window extends JFrame implements Runnable {
                 System.out.println("Unknown scene.");
                 currentScene = null;
                 break;
+
         }
     }
 
@@ -89,11 +97,13 @@ public class Window extends JFrame implements Runnable {
      */
 
     public void update(double dt) {
+
         Image dbImage = createImage(getWidth(), getHeight());
         Graphics dbg = dbImage.getGraphics();
         this.draw(dbg);
         getGraphics().drawImage(dbImage, 0, 0, this);
         currentScene.update(dt);
+
     }
 
     /**
@@ -113,6 +123,7 @@ public class Window extends JFrame implements Runnable {
 
     @Override
     public void run() {
+
         this.nickname = NicknameDialog.showDialog(this);
         Instant lastFrameTime = Instant.now();
         try {
@@ -131,7 +142,6 @@ public class Window extends JFrame implements Runnable {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         this.dispose();
     }
 }
