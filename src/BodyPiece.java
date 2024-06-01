@@ -2,6 +2,7 @@
  * Represents a single segment of the snake's body.
  */
 public class BodyPiece {
+
     public Rect rect;
 
     public boolean isHead, isTail = false;
@@ -11,6 +12,8 @@ public class BodyPiece {
      * @param rect the rectangular area defining the position and size of the body segment
      */
     public BodyPiece(Rect rect) {
+
         this.rect = rect;
+
     }
 }

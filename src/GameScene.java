@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
  */
 
 public class GameScene extends Scene {
+
     Rect background, foreground;
     Snake snake;
     KeyL keyListener;
@@ -19,6 +20,7 @@ public class GameScene extends Scene {
      */
 
     public GameScene(KeyL keyListener) {
+
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         foreground = new Rect(24, 48, (Constants.SCREEN_WIDTH - 48) / Constants.TILE_WIDTH * Constants.TILE_WIDTH , (Constants.SCREEN_HEIGHT - 172) / Constants.TILE_WIDTH * Constants.TILE_WIDTH );
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.x, Constants.TILE_WIDTH * 3 + foreground.y, Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
@@ -35,6 +37,7 @@ public class GameScene extends Scene {
 
     @Override
     public void update(double dt) {
+
         if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
             snake.changeDirecton(Direction.UP);
         } else if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -47,8 +50,6 @@ public class GameScene extends Scene {
 
         if (!food.isSpawned) food.spawn();
 
-
-
         snake.update(dt);
         food.update(dt);
     }
@@ -60,6 +61,7 @@ public class GameScene extends Scene {
 
     @Override
     public void draw(Graphics g) {
+
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.BLACK);
         g2.fill(new Rectangle2D.Double(background.x, background.y, background.width, background.height));
@@ -76,8 +78,6 @@ public class GameScene extends Scene {
         g2.setFont(font);
         g2.setColor(Color.WHITE);
         g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 50);
-
-
 
     }
 }

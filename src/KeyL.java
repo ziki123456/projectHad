@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
  */
 
 public class KeyL extends KeyAdapter implements KeyListener {
+
     private boolean[] keyPressed = new boolean[128];
 
     @Override
