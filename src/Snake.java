@@ -16,18 +16,22 @@ import java.util.List;
 
 public class Snake {
 
-
     public BufferedImage headN, headS, headE, headW, bodyImg;
+
      List<BodyPiece> body = new ArrayList<>();
+
      BodyPiece  headPiece, tailPiece;
+
     public double bodyWidth, bodyHeight;
 
     public int size;
+
     public boolean shouldGrow = false;
 
     public Direction direction = Direction.RIGHT;
 
     public double ogWaitBetweenUpdates = 0.51f;
+
     public double waitTimeLeft = ogWaitBetweenUpdates;
 
     public Rect background;
@@ -45,19 +49,23 @@ public class Snake {
      */
 
     public Snake(int size, double startX, double startY, double bodyWidth, double bodyHeight, Rect background) {
+
         this.size = size;
         this.bodyWidth = bodyWidth;
         this.bodyHeight = bodyHeight;
         this.background = background;
 
         for (int i=0; i <= size; i++) {
+
             BodyPiece bodyPiece = new BodyPiece(new Rect(startX + i * bodyWidth, startY, bodyWidth, bodyHeight));
             if (i==0) this.tailPiece = bodyPiece;
             if (i==size) this.headPiece = bodyPiece;
             body.add(bodyPiece);
+
         }
 
         try {
+
             BufferedImage snakeImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
             Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
             bodyImg = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
@@ -92,15 +100,20 @@ public class Snake {
      */
 
     public String printBody() {
+
         String text = "-------------"+ "\n";
         text += "size :"+body.size() + "\n";
         text += "head :"+body.get(body.size()-1) + "\n";
         text += "tail :"+body.get(0) + "\n";
+
         for(int i = 0; i < body.size(); i++) {
 
             text +=  body.get(i).rect.x + " " + body.get(i).rect.y + "\n";
+
         }
+
         return text;
+
     }
 
     /**
@@ -109,14 +122,19 @@ public class Snake {
      */
 
     public void changeDirecton(Direction newDirection) {
+
         if (newDirection == Direction.RIGHT && direction != Direction.LEFT)
             direction = newDirection;
+
         else if (newDirection == Direction.LEFT && direction != Direction.RIGHT)
             direction = newDirection;
+
         else if (newDirection == Direction.UP && direction != Direction.DOWN)
             direction = newDirection;
+
         else if (newDirection == Direction.DOWN && direction != Direction.UP)
             direction = newDirection;
+
     }
 
     /**
@@ -125,11 +143,15 @@ public class Snake {
      */
 
     public void update(double dt) {
+
         if (waitTimeLeft > 0) {
+
             waitTimeLeft -= dt;
             return;
+
         }
         if (intersectingWithSelf()) {
+
             Window.getWindow().lastScore = this.score;
             FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
             Window.getWindow().changeState(2);
@@ -143,15 +165,19 @@ public class Snake {
         if (direction == Direction.RIGHT) {
             newX = body.get(body.size()-1).rect.x + bodyWidth;
             newY = body.get(body.size()-1).rect.y;
+
         } else if (direction == Direction.LEFT) {
             newX = body.get(body.size()-1).rect.x - bodyWidth;
             newY = body.get(body.size()-1).rect.y;
+
         } else if (direction == Direction.UP) {
             newX = body.get(body.size()-1).rect.x;
             newY = body.get(body.size()-1).rect.y - bodyHeight;
+
         } else if (direction == Direction.DOWN) {
             newX = body.get(body.size()-1).rect.x;
             newY = body.get(body.size()-1).rect.y + bodyHeight;
+
         }
 
         if (this.shouldGrow) {
@@ -205,9 +231,11 @@ public class Snake {
      */
 
     public void grow() {
+
         this.shouldGrow = true;
         this.ogWaitBetweenUpdates *= 0.9;
         this.score++;
+
     }
 
     /**
