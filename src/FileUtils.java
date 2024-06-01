@@ -5,10 +5,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Utility class for handling player score saving and loading operations.
+ */
 public class FileUtils {
 
     private static final String FILENAME = "player_scores.txt";
 
+    /**
+     * Saves a player's score to a file. If the file contains more than 3 scores,
+     * it keeps only the top 3 highest scores.
+     *
+     * @param name  the name of the player
+     * @param score the score of the player
+     */
     public static void savePlayerScore(String name, int score) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -34,6 +44,11 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Loads the player scores from a file.
+     *
+     * @return a map of player names and their scores
+     */
     public static Map<String, Integer> loadPlayerScores() {
         Map<String, Integer> scores = new HashMap<>();
 
@@ -55,6 +70,12 @@ public class FileUtils {
         return scores;
     }
 
+    /**
+     * Gets the file path of the player scores file. If the file does not exist, it creates a new file.
+     *
+     * @return the absolute file path of the player scores file
+     * @throws IOException if an I/O error occurs
+     */
     private static String getFilePath() throws IOException {
         URL url = FileUtils.class.getProtectionDomain().getCodeSource().getLocation();
         if (url != null) {
