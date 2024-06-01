@@ -4,6 +4,8 @@ import java.awt.Graphics;
  * Any scene in the game must implement the update and draw methods.
  */
 public abstract class Scene {
+
     public abstract void update(double dt);
     public abstract void draw(Graphics g);
+
 }
