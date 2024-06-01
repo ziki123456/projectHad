@@ -10,6 +10,7 @@ import java.io.File;
  */
 
 public class Food {
+
     public Rect background;
     public Snake snake;
     public int width, height;
@@ -56,13 +57,17 @@ public class Food {
      */
 
     public void spawn() {
+
         do {
+
             double randX = (int) (Math.random() * (int) (background.width / Constants.TILE_WIDTH)) * Constants.TILE_WIDTH + background.x;
             double randY = (int) (Math.random() * (int) (background.height / Constants.TILE_WIDTH)) * Constants.TILE_WIDTH + background.y;
             this.rect.x = randX;
             this.rect.y = randY;
         } while (snake.intersectingWithRect(this.rect));
+
         this.isSpawned = true;
+
     }
     /**
      * Updates the state of the food item.
@@ -77,6 +82,7 @@ public class Food {
             this.rect.x = -100;
             this.rect.y = -100;
             isSpawned = false;
+
         }
 
     }
