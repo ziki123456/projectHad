@@ -75,7 +75,7 @@ public class Window extends JFrame implements Runnable {
                 currentScene = new GameScene(keyListener);
                 break;
             case 2:
-                currentScene = new EndScene(this.lastScore,this.bestScore);
+                currentScene = new EndScene(this.lastScore,this.bestScore, keyListener,  mouseListener);
                 break;            default:
                 System.out.println("Unknown scene.");
                 currentScene = null;

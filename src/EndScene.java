@@ -6,10 +6,14 @@ public class EndScene extends Scene {
 
     private int lastScore;
     private int highScore;
+    public KeyL keyListener;
+    public MouseL mouseListener;
 
-    public EndScene(int score, int highestScore) {
+    public EndScene(int score, int highestScore, KeyL keyListener, MouseL mouseListener) {
         this.lastScore = score;
         this.highScore = highestScore;
+        this.keyListener = keyListener;
+        this.mouseListener = mouseListener;
     }
 
     @Override
@@ -24,7 +28,6 @@ public class EndScene extends Scene {
         String highScoreText = "High score: " + highScore;
         g2.setFont(font);
         g2.setColor(Color.BLACK);
-        //g2.drawString(highScoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(highScoreText) / 2), Constants.SCREEN_HEIGHT - 50);
         g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 500);
 
         String nicknameText = "Well played " + Window.getWindow().nickname;
@@ -46,6 +49,9 @@ public class EndScene extends Scene {
     public void update(double dt) {
         if (lastScore > highScore) {
             highScore = lastScore;
+        }
+        if (mouseListener.isPressed()) {
+            Window.getWindow().changeState(0);
         }
     }
 }
