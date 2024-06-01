@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * Represents the snake in the game.
  */
-
 public class Snake {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
@@ -47,7 +46,6 @@ public class Snake {
      * @param bodyHeight The height of each body piece.
      * @param background The background rectangle of the game.
      */
-
     public Snake(int size, double startX, double startY, double bodyWidth, double bodyHeight, Rect background) {
 
         this.size = size;
@@ -66,7 +64,7 @@ public class Snake {
 
         try {
 
-            BufferedImage snakeImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
+            BufferedImage snakeImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakehead.png"));
             Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
             bodyImg = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = bodyImg.createGraphics();
@@ -98,7 +96,6 @@ public class Snake {
      * Prints information about the snake's body.
      * @return A string containing information about the snake's body.
      */
-
     public String printBody() {
 
         String text = "-------------"+ "\n";
@@ -120,7 +117,6 @@ public class Snake {
      * Changes the direction of the snake.
      * @param newDirection The new direction of the snake.
      */
-
     public void changeDirecton(Direction newDirection) {
 
         if (newDirection == Direction.RIGHT && direction != Direction.LEFT)
@@ -141,7 +137,6 @@ public class Snake {
      * Updates the snake's position.
      * @param dt The time elapsed since the last update.
      */
-
     public void update(double dt) {
 
         if (waitTimeLeft > 0) {
@@ -199,7 +194,6 @@ public class Snake {
     /**
      * Checks if the snake is intersecting with a given rectangle.
      */
-
     public boolean intersectingWithRect(Rect rect) {
         for(int i = 0; i < body.size()-1; i++)    {
             if (intersecting(rect, body.get(i).rect)) return true;
@@ -210,7 +204,6 @@ public class Snake {
     /**
      * Checks if two rectangles are intersecting.
      */
-
     public boolean intersecting(Rect r1, Rect r2) {
         return (r1.x >= r2.x && r1.x + r1.width <= r2.x + r2.width &&
                 r1.y >= r2.y && r1.y + r1.height <= r2.y + r2.height);
@@ -219,7 +212,6 @@ public class Snake {
     /**
      * Checks if the snake is intersecting with the screen boundaries.
      */
-
     public boolean intersectingWithScreenBoundaries(Rect head) {
         return (head.x < background.x || (head.x + head.width) > background.x + background.width ||
                 head.y < background.y || (head.y + head.height) > background.y + background.height);
@@ -229,7 +221,6 @@ public class Snake {
      * Makes the snake grow.
      * Makes the snake faster after eating food.
      */
-
     public void grow() {
 
         this.shouldGrow = true;
@@ -242,7 +233,6 @@ public class Snake {
      * Draws the snake on the graphics context.
      * @param g2 The graphics context to draw on.
      */
-
     public void draw(Graphics2D g2) {
 
         for(int i = 0; i < body.size(); i++)   {

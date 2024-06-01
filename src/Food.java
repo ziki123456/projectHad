@@ -30,7 +30,7 @@ public class Food {
 
         try {
 
-            BufferedImage foodImages = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakehead.png"));
+            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakehead.png"));
             Image tmp = foodImages.getSubimage(710, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
             foodImage = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = foodImage.createGraphics();
@@ -55,7 +55,6 @@ public class Food {
     /**
      * Spawns the food item at a random position on the game background.
      */
-
     public void spawn() {
 
         do {

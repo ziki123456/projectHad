@@ -6,7 +6,6 @@ import java.util.List;
  * EndScene is a class representing the end screen of the game where the final score and
  * high score are displayed.
  */
-
 public class EndScene extends Scene {
 
     private int lastScore;
@@ -28,7 +27,6 @@ public class EndScene extends Scene {
      *
      * @param g The Graphics object used for drawing.
      */
-
     @Override
     public void draw(Graphics g) {
 
@@ -53,7 +51,7 @@ public class EndScene extends Scene {
 
         int yPosition = Constants.SCREEN_HEIGHT / 2 - 50;
 
-        for (Map.Entry<String, Integer> entry : sortedScores) {
+            for (Map.Entry<String, Integer> entry : sortedScores) {
 
             String scoreEntry = entry.getKey().substring(20) + ": " + entry.getValue();
             g2.drawString(scoreEntry, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreEntry) / 2), yPosition);
@@ -72,7 +70,6 @@ public class EndScene extends Scene {
      *
      * @param dt The delta time since the last update.
      */
-
     @Override
     public void update(double dt) {
 

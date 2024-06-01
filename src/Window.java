@@ -7,7 +7,6 @@ import java.time.Instant;
  * Represents the main window of the application.
  * Extends JFrame and implements Runnable for running the game loop.
  */
-
 public class Window extends JFrame implements Runnable {
 
     public int lastScore = 0;
@@ -30,7 +29,6 @@ public class Window extends JFrame implements Runnable {
      * @param height The height of the window.
      * @param title The title of the window.
      */
-
     public Window(int width, int height, String title) {
 
         setSize(width, height);
@@ -50,7 +48,6 @@ public class Window extends JFrame implements Runnable {
      * Gets the singleton instance of the Window class.
      * @return The Window instance.
      */
-
     public static Window getWindow() {
 
         if (Window.window == null) {
@@ -68,7 +65,6 @@ public class Window extends JFrame implements Runnable {
      * Changes the state of the game to the specified state.
      * @param newState The new state of the game.
      */
-
     public void changeState(int newState) {
 
         currentState = newState;
@@ -95,7 +91,6 @@ public class Window extends JFrame implements Runnable {
      * Updates the game logic.
      * @param dt The time elapsed since the last frame.
      */
-
     public void update(double dt) {
 
         Image dbImage = createImage(getWidth(), getHeight());
@@ -110,7 +105,6 @@ public class Window extends JFrame implements Runnable {
      * Draws the current scene.
      * @param g The graphics context.
      */
-
     public void draw(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         currentScene.draw(g);
@@ -120,7 +114,6 @@ public class Window extends JFrame implements Runnable {
      * Runs the game loop.
      * It updates the game logic and redraws the scene at a fixed time step.
      */
-
     @Override
     public void run() {
 

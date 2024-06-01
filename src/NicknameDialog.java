@@ -8,6 +8,14 @@ public class NicknameDialog extends JDialog {
     private JTextField nicknameField;
     private String nickname;
 
+    public JTextField getNicknameField() {
+        return nicknameField;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
     public NicknameDialog(Frame owner) {
 
         super(owner, "Enter Nickname", true);

@@ -1,9 +1,9 @@
 public class Main {
-    public static void main(String[] args) {
 
-        /**
-         * The main method that starts the game by initializing the window and starting its thread.
-         */
+    /**
+     * The main method that starts the game by initializing the window and starting its thread.
+     */
+    public static void main(String[] args) {
 
         Window window = Window.getWindow();
 

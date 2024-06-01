@@ -7,7 +7,6 @@ import java.io.File;
 /**
  * Represents the main menu scene of the game.
  */
-
 public class MenuScene extends Scene {
 
     public KeyL keyListener;
@@ -22,7 +21,6 @@ public class MenuScene extends Scene {
      * @param keyListener the key listener for handling keyboard input
      * @param mouseListener the mouse listener for handling mouse input
      */
-
     public MenuScene(KeyL keyListener, MouseL mouseListener) {
 
         this.keyListener = keyListener;
@@ -30,7 +28,7 @@ public class MenuScene extends Scene {
 
         try {
 
-            BufferedImage spritesheet = ImageIO.read(new File("C:\\Users\\tadea\\Desktop\\projectHad\\snakeMenu.png"));
+            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakeMenu.png"));
             title = spritesheet.getSubimage(170, 40, 320, 70);
             play = spritesheet.getSubimage(130, 130, 410, 40);
             playPressed = spritesheet.getSubimage(130, 185, 410, 40);
@@ -54,7 +52,6 @@ public class MenuScene extends Scene {
      * Updates the main menu scene based on the elapsed time and user input.
      * @param dt the time elapsed since the last update in seconds
      */
-
     @Override
     public void update(double dt) {
 
@@ -84,7 +81,6 @@ public class MenuScene extends Scene {
      * Draws the main menu scene.
      * @param g the Graphics object used for drawing
      */
-
     @Override
     public void draw(Graphics g) {
 

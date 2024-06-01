@@ -8,7 +8,6 @@ public class Rect {
     /**
      * Constructs a new rectangle with the specified position and size.
      */
-
     public Rect(double x, double y, double width, double height) {
 
         this.x = x;

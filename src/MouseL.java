@@ -5,7 +5,6 @@ import java.awt.event.MouseMotionListener;
 /**
  * Handles mouse inputs by implementing the MouseAdapter and MouseMotionListener interfaces.
  */
-
 public class MouseL extends MouseAdapter implements MouseMotionListener {
 
     public boolean isPressed = false;

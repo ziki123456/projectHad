@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 /**
  * Represents the game scene where gameplay takes place.
  */
-
 public class GameScene extends Scene {
 
     Rect background, foreground;
@@ -18,7 +17,6 @@ public class GameScene extends Scene {
      * Constructs a new GameScene with the specified key listener.
      * @param keyListener the key listener for handling user input
      */
-
     public GameScene(KeyL keyListener) {
 
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -34,7 +32,6 @@ public class GameScene extends Scene {
      * Updates the game scene based on the elapsed time.
      * @param dt the time elapsed since the last update in seconds
      */
-
     @Override
     public void update(double dt) {
 
@@ -58,7 +55,6 @@ public class GameScene extends Scene {
      * Draws the game scene.
      * @param g the Graphics object used for drawing
      */
-
     @Override
     public void draw(Graphics g) {
 
