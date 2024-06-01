@@ -39,10 +39,15 @@ public class EndScene extends Scene {
 
         int yPosition = Constants.SCREEN_HEIGHT / 2 - 50;
         for (Map.Entry<String, Integer> entry : sortedScores) {
-            String scoreEntry = entry.getKey() + ": " + entry.getValue();
+            String scoreEntry = entry.getKey().substring(20) + ": " + entry.getValue();
             g2.drawString(scoreEntry, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreEntry) / 2), yPosition);
             yPosition += 50;
         }
+
+        font = new Font("Tahoma", Font.BOLD, 15);
+        g2.setFont(font);
+        g2.drawString("click anywhere to get back to menu",  270, Constants.SCREEN_HEIGHT - 50);
+
     }
 
     @Override
