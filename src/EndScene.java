@@ -48,16 +48,15 @@ public class EndScene extends Scene {
         Map<String, Integer> scores = FileUtils.loadPlayerScores();
         List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(scores.entrySet());
         sortedScores.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
-
         int yPosition = Constants.SCREEN_HEIGHT / 2 - 50;
 
             for (Map.Entry<String, Integer> entry : sortedScores) {
 
-            String scoreEntry = entry.getKey().substring(20) + ": " + entry.getValue();
-            g2.drawString(scoreEntry, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreEntry) / 2), yPosition);
-            yPosition += 50;
+                String scoreEntry = entry.getKey().substring(20) + ": " + entry.getValue();
+                g2.drawString(scoreEntry, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreEntry) / 2), yPosition);
+                yPosition += 50;
 
-        }
+            }
 
         font = new Font("Tahoma", Font.BOLD, 15);
         g2.setFont(font);

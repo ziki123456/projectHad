@@ -1,4 +1,6 @@
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -38,6 +40,7 @@ public class FileUtils {
         try (BufferedReader reader = new BufferedReader(new FileReader(getFilePath()))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line == "") continue;
                 String[] parts = line.split(": ");
                 if (parts.length == 2) {
                     String name = parts[0];
