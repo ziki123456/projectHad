@@ -9,6 +9,7 @@ public class NicknameDialog extends JDialog {
     private String nickname;
 
     public NicknameDialog(Frame owner) {
+
         super(owner, "Enter Nickname", true);
         setLayout(new BorderLayout());
         setSize(300, 150);
@@ -23,8 +24,10 @@ public class NicknameDialog extends JDialog {
 
         JButton okButton = new JButton("OK");
         okButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if (validateNickname()) {
                     nickname = nicknameField.getText();
                     setVisible(false);
@@ -33,26 +36,31 @@ public class NicknameDialog extends JDialog {
                             "Nickname must be up to 20 letters or numbers.",
                             "Invalid Nickname",
                             JOptionPane.WARNING_MESSAGE);
+
                 }
             }
         });
-
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(okButton);
 
         add(inputPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+
     }
 
     private boolean validateNickname() {
+
         String text = nicknameField.getText();
         return text != null && text.matches("[a-zA-Z0-9 ]{1,20}");
+
     }
 
     public static String showDialog(Frame owner) {
+
         NicknameDialog dialog = new NicknameDialog(owner);
         dialog.setVisible(true);
         return dialog.nickname;
+
     }
 }
