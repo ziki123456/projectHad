@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
  */
 
 public class MouseL extends MouseAdapter implements MouseMotionListener {
+
     public boolean isPressed = false;
     public double x = 0.0, y = 0.0;
 
@@ -26,8 +27,14 @@ public class MouseL extends MouseAdapter implements MouseMotionListener {
         this.y = e.getY();
     }
 
-    public double getX() { return this.x; }
-    public double getY() { return this.y; }
+    public double getX() {
+        return this.x;
+    }
+    public double getY() {
+        return this.y;
+    }
 
-    public boolean isPressed() { return this.isPressed; }
+    public boolean isPressed() {
+        return this.isPressed;
+    }
 }
