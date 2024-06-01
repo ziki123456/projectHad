@@ -3,19 +3,37 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A dialog for entering a nickname.
+ */
 public class NicknameDialog extends JDialog {
 
     private JTextField nicknameField;
     private String nickname;
 
+    /**
+     * Gets the text field used for entering the nickname.
+     *
+     * @return the text field for entering the nickname
+     */
     public JTextField getNicknameField() {
         return nicknameField;
     }
 
+    /**
+     * Gets the entered nickname.
+     *
+     * @return the entered nickname
+     */
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     * Constructs a new NicknameDialog.
+     *
+     * @param owner the owner frame of the dialog
+     */
     public NicknameDialog(Frame owner) {
 
         super(owner, "Enter Nickname", true);
@@ -57,6 +75,11 @@ public class NicknameDialog extends JDialog {
 
     }
 
+    /**
+     * Validates the entered nickname.
+     *
+     * @return true if the nickname is valid, false otherwise
+     */
     private boolean validateNickname() {
 
         String text = nicknameField.getText();
@@ -64,6 +87,12 @@ public class NicknameDialog extends JDialog {
 
     }
 
+    /**
+     * Displays the nickname dialog and returns the entered nickname.
+     *
+     * @param owner the owner frame of the dialog
+     * @return the entered nickname
+     */
     public static String showDialog(Frame owner) {
 
         NicknameDialog dialog = new NicknameDialog(owner);
