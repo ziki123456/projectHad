@@ -14,6 +14,8 @@ public class Time {
      * @return The elapsed time in seconds.
      */
 
-    public static double getTime() { return (System.nanoTime() - timeStarted) * 1E-9; }
+    public static double getTime() {
+        return (System.nanoTime() - timeStarted) * 1E-9;
+    }
 
 }
