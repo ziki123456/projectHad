@@ -10,6 +10,7 @@ public class Time {
 
     /**
      * Gets the current time elapsed since the application started.
+     *
      * @return The elapsed time in seconds.
      */
     public static double getTime() {

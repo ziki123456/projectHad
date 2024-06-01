@@ -30,7 +30,7 @@ public class EndScene extends Scene {
     @Override
     public void draw(Graphics g) {
 
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
 
         g.setColor(new Color(10, 220, 215));
         g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -50,17 +50,17 @@ public class EndScene extends Scene {
         sortedScores.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
         int yPosition = Constants.SCREEN_HEIGHT / 2 - 50;
 
-            for (Map.Entry<String, Integer> entry : sortedScores) {
+        for (Map.Entry<String, Integer> entry : sortedScores) {
 
-                String scoreEntry = entry.getKey().substring(20) + ": " + entry.getValue();
-                g2.drawString(scoreEntry, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreEntry) / 2), yPosition);
-                yPosition += 50;
+            String scoreEntry = entry.getKey().substring(20) + ": " + entry.getValue();
+            g2.drawString(scoreEntry, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreEntry) / 2), yPosition);
+            yPosition += 50;
 
-            }
+        }
 
         font = new Font("Tahoma", Font.BOLD, 15);
         g2.setFont(font);
-        g2.drawString("click anywhere to get back to menu",  270, Constants.SCREEN_HEIGHT - 50);
+        g2.drawString("click anywhere to get back to menu", 270, Constants.SCREEN_HEIGHT - 50);
 
     }
 

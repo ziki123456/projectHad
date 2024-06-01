@@ -9,6 +9,7 @@ public class BodyPiece {
 
     /**
      * Constructs a new BodyPiece with the specified rectangular area.
+     *
      * @param rect the rectangular area defining the position and size of the body segment
      */
     public BodyPiece(Rect rect) {

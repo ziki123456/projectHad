@@ -17,9 +17,9 @@ public class Snake {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
 
-     List<BodyPiece> body = new ArrayList<>();
+    List<BodyPiece> body = new ArrayList<>();
 
-     BodyPiece  headPiece, tailPiece;
+    BodyPiece headPiece, tailPiece;
 
     public double bodyWidth, bodyHeight;
 
@@ -39,10 +39,11 @@ public class Snake {
 
     /**
      * Constructs a new snake with the specified parameters.
-     * @param size The size of the snake.
-     * @param startX The starting x-coordinate of the snake.
-     * @param startY The starting y-coordinate of the snake.
-     * @param bodyWidth The width of each body piece.
+     *
+     * @param size       The size of the snake.
+     * @param startX     The starting x-coordinate of the snake.
+     * @param startY     The starting y-coordinate of the snake.
+     * @param bodyWidth  The width of each body piece.
      * @param bodyHeight The height of each body piece.
      * @param background The background rectangle of the game.
      */
@@ -53,11 +54,11 @@ public class Snake {
         this.bodyHeight = bodyHeight;
         this.background = background;
 
-        for (int i=0; i <= size; i++) {
+        for (int i = 0; i <= size; i++) {
 
             BodyPiece bodyPiece = new BodyPiece(new Rect(startX + i * bodyWidth, startY, bodyWidth, bodyHeight));
-            if (i==0) this.tailPiece = bodyPiece;
-            if (i==size) this.headPiece = bodyPiece;
+            if (i == 0) this.tailPiece = bodyPiece;
+            if (i == size) this.headPiece = bodyPiece;
             body.add(bodyPiece);
 
         }
@@ -79,7 +80,7 @@ public class Snake {
             g2d.dispose();
 
             AffineTransform tx = new AffineTransform();
-            tx.rotate(3.14/2, headE.getWidth() / 2, headE.getHeight() / 2);
+            tx.rotate(3.14 / 2, headE.getWidth() / 2, headE.getHeight() / 2);
 
             AffineTransformOp op = new AffineTransformOp(tx,
                     AffineTransformOp.TYPE_BILINEAR);
@@ -87,25 +88,26 @@ public class Snake {
             headW = op.filter(headS, null);
             headN = op.filter(headW, null);
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Prints information about the snake's body.
+     *
      * @return A string containing information about the snake's body.
      */
     public String printBody() {
 
-        String text = "-------------"+ "\n";
-        text += "size :"+body.size() + "\n";
-        text += "head :"+body.get(body.size()-1) + "\n";
-        text += "tail :"+body.get(0) + "\n";
+        String text = "-------------" + "\n";
+        text += "size :" + body.size() + "\n";
+        text += "head :" + body.get(body.size() - 1) + "\n";
+        text += "tail :" + body.get(0) + "\n";
 
-        for(int i = 0; i < body.size(); i++) {
+        for (int i = 0; i < body.size(); i++) {
 
-            text +=  body.get(i).rect.x + " " + body.get(i).rect.y + "\n";
+            text += body.get(i).rect.x + " " + body.get(i).rect.y + "\n";
 
         }
 
@@ -115,6 +117,7 @@ public class Snake {
 
     /**
      * Changes the direction of the snake.
+     *
      * @param newDirection The new direction of the snake.
      */
     public void changeDirecton(Direction newDirection) {
@@ -135,6 +138,7 @@ public class Snake {
 
     /**
      * Updates the snake's position.
+     *
      * @param dt The time elapsed since the last update.
      */
     public void update(double dt) {
@@ -158,20 +162,20 @@ public class Snake {
         double newY = 0;
 
         if (direction == Direction.RIGHT) {
-            newX = body.get(body.size()-1).rect.x + bodyWidth;
-            newY = body.get(body.size()-1).rect.y;
+            newX = body.get(body.size() - 1).rect.x + bodyWidth;
+            newY = body.get(body.size() - 1).rect.y;
 
         } else if (direction == Direction.LEFT) {
-            newX = body.get(body.size()-1).rect.x - bodyWidth;
-            newY = body.get(body.size()-1).rect.y;
+            newX = body.get(body.size() - 1).rect.x - bodyWidth;
+            newY = body.get(body.size() - 1).rect.y;
 
         } else if (direction == Direction.UP) {
-            newX = body.get(body.size()-1).rect.x;
-            newY = body.get(body.size()-1).rect.y - bodyHeight;
+            newX = body.get(body.size() - 1).rect.x;
+            newY = body.get(body.size() - 1).rect.y - bodyHeight;
 
         } else if (direction == Direction.DOWN) {
-            newX = body.get(body.size()-1).rect.x;
-            newY = body.get(body.size()-1).rect.y + bodyHeight;
+            newX = body.get(body.size() - 1).rect.x;
+            newY = body.get(body.size() - 1).rect.y + bodyHeight;
 
         }
 
@@ -183,11 +187,12 @@ public class Snake {
         body.add(bodyPiece);
 
     }
+
     /**
      * Checks if the snake is intersecting with itself.
      */
     public boolean intersectingWithSelf() {
-        Rect headR = body.get(body.size()-1).rect;
+        Rect headR = body.get(body.size() - 1).rect;
         return intersectingWithRect(headR) || intersectingWithScreenBoundaries(headR);
     }
 
@@ -195,7 +200,7 @@ public class Snake {
      * Checks if the snake is intersecting with a given rectangle.
      */
     public boolean intersectingWithRect(Rect rect) {
-        for(int i = 0; i < body.size()-1; i++)    {
+        for (int i = 0; i < body.size() - 1; i++) {
             if (intersecting(rect, body.get(i).rect)) return true;
         }
         return false;
@@ -231,29 +236,30 @@ public class Snake {
 
     /**
      * Draws the snake on the graphics context.
+     *
      * @param g2 The graphics context to draw on.
      */
     public void draw(Graphics2D g2) {
 
-        for(int i = 0; i < body.size(); i++)   {
+        for (int i = 0; i < body.size(); i++) {
 
             BodyPiece piece = body.get(i);
             double subWidth = (piece.rect.width - 6.0) / 2.0;
             double subHeight = (piece.rect.height - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
-            if(i==body.size()-1) {
+            if (i == body.size() - 1) {
                 if (direction == Direction.RIGHT) {
-                    g2.drawImage(this.headE, (int)piece.rect.x ,(int)piece.rect.y,null);
+                    g2.drawImage(this.headE, (int) piece.rect.x, (int) piece.rect.y, null);
                 } else if (direction == Direction.LEFT) {
-                    g2.drawImage(this.headW, (int)piece.rect.x ,(int)piece.rect.y,null);
+                    g2.drawImage(this.headW, (int) piece.rect.x, (int) piece.rect.y, null);
                 } else if (direction == Direction.UP) {
-                    g2.drawImage(this.headN, (int)piece.rect.x ,(int)piece.rect.y,null);
+                    g2.drawImage(this.headN, (int) piece.rect.x, (int) piece.rect.y, null);
                 } else if (direction == Direction.DOWN) {
-                    g2.drawImage(this.headS, (int)piece.rect.x ,(int)piece.rect.y,null);
+                    g2.drawImage(this.headS, (int) piece.rect.x, (int) piece.rect.y, null);
                 }
 
-            } else g2.drawImage(this.bodyImg, (int)piece.rect.x ,(int)piece.rect.y,null);
+            } else g2.drawImage(this.bodyImg, (int) piece.rect.x, (int) piece.rect.y, null);
         }
     }
 }

@@ -25,9 +25,10 @@ public class Window extends JFrame implements Runnable {
 
     /**
      * Constructs the game window.
-     * @param width The width of the window.
+     *
+     * @param width  The width of the window.
      * @param height The height of the window.
-     * @param title The title of the window.
+     * @param title  The title of the window.
      */
     public Window(int width, int height, String title) {
 
@@ -46,6 +47,7 @@ public class Window extends JFrame implements Runnable {
 
     /**
      * Gets the singleton instance of the Window class.
+     *
      * @return The Window instance.
      */
     public static Window getWindow() {
@@ -63,13 +65,14 @@ public class Window extends JFrame implements Runnable {
 
     /**
      * Changes the state of the game to the specified state.
+     *
      * @param newState The new state of the game.
      */
     public void changeState(int newState) {
 
         currentState = newState;
 
-        switch(currentState) {
+        switch (currentState) {
 
             case 0:
                 currentScene = new MenuScene(keyListener, mouseListener);
@@ -78,8 +81,9 @@ public class Window extends JFrame implements Runnable {
                 currentScene = new GameScene(keyListener);
                 break;
             case 2:
-                currentScene = new EndScene(this.lastScore,this.bestScore, keyListener,  mouseListener);
-                break;            default:
+                currentScene = new EndScene(this.lastScore, this.bestScore, keyListener, mouseListener);
+                break;
+            default:
                 System.out.println("Unknown scene.");
                 currentScene = null;
                 break;
@@ -89,6 +93,7 @@ public class Window extends JFrame implements Runnable {
 
     /**
      * Updates the game logic.
+     *
      * @param dt The time elapsed since the last frame.
      */
     public void update(double dt) {
@@ -103,10 +108,11 @@ public class Window extends JFrame implements Runnable {
 
     /**
      * Draws the current scene.
+     *
      * @param g The graphics context.
      */
     public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
         currentScene.draw(g);
     }
 
@@ -127,12 +133,12 @@ public class Window extends JFrame implements Runnable {
 
                 double deltaWanted = 0.02167;
                 update(deltaWanted);
-                long msToSleep = (long)((deltaWanted - deltaTime) * 1000);
+                long msToSleep = (long) ((deltaWanted - deltaTime) * 1000);
                 if (msToSleep > 0) {
                     Thread.sleep(msToSleep);
                 }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         this.dispose();

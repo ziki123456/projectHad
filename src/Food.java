@@ -22,9 +22,9 @@ public class Food {
 
     public boolean isSpawned = false;
 
-/**
- * Constructs a new Food object with the specified parameters.
- */
+    /**
+     * Constructs a new Food object with the specified parameters.
+     */
 
     public Food(Rect background, Snake snake, int width, int height, Color color) {
 
@@ -68,8 +68,10 @@ public class Food {
         this.isSpawned = true;
 
     }
+
     /**
      * Updates the state of the food item.
+     *
      * @param dt the time elapsed since the last update in seconds
      */
 
@@ -88,12 +90,13 @@ public class Food {
 
     /**
      * Draws the food item on the game screen.
+     *
      * @param g2 the Graphics2D object used for drawing
      */
 
     public void draw(Graphics2D g2) {
 
-      if (!snake.shouldGrow)  g2.drawImage(this.foodImage, (int) this.rect.x + xPadding, (int) this.rect.y, null);
+        if (!snake.shouldGrow) g2.drawImage(this.foodImage, (int) this.rect.x + xPadding, (int) this.rect.y, null);
 
     }
 }

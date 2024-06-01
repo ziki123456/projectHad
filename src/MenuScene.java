@@ -18,7 +18,8 @@ public class MenuScene extends Scene {
 
     /**
      * Constructs a new MenuScene with the specified key and mouse listeners.
-     * @param keyListener the key listener for handling keyboard input
+     *
+     * @param keyListener   the key listener for handling keyboard input
      * @param mouseListener the mouse listener for handling mouse input
      */
     public MenuScene(KeyL keyListener, MouseL mouseListener) {
@@ -35,7 +36,7 @@ public class MenuScene extends Scene {
             exit = spritesheet.getSubimage(180, 240, 310, 40);
             exitPressed = spritesheet.getSubimage(180, 295, 310, 40);
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -50,6 +51,7 @@ public class MenuScene extends Scene {
 
     /**
      * Updates the main menu scene based on the elapsed time and user input.
+     *
      * @param dt the time elapsed since the last update in seconds
      */
     @Override
@@ -79,6 +81,7 @@ public class MenuScene extends Scene {
 
     /**
      * Draws the main menu scene.
+     *
      * @param g the Graphics object used for drawing
      */
     @Override
@@ -86,9 +89,9 @@ public class MenuScene extends Scene {
 
         g.setColor(new Color(10, 220, 215));
         g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        g.drawImage(title, (int)titleRect.x, (int)titleRect.y, (int)titleRect.width, (int)titleRect.height, null);
-        g.drawImage(playCurrentImage, (int)playRect.x, (int)playRect.y, (int)playRect.width, (int)playRect.height, null);
-        g.drawImage(exitCurrentImage, (int)exitRect.x, (int)exitRect.y, (int)exitRect.width, (int)exitRect.height, null);
+        g.drawImage(title, (int) titleRect.x, (int) titleRect.y, (int) titleRect.width, (int) titleRect.height, null);
+        g.drawImage(playCurrentImage, (int) playRect.x, (int) playRect.y, (int) playRect.width, (int) playRect.height, null);
+        g.drawImage(exitCurrentImage, (int) exitRect.x, (int) exitRect.y, (int) exitRect.width, (int) exitRect.height, null);
 
         Font font = new Font("Tahoma", Font.BOLD, 18);
         FontMetrics metrics = g.getFontMetrics(font);

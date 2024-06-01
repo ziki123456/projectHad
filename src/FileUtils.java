@@ -76,7 +76,7 @@ public class FileUtils {
      * @return the absolute file path of the player scores file
      * @throws IOException if an I/O error occurs
      */
-    private static String getFilePath() throws IOException {
+    public static String getFilePath() throws IOException {
         URL url = FileUtils.class.getProtectionDomain().getCodeSource().getLocation();
         if (url != null) {
             try {
