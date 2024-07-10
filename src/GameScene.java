@@ -24,7 +24,7 @@ public class GameScene extends Scene {
         foreground = new Rect(24, 48, (Constants.SCREEN_WIDTH - 48) / Constants.TILE_WIDTH * Constants.TILE_WIDTH, (Constants.SCREEN_HEIGHT - 172) / Constants.TILE_WIDTH * Constants.TILE_WIDTH);
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.x, Constants.TILE_WIDTH * 3 + foreground.y, Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         this.keyListener = keyListener;
-        food = new Food(foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
+        food = new Mouse(foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
         food.spawn();
 
     }
