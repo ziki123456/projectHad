@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 /**
  * Contains constant values used throughout the game.
  */

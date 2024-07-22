@@ -1,3 +1,9 @@
+package cz.ziki.had.FoodObjects;
+
+import cz.ziki.had.Constants;
+import cz.ziki.had.Rect;
+import cz.ziki.had.Snake;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,10 +14,10 @@ public class Apple  extends CommonFood  implements Food{
 
 
     /**
-     * Constructs a new Food object with the specified parameters.
+     * Constructs a new cz.ziki.had.FoodObjects.Food object with the specified parameters.
      */
     /**
-     * Constructs a new Food object with the specified parameters.
+     * Constructs a new cz.ziki.had.FoodObjects.Food object with the specified parameters.
      *
      * @param background
      * @param snake

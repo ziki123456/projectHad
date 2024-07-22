@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -29,7 +31,7 @@ public class Snake {
 
     public Direction direction = Direction.RIGHT;
 
-    public double ogWaitBetweenUpdates = 0.51f;
+    public double ogWaitBetweenUpdates = 1/2f;
 
     public double waitTimeLeft = ogWaitBetweenUpdates;
 

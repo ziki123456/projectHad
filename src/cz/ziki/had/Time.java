@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 /**
  * Utility class for managing time-related operations.
  */

@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;

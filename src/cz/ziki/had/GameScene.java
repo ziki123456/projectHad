@@ -1,3 +1,8 @@
+package cz.ziki.had;
+
+import cz.ziki.had.FoodObjects.Food;
+import cz.ziki.had.FoodObjects.FoodFactory;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;

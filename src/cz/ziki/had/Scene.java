@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 import java.awt.Graphics;
 
 /**

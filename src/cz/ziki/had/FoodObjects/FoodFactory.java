@@ -1,6 +1,9 @@
-import javax.imageio.ImageIO;
+package cz.ziki.had.FoodObjects;
+
+import cz.ziki.had.Rect;
+import cz.ziki.had.Snake;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Represents the food item in the game.

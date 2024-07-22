@@ -1,3 +1,5 @@
+package cz.ziki.had.FoodObjects;
+
 import java.awt.*;
 
 public interface Food {

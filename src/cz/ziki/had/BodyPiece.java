@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 /**
  * Represents a single segment of the snake's body.
  */

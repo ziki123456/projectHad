@@ -1,3 +1,10 @@
+package cz.ziki.had.FoodObjects;
+
+
+import cz.ziki.had.Constants;
+import cz.ziki.had.Rect;
+import cz.ziki.had.Snake;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

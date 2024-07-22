@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 /**
  * Represents the directions in which an entity can move.
  */
