@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.*;

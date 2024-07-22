@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;

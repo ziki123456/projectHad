@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 /**
  * Represents a rectangle with a specified position (x, y) and size (width, height).
  */

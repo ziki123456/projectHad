@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

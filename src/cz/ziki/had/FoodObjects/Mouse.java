@@ -1,14 +1,22 @@
+package cz.ziki.had.FoodObjects;
+
+import cz.ziki.had.Constants;
+import cz.ziki.had.Rect;
+import cz.ziki.had.Snake;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class Mouse extends Food {
+public class Mouse extends CommonFood implements Food {
 
-    private static final double moveDelay = 0.1f;
+    private static final double mouseMoveTime = 1/3f;
     private double waitTimeLeft;
     private int velx = 1;
     private int vely = 1;
 
     /**
-     * Constructs a new Food object with the specified parameters.
+     * Constructs a new cz.ziki.had.FoodObjects.Food object with the specified parameters.
      *
      * @param background
      * @param snake
@@ -17,7 +25,34 @@ public class Mouse extends Food {
      * @param color
      */
     public Mouse(Rect background, Snake snake, int width, int height, Color color) {
-        super(background, snake, width, height, color);
+
+        try {
+
+            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("mys.gif"));
+            foodImage =  foodImages;
+            Graphics2D g2d = foodImages.createGraphics();
+            g2d.drawImage(foodImages, 0, 0, null);
+            g2d.dispose();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        this.background = background;
+        this.snake = snake;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.rect = new Rect(0, 0, width, height);
+
+        xPadding = (int) ((Constants.TILE_WIDTH - this.width) / 2.0);
+
+    }
+
+    public void spawn(){
+        randomSpawn();
     }
 
     private void colisionCheck() {
@@ -32,8 +67,8 @@ public class Mouse extends Food {
 
     private boolean intersectRightBound() {
 
-
         return ((rect.x + rect.width) > background.x + background.width - Constants.TILE_WIDTH);
+
     }
 
     private boolean intersectUpperBound() {
@@ -66,22 +101,21 @@ public class Mouse extends Food {
 
     @Override
     public void update(double dt) {
-        //mys se pohne az vyprsi cas a pokazde musi zkontrolovat jestli ji had nesezral
-        //pokazde co ubehne cas zavola se update
-        //zresetovat casovac
-        //zavola se super.update
-
+        //od casovace odectu ubehly cas
         waitTimeLeft -= dt;
+        //pokud ubehl cas
         if (waitTimeLeft <= 0) {
 
             move();
-            //nastaveni casu pro dalsi pohyb myi;
-            waitTimeLeft = moveDelay;
-
+            //reset casovace
+            waitTimeLeft = mouseMoveTime;
 
         }
-        super.update(dt);
+        checkIfNotEaten();
 
     }
 
+    public void draw(Graphics2D g2d) {
+        drawIfNotEaten(g2d);
+    }
 }

@@ -1,3 +1,5 @@
+package cz.ziki.had;
+
 import javax.swing.JFrame;
 import java.awt.*;
 import java.time.Duration;
