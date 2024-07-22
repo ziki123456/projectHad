@@ -6,6 +6,7 @@ import cz.ziki.had.FoodObjects.FoodFactory;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 /**
  * Represents the game scene where gameplay takes place.
@@ -30,9 +31,15 @@ public class GameScene extends Scene {
         foreground = new Rect(24, 48, (Constants.SCREEN_WIDTH - 48) / Constants.TILE_WIDTH * Constants.TILE_WIDTH, (Constants.SCREEN_HEIGHT - 172) / Constants.TILE_WIDTH * Constants.TILE_WIDTH);
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.x, Constants.TILE_WIDTH * 3 + foreground.y, Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         this.keyListener = keyListener;
-        food = foodFactory.getFood(FoodFactory.FoodType.LIZARD, foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
+        food = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
         food.spawn();
 
+    }
+
+    private FoodFactory.FoodType getNextFoodType() {
+        Random random = new Random();
+        int foodTypesNumber = random.nextInt(FoodFactory.FoodType.values().length);
+        return FoodFactory.FoodType.values()[foodTypesNumber];
     }
 
     /**
@@ -53,7 +60,11 @@ public class GameScene extends Scene {
             snake.changeDirecton(Direction.LEFT);
         }
 
-        if (!food.isSpawned()) food.spawn();
+        if (!food.isSpawned()) {
+            food = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
+            food.spawn();
+        }
+
 
         snake.update(dt);
         food.update(dt);
