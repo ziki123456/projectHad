@@ -12,12 +12,14 @@ import java.awt.*;
 public class FoodFactory {
     public enum FoodType{
         MOUSE,
-        APPLE
+        APPLE,
+        LIZARD
     }
     public Food getFood(FoodType foodType, Rect background, Snake snake, int width , int height, Color color){
         return switch (foodType) {
             case MOUSE -> new Mouse( background,  snake,  width,  height,  color);
             case APPLE -> new Apple( background,  snake,  width,  height,  color);
+            case LIZARD -> new Lizard( background,  snake,  width,  height,  color);
         };
     }
 }

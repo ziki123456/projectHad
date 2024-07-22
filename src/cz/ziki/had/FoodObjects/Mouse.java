@@ -118,6 +118,4 @@ public class Mouse extends CommonFood implements Food {
     public void draw(Graphics2D g2d) {
         drawIfNotEaten(g2d);
     }
-
-
 }

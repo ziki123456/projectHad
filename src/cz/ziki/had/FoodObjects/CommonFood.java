@@ -35,10 +35,15 @@ public class CommonFood {
 
         do {
 
-            double randX = (int) (Math.random() * (int) (background.width / Constants.TILE_WIDTH)) * Constants.TILE_WIDTH + background.x;
-            double randY = (int) (Math.random() * (int) (background.height / Constants.TILE_WIDTH)) * Constants.TILE_WIDTH + background.y;
-            this.rect.x = randX;
-            this.rect.y = randY;
+            //Vyrobit nahody cislo mezi 0 a maximalnim poctem horizontalnich dlazdic
+            int tileCountX = (int) background.width / Constants.TILE_WIDTH;
+            int randomTileX = (int) (Math.random() * (tileCountX -1));
+
+            int tileCountY = (int) background.height / Constants.TILE_WIDTH;
+            int randomTileY = (int) (Math.random() * (tileCountY -1));
+
+            this.rect.x = (int) (randomTileX * Constants.TILE_WIDTH + background.x);
+            this.rect.y = (int) (randomTileY * Constants.TILE_WIDTH + background.y);;
         } while (snake.intersectingWithRect(this.rect));
 
         this.isSpawned = true;
