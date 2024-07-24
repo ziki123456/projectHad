@@ -1,7 +1,8 @@
 package cz.ziki.had;
 
-import cz.ziki.had.FoodObjects.Food;
-import cz.ziki.had.FoodObjects.FoodFactory;
+import cz.ziki.had.pawn.Obstacle;
+import cz.ziki.had.pawn.food.Food;
+import cz.ziki.had.pawn.food.FoodFactory;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -67,7 +68,7 @@ public class GameScene extends Scene {
             food.spawn();
         }
 
-
+        obstacle.update(dt);
         snake.update(dt);
         food.update(dt);
     }

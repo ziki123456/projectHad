@@ -1,12 +1,12 @@
-package cz.ziki.had.FoodObjects;
+package cz.ziki.had.pawn.food;
 
 
-import cz.ziki.had.CommonGameObject;
+import cz.ziki.had.pawn.CommonGameObject;
 import cz.ziki.had.Constants;
 
 import java.awt.*;
 
-public class CommonFood extends CommonGameObject {
+public abstract class CommonFood extends CommonGameObject {
 
 
     public int xPadding;
@@ -48,7 +48,7 @@ public class CommonFood extends CommonGameObject {
 
     public void checkIfNotEaten() {
 
-        if (snake.intersectingWithRect(this.myPhysicalShape)) {
+        if (intersectingWithSnake()) {
 
             snake.grow();
             this.myPhysicalShape.setX(-100);

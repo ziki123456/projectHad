@@ -153,9 +153,7 @@ public class Snake {
         }
         if (intersectingWithSelf()) {
 
-            Window.getWindow().lastScore = this.score;
-            FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
-            Window.getWindow().changeState(2);
+            this.die();
 
         }
 
@@ -263,5 +261,11 @@ public class Snake {
 
             } else g2.drawImage(this.bodyImg, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
         }
+    }
+
+    public void die() {
+        Window.getWindow().lastScore = this.score;
+        FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
+        Window.getWindow().changeState(2);
     }
 }

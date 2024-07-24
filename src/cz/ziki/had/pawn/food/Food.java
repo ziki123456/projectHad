@@ -1,4 +1,4 @@
-package cz.ziki.had.FoodObjects;
+package cz.ziki.had.pawn.food;
 
 import java.awt.*;
 
