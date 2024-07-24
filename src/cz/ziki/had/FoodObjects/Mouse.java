@@ -22,9 +22,8 @@ public class Mouse extends CommonFood implements Food {
      * @param snake
      * @param width
      * @param height
-     * @param color
      */
-    public Mouse(Rect background, Snake snake, int width, int height, Color color) {
+    public Mouse(Rect background, Snake snake, int width, int height) {
 
         try {
 
@@ -40,14 +39,11 @@ public class Mouse extends CommonFood implements Food {
 
         }
 
-        this.background = background;
+        this.gameField = background;
         this.snake = snake;
-        this.width = width;
-        this.height = height;
-        this.color = color;
-        this.rect = new Rect(0, 0, width, height);
+        this.myPhysicalShape = new Rect(0, 0, width, height);
 
-        xPadding = (int) ((Constants.TILE_WIDTH - this.width) / 2.0);
+        xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
 
     }
 
@@ -61,23 +57,23 @@ public class Mouse extends CommonFood implements Food {
 
     private boolean intersectLeftBound() {
 
-        return (rect.x < background.x + Constants.TILE_WIDTH);
+        return (myPhysicalShape.getX() < gameField.getX() + Constants.TILE_WIDTH);
 
     }
 
     private boolean intersectRightBound() {
 
-        return ((rect.x + rect.width) > background.x + background.width - Constants.TILE_WIDTH);
+        return ((myPhysicalShape.getX() + myPhysicalShape.getWidth()) > gameField.getX() + gameField.getWidth() - Constants.TILE_WIDTH);
 
     }
 
     private boolean intersectUpperBound() {
-        return (rect.y < background.y + Constants.TILE_WIDTH);
+        return (myPhysicalShape.getY() < gameField.getY() + Constants.TILE_WIDTH);
 
     }
 
     private boolean intersectLowerBound() {
-        return ((rect.y + rect.height) > background.y + background.height - Constants.TILE_WIDTH);
+        return ((myPhysicalShape.getY() + myPhysicalShape.getHeight()) > gameField.getY() + gameField.getHeight() - Constants.TILE_WIDTH);
 
     }
 
@@ -93,9 +89,9 @@ public class Mouse extends CommonFood implements Food {
         }
 
 
-        this.rect.x -= (Constants.TILE_WIDTH * velx);
+        this.myPhysicalShape.setX( this.myPhysicalShape.getX() - (Constants.TILE_WIDTH * velx));
 
-        this.rect.y -= (Constants.TILE_WIDTH * vely);
+        this.myPhysicalShape.setY( this.myPhysicalShape.getY() - (Constants.TILE_WIDTH * vely));
 
     }
 

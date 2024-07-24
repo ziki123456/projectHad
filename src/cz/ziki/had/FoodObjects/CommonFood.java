@@ -1,20 +1,13 @@
 package cz.ziki.had.FoodObjects;
 
 
+import cz.ziki.had.CommonGameObject;
 import cz.ziki.had.Constants;
-import cz.ziki.had.Rect;
-import cz.ziki.had.Snake;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-public class CommonFood {
-    public Rect background;
-    public Snake snake;
-    public int width, height;
-    public Color color;
-    public Rect rect;
-    public BufferedImage foodImage;
+public class CommonFood extends CommonGameObject {
+
 
     public int xPadding;
 
@@ -35,32 +28,31 @@ public class CommonFood {
 
         do {
 
-            //Vyrobit nahody cislo mezi 0 a maximalnim poctem horizontalnich dlazdic
-            int tileCountX = (int) background.width / Constants.TILE_WIDTH;
+            int tileCountX = (int) gameField.getWidth() / Constants.TILE_WIDTH;
             int randomTileX = (int) (Math.random() * (tileCountX -1));
 
-            int tileCountY = (int) background.height / Constants.TILE_WIDTH;
+            int tileCountY = (int) gameField.getHeight() / Constants.TILE_WIDTH;
             int randomTileY = (int) (Math.random() * (tileCountY -1));
 
-            this.rect.x = (int) (randomTileX * Constants.TILE_WIDTH + background.x);
-            this.rect.y = (int) (randomTileY * Constants.TILE_WIDTH + background.y);;
-        } while (snake.intersectingWithRect(this.rect));
+            this.myPhysicalShape.setX((int) (randomTileX * Constants.TILE_WIDTH + gameField.getX()));
+            this.myPhysicalShape.setY((int) (randomTileY * Constants.TILE_WIDTH + gameField.getY()));;
+        } while (snake.intersectingWithRect(this.myPhysicalShape));
 
         this.isSpawned = true;
 
     }
 
     public void drawIfNotEaten(Graphics2D g2) {
-        if (!snake.shouldGrow) g2.drawImage(this.foodImage, (int) this.rect.x + xPadding, (int) this.rect.y, null);
+        if (!snake.shouldGrow) g2.drawImage(this.foodImage, (int) this.myPhysicalShape.getX() + xPadding, (int) this.myPhysicalShape.getY(), null);
     }
 
     public void checkIfNotEaten() {
 
-        if (snake.intersectingWithRect(this.rect)) {
+        if (snake.intersectingWithRect(this.myPhysicalShape)) {
 
             snake.grow();
-            this.rect.x = -100;
-            this.rect.y = -100;
+            this.myPhysicalShape.setX(-100);
+            this.myPhysicalShape.setY(-100);
             isSpawned = false;
 
         }

@@ -19,6 +19,7 @@ public class GameScene extends Scene {
 
     public Food food;
     public FoodFactory foodFactory = new FoodFactory();
+    private Obstacle obstacle;
 
     /**
      * Constructs a new GameScene with the specified key listener.
@@ -29,10 +30,11 @@ public class GameScene extends Scene {
 
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         foreground = new Rect(24, 48, (Constants.SCREEN_WIDTH - 48) / Constants.TILE_WIDTH * Constants.TILE_WIDTH, (Constants.SCREEN_HEIGHT - 172) / Constants.TILE_WIDTH * Constants.TILE_WIDTH);
-        snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.x, Constants.TILE_WIDTH * 3 + foreground.y, Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
+        snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.getX(), Constants.TILE_WIDTH * 3 + foreground.getY(), Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         this.keyListener = keyListener;
         food = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
         food.spawn();
+        obstacle = new Obstacle(foreground,snake,2,2);
 
     }
 
@@ -80,13 +82,14 @@ public class GameScene extends Scene {
 
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.BLACK);
-        g2.fill(new Rectangle2D.Double(background.x, background.y, background.width, background.height));
+        g2.fill(new Rectangle2D.Double(background.getX(), background.getY(), background.getWidth(), background.getHeight()));
 
         g2.setColor(new Color(131, 250, 101));
-        g2.fill(new Rectangle2D.Double(foreground.x, foreground.y, foreground.width, foreground.height));
+        g2.fill(new Rectangle2D.Double(foreground.getX(), foreground.getY(), foreground.getWidth(), foreground.getHeight()));
 
         food.draw(g2);
         snake.draw(g2);
+        obstacle.draw(g2);
 
         Font font = new Font("Arial", Font.BOLD, 40);
         FontMetrics metrics = g2.getFontMetrics(font);

@@ -59,8 +59,8 @@ public class MenuScene extends Scene {
     @Override
     public void update(double dt) {
 
-        if (mouseListener.getX() >= playRect.x && mouseListener.getX() <= playRect.x + playRect.width &&
-                mouseListener.getY() >= playRect.y && mouseListener.getY() <= playRect.y + playRect.height) {
+        if (mouseListener.getX() >= playRect.getX() && mouseListener.getX() <= playRect.getX() + playRect.getWidth() &&
+                mouseListener.getY() >= playRect.getY() && mouseListener.getY() <= playRect.getY() + playRect.getHeight()) {
             playCurrentImage = playPressed;
             if (mouseListener.isPressed()) {
                 Window.getWindow().changeState(1);
@@ -69,8 +69,8 @@ public class MenuScene extends Scene {
             playCurrentImage = play;
         }
 
-        if (mouseListener.getX() >= exitRect.x && mouseListener.getX() <= exitRect.x + exitRect.width &&
-                mouseListener.getY() >= exitRect.y && mouseListener.getY() <= exitRect.y + exitRect.height) {
+        if (mouseListener.getX() >= exitRect.getX() && mouseListener.getX() <= exitRect.getX() + exitRect.getWidth() &&
+                mouseListener.getY() >= exitRect.getY() && mouseListener.getY() <= exitRect.getY() + exitRect.getHeight()) {
             exitCurrentImage = exitPressed;
             if (mouseListener.isPressed()) {
                 Window.getWindow().close();
@@ -91,9 +91,9 @@ public class MenuScene extends Scene {
 
         g.setColor(new Color(10, 220, 215));
         g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        g.drawImage(title, (int) titleRect.x, (int) titleRect.y, (int) titleRect.width, (int) titleRect.height, null);
-        g.drawImage(playCurrentImage, (int) playRect.x, (int) playRect.y, (int) playRect.width, (int) playRect.height, null);
-        g.drawImage(exitCurrentImage, (int) exitRect.x, (int) exitRect.y, (int) exitRect.width, (int) exitRect.height, null);
+        g.drawImage(title, (int) titleRect.getX(), (int) titleRect.getY(), (int) titleRect.getWidth(), (int) titleRect.getHeight(), null);
+        g.drawImage(playCurrentImage, (int) playRect.getX(), (int) playRect.getY(), (int) playRect.getWidth(), (int) playRect.getHeight(), null);
+        g.drawImage(exitCurrentImage, (int) exitRect.getX(), (int) exitRect.getY(), (int) exitRect.getWidth(), (int) exitRect.getHeight(), null);
 
         Font font = new Font("Tahoma", Font.BOLD, 18);
         FontMetrics metrics = g.getFontMetrics(font);

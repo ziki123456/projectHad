@@ -23,7 +23,7 @@ public class Snake {
 
     BodyPiece headPiece, tailPiece;
 
-    public double bodyWidth, bodyHeight;
+    public int bodyWidth, bodyHeight;
 
     public int size;
 
@@ -49,7 +49,7 @@ public class Snake {
      * @param bodyHeight The height of each body piece.
      * @param background The background rectangle of the game.
      */
-    public Snake(int size, double startX, double startY, double bodyWidth, double bodyHeight, Rect background) {
+    public Snake(int size, int startX, int startY, int bodyWidth, int bodyHeight, Rect background) {
 
         this.size = size;
         this.bodyWidth = bodyWidth;
@@ -109,7 +109,7 @@ public class Snake {
 
         for (int i = 0; i < body.size(); i++) {
 
-            text += body.get(i).rect.x + " " + body.get(i).rect.y + "\n";
+            text += body.get(i).rect.getX() + " " + body.get(i).rect.getY() + "\n";
 
         }
 
@@ -160,24 +160,24 @@ public class Snake {
         }
 
         waitTimeLeft = ogWaitBetweenUpdates;
-        double newX = 0;
-        double newY = 0;
+        int newX = 0;
+        int newY = 0;
 
         if (direction == Direction.RIGHT) {
-            newX = body.get(body.size() - 1).rect.x + bodyWidth;
-            newY = body.get(body.size() - 1).rect.y;
+            newX = body.get(body.size() - 1).rect.getX() + bodyWidth;
+            newY = body.get(body.size() - 1).rect.getY();
 
         } else if (direction == Direction.LEFT) {
-            newX = body.get(body.size() - 1).rect.x - bodyWidth;
-            newY = body.get(body.size() - 1).rect.y;
+            newX = body.get(body.size() - 1).rect.getX() - bodyWidth;
+            newY = body.get(body.size() - 1).rect.getY();
 
         } else if (direction == Direction.UP) {
-            newX = body.get(body.size() - 1).rect.x;
-            newY = body.get(body.size() - 1).rect.y - bodyHeight;
+            newX = body.get(body.size() - 1).rect.getX();
+            newY = body.get(body.size() - 1).rect.getY() - bodyHeight;
 
         } else if (direction == Direction.DOWN) {
-            newX = body.get(body.size() - 1).rect.x;
-            newY = body.get(body.size() - 1).rect.y + bodyHeight;
+            newX = body.get(body.size() - 1).rect.getX();
+            newY = body.get(body.size() - 1).rect.getY() + bodyHeight;
 
         }
 
@@ -212,16 +212,16 @@ public class Snake {
      * Checks if two rectangles are intersecting.
      */
     public boolean intersecting(Rect r1, Rect r2) {
-        return (r1.x >= r2.x && r1.x + r1.width <= r2.x + r2.width &&
-                r1.y >= r2.y && r1.y + r1.height <= r2.y + r2.height);
+        return (r1.getX() >= r2.getX() && r1.getX() + r1.getWidth() <= r2.getX() + r2.getWidth() &&
+                r1.getY() >= r2.getY() && r1.getY() + r1.getHeight() <= r2.getY() + r2.getHeight());
     }
 
     /**
      * Checks if the snake is intersecting with the screen boundaries.
      */
     public boolean intersectingWithScreenBoundaries(Rect head) {
-        return (head.x < background.x || (head.x + head.width) > background.x + background.width ||
-                head.y < background.y || (head.y + head.height) > background.y + background.height);
+        return (head.getX() < background.getX() || (head.getX() + head.getWidth()) > background.getX() + background.getWidth() ||
+                head.getY() < background.getY() || (head.getY() + head.getHeight()) > background.getY() + background.getHeight());
     }
 
     /**
@@ -246,22 +246,22 @@ public class Snake {
         for (int i = 0; i < body.size(); i++) {
 
             BodyPiece piece = body.get(i);
-            double subWidth = (piece.rect.width - 6.0) / 2.0;
-            double subHeight = (piece.rect.height - 6.0) / 2.0;
+            double subWidth = (piece.rect.getWidth() - 6.0) / 2.0;
+            double subHeight = (piece.rect.getHeight() - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
             if (i == body.size() - 1) {
                 if (direction == Direction.RIGHT) {
-                    g2.drawImage(this.headE, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headE, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
                 } else if (direction == Direction.LEFT) {
-                    g2.drawImage(this.headW, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headW, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
                 } else if (direction == Direction.UP) {
-                    g2.drawImage(this.headN, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headN, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
                 } else if (direction == Direction.DOWN) {
-                    g2.drawImage(this.headS, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headS, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
                 }
 
-            } else g2.drawImage(this.bodyImg, (int) piece.rect.x, (int) piece.rect.y, null);
+            } else g2.drawImage(this.bodyImg, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
         }
     }
 }
