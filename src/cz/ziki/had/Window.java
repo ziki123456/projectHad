@@ -80,7 +80,7 @@ public class Window extends JFrame implements Runnable {
                 currentScene = new MenuScene(keyListener, mouseListener);
                 break;
             case 1:
-                currentScene = new GameScene(keyListener);
+                currentScene = new GameScene(keyListener, mouseListener);
                 break;
             case 2:
                 currentScene = new EndScene(this.lastScore, this.bestScore, keyListener, mouseListener);

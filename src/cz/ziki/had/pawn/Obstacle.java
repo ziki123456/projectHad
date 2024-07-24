@@ -27,6 +27,4 @@ public class Obstacle extends CommonGameObject {
             snake.die();
         }
     }
-
 }
-

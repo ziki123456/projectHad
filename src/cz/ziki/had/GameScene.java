@@ -17,22 +17,26 @@ public class GameScene extends Scene {
     Rect background, foreground;
     Snake snake;
     KeyL keyListener;
+    public MouseL mouseListener;
 
     public Food food;
     public FoodFactory foodFactory = new FoodFactory();
     private Obstacle obstacle;
+    private Obstacle obstacle2;
 
     /**
      * Constructs a new GameScene with the specified key listener.
      *
-     * @param keyListener the key listener for handling user input
+     * @param keyListener   the key listener for handling user input
+     * @param mouseListener
      */
-    public GameScene(KeyL keyListener) {
+    public GameScene(KeyL keyListener, MouseL mouseListener) {
 
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         foreground = new Rect(24, 48, (Constants.SCREEN_WIDTH - 48) / Constants.TILE_WIDTH * Constants.TILE_WIDTH, (Constants.SCREEN_HEIGHT - 172) / Constants.TILE_WIDTH * Constants.TILE_WIDTH);
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.getX(), Constants.TILE_WIDTH * 3 + foreground.getY(), Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         this.keyListener = keyListener;
+        this.mouseListener = mouseListener;
         food = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH, Color.GREEN);
         food.spawn();
         obstacle = new Obstacle(foreground,snake,2,2);
@@ -43,6 +47,12 @@ public class GameScene extends Scene {
         Random random = new Random();
         int foodTypesNumber = random.nextInt(FoodFactory.FoodType.values().length);
         return FoodFactory.FoodType.values()[foodTypesNumber];
+    }
+
+    private int getNearestTile(double x) {
+        int remainder = 0;
+        remainder =  ((int)x) % Constants.TILE_WIDTH;
+        return (int) (x - remainder) / Constants.TILE_WIDTH;
     }
 
     /**
@@ -71,6 +81,14 @@ public class GameScene extends Scene {
         obstacle.update(dt);
         snake.update(dt);
         food.update(dt);
+        if (obstacle2 != null) obstacle2.update(dt);
+
+        if (mouseListener.getX() >= foreground.getX() && mouseListener.getX() <= foreground.getX() + foreground.getWidth() &&
+                mouseListener.getY() >= foreground.getY() && mouseListener.getY() <= foreground.getY() + foreground.getHeight()) {
+            if (mouseListener.isPressed()) {
+                obstacle2 = new Obstacle(foreground,snake, getNearestTile(mouseListener.getX()-foreground.getX()) , getNearestTile(mouseListener.getY()-foreground.getY()));
+            }
+        }
     }
 
     /**
@@ -91,6 +109,7 @@ public class GameScene extends Scene {
         food.draw(g2);
         snake.draw(g2);
         obstacle.draw(g2);
+        if (obstacle2 != null) obstacle2.draw(g2);
 
         Font font = new Font("Arial", Font.BOLD, 40);
         FontMetrics metrics = g2.getFontMetrics(font);
