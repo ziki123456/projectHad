@@ -15,11 +15,11 @@ public class FoodFactory {
         APPLE,
         LIZARD
     }
-    public Food getFood(FoodType foodType, Rect background, Snake snake, int width , int height, Color color){
+    public Food getFood(FoodType foodType, Rect background, Snake snake, int x , int y){
         return switch (foodType) {
-            case MOUSE -> new Mouse( background,  snake,  width,  height);
-            case APPLE -> new Apple( background,  snake,  width,  height);
-            case LIZARD -> new Lizard( background,  snake,  width,  height);
+            case MOUSE -> new Mouse( background,  snake,  x,  y);
+            case APPLE -> new Apple( background,  snake,  x,  y);
+            case LIZARD -> new Lizard( background,  snake,  x,  y);
         };
     }
 }

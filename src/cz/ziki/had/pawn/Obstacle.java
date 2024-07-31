@@ -5,6 +5,7 @@ import cz.ziki.had.Rect;
 import cz.ziki.had.Snake;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Obstacle extends CommonGameObject {
 
@@ -26,5 +27,19 @@ public class Obstacle extends CommonGameObject {
         if (intersectingWithSnake()) {
             snake.die();
         }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Obstacle obstacle = (Obstacle) o;
+        return myPhysicalShape.getX() == obstacle.myPhysicalShape.getX() && myPhysicalShape.getY() == obstacle.myPhysicalShape.getY();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(myPhysicalShape.getX(), myPhysicalShape.getY());
     }
 }

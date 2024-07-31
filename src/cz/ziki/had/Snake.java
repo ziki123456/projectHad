@@ -1,5 +1,7 @@
 package cz.ziki.had;
 
+import cz.ziki.had.pawn.GameObject;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -15,7 +17,7 @@ import java.util.List;
 /**
  * Represents the snake in the game.
  */
-public class Snake {
+public class Snake implements GameObject {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
 

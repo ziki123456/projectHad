@@ -21,10 +21,10 @@ public class Apple  extends CommonFood  implements Food{
      *
      * @param background
      * @param snake
-     * @param width
-     * @param height
+     * @param x
+     * @param y
      */
-    public Apple(Rect background, Snake snake, int width, int height) {
+    public Apple(Rect background, Snake snake, int x, int y) {
 
         try {
 
@@ -42,7 +42,7 @@ public class Apple  extends CommonFood  implements Food{
         }
         this.gameField = background;
         this.snake = snake;
-        this.myPhysicalShape = new Rect(0, 0, width, height);
+        this.myPhysicalShape = new Rect(x, y, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
 
         xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
     }
