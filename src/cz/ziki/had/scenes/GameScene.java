@@ -1,8 +1,8 @@
-package cz.ziki.had;
+package cz.ziki.had.scenes;
 
+import cz.ziki.had.*;
 import cz.ziki.had.pawn.GameObject;
 import cz.ziki.had.pawn.Obstacle;
-import cz.ziki.had.pawn.food.Apple;
 import cz.ziki.had.pawn.food.Food;
 import cz.ziki.had.pawn.food.FoodFactory;
 
@@ -14,25 +14,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * Represents the game scene where gameplay takes place.
  */
-public class GameScene extends Scene {
+public class GameScene extends CommonGameScene implements Scene {
 
-    Rect background, foreground;
     Snake snake;
-    KeyL keyListener;
-    public MouseL mouseListener;
-
-
-    public FoodFactory foodFactory = new FoodFactory();
-
-
-    private final Set<GameObject> gameObjects = Collections.synchronizedSet(new HashSet<>());
-    private final Set<Obstacle> obstacles = Collections.synchronizedSet(new HashSet<>());
-    private final Set<Food> foods = Collections.synchronizedSet(new HashSet<>());
 
     /**
      * Constructs a new GameScene with the specified key listener.
@@ -43,15 +31,11 @@ public class GameScene extends Scene {
 
     public GameScene(KeyL keyListener, MouseL mouseListener) {
 
-        background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        foreground = new Rect(24, 48, (Constants.SCREEN_WIDTH - 48) / Constants.TILE_WIDTH * Constants.TILE_WIDTH, (Constants.SCREEN_HEIGHT - 172) / Constants.TILE_WIDTH * Constants.TILE_WIDTH);
+        super(keyListener);
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.getX(), Constants.TILE_WIDTH * 3 + foreground.getY(), Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         gameObjects.add(snake);
-        this.keyListener = keyListener;
-        this.mouseListener = mouseListener;
-        mouseListener.registerOnClick(this::toggleOnClick);
         newFood();
-        addObstacle(new Obstacle(foreground,snake,2,2));
+
     }
 
     private FoodFactory.FoodType getNextFoodType() {
@@ -60,11 +44,6 @@ public class GameScene extends Scene {
         return FoodFactory.FoodType.values()[foodTypesNumber];
     }
 
-    private int getNearestTile(double x) {
-        int remainder = 0;
-        remainder =  ((int)x) % Constants.TILE_WIDTH;
-        return (int) (x - remainder) / Constants.TILE_WIDTH;
-    }
 
     /**
      * Updates the game scene based on the elapsed time.
@@ -92,78 +71,8 @@ public class GameScene extends Scene {
             gameObject.update(dt);
         }
 
-/*
-        if (mouseListener.getX() >= foreground.getX() && mouseListener.getX() <= foreground.getX() + foreground.getWidth() &&
-                mouseListener.getY() >= foreground.getY() && mouseListener.getY() <= foreground.getY() + foreground.getHeight()) {
-            if (mouseListener.isPressed()) {
-
-
-                toggleObstacle(point2D);
-
-
-            }
-        }
-  */
     }
 
-    private void toggleOnClick(Point2D point2D) {
-        if(keyListener.isKeyPressed(KeyEvent.VK_F)) {
-            System.out.println("asdf");
-            toggleFood(point2D);
-        } else {
-            toggleObstacle(point2D);
-            System.out.println("fdas");
-        }
-
-    }
-
-    private void toggleFood(Point2D point2D) {
-        Food clickedFood = foodFactory.getFood(FoodFactory.FoodType.APPLE,
-                foreground,
-                snake,
-                getNearestTile(point2D.getX()-foreground.getX()) * Constants.TILE_WIDTH + foreground.getX(),
-                getNearestTile(point2D.getY()-foreground.getY()) * Constants.TILE_WIDTH + foreground.getY());
-
-        if (foods.contains(clickedFood)) {
-
-            removeFood(clickedFood);
-        } else {
-
-            addFood(clickedFood);
-        }
-    }
-
-    private void addFood(Food clickedFood) {
-        gameObjects.add(clickedFood);
-        foods.add(clickedFood);
-    }
-
-    private void removeFood(Food clickedFood) {
-        gameObjects.remove(clickedFood);
-        foods.remove(clickedFood);
-    }
-
-    private void toggleObstacle(Point2D point2D) {
-        Obstacle clickedObstacle = new Obstacle(foreground,snake, getNearestTile(point2D.getX()-foreground.getX()) , getNearestTile(point2D.getY()-foreground.getY()));
-
-        if (obstacles.contains(clickedObstacle)) {
-
-            removeObstacle(clickedObstacle);
-        } else {
-
-            addObstacle(clickedObstacle);
-        }
-    }
-
-    private void addObstacle(Obstacle clickedObstacle) {
-        gameObjects.add(clickedObstacle);
-        obstacles.add(clickedObstacle);
-    }
-
-    private void removeObstacle(Obstacle clickedObstacle) {
-        gameObjects.remove(clickedObstacle);
-        obstacles.remove(clickedObstacle);
-    }
 
     private void newFood() {
         Food newFood = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH);

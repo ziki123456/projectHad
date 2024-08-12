@@ -43,7 +43,7 @@ public abstract class CommonFood extends CommonGameObject {
     }
 
     public void drawIfNotEaten(Graphics2D g2) {
-        if (!snake.shouldGrow) g2.drawImage(this.foodImage, (int) this.myPhysicalShape.getX() + xPadding, (int) this.myPhysicalShape.getY(), null);
+        if (snake == null || !snake.shouldGrow) g2.drawImage(this.foodImage, (int) this.myPhysicalShape.getX() + xPadding, (int) this.myPhysicalShape.getY(), null);
     }
 
     public void checkIfNotEaten() {

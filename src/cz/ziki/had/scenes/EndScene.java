@@ -1,4 +1,7 @@
-package cz.ziki.had;
+package cz.ziki.had.scenes;
+
+import cz.ziki.had.*;
+import cz.ziki.had.Window;
 
 import java.awt.*;
 import java.util.*;
@@ -8,7 +11,7 @@ import java.util.List;
  * EndScene is a class representing the end screen of the game where the final score and
  * high score are displayed.
  */
-public class EndScene extends Scene {
+public class EndScene implements Scene {
 
     private int lastScore;
     private int highScore;
@@ -44,7 +47,7 @@ public class EndScene extends Scene {
         g2.setColor(Color.BLACK);
         g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 500);
 
-        String nicknameText = "Well played " + Window.getWindow().nickname;
+        String nicknameText = "Well played " + cz.ziki.had.Window.getWindow().nickname;
         g2.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 600);
 
         Map<String, Integer> scores = FileUtils.loadPlayerScores();

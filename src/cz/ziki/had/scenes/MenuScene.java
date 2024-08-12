@@ -1,22 +1,23 @@
-package cz.ziki.had;
+package cz.ziki.had.scenes;
+
+import cz.ziki.had.*;
+import cz.ziki.had.Window;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 /**
  * Represents the main menu scene of the game.
  */
-public class MenuScene extends Scene {
+public class MenuScene implements Scene {
 
     public KeyL keyListener;
     public MouseL mouseListener;
-    public BufferedImage title, play, playPressed, exit, exitPressed;
-    public Rect playRect, exitRect, titleRect;
+    public BufferedImage title, play, playPressed, exit, exitPressed, editMode, editModePressed;
+    public Rect playRect, exitRect, titleRect, editRect;
 
-    public BufferedImage playCurrentImage, exitCurrentImage;
+    public BufferedImage playCurrentImage, exitCurrentImage, editCurrentImage;
 
     /**
      * Constructs a new MenuScene with the specified key and mouse listeners.
@@ -31,12 +32,14 @@ public class MenuScene extends Scene {
 
         try {
 
-            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakeMenu.png"));
+            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakeMenuOld.png"));
             title = spritesheet.getSubimage(170, 40, 320, 70);
             play = spritesheet.getSubimage(130, 130, 410, 40);
             playPressed = spritesheet.getSubimage(130, 185, 410, 40);
             exit = spritesheet.getSubimage(180, 240, 310, 40);
             exitPressed = spritesheet.getSubimage(180, 295, 310, 40);
+            editMode = spritesheet.getSubimage(180,335,310,20);
+            editModePressed = spritesheet.getSubimage(180,355,310,20);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,10 +47,12 @@ public class MenuScene extends Scene {
 
         playCurrentImage = play;
         exitCurrentImage = exit;
+        editCurrentImage = editMode;
 
         titleRect = new Rect(240, 100, 320, 70);
         playRect = new Rect(195, 280, 410, 40);
         exitRect = new Rect(245, 355, 310, 40);
+        editRect = new Rect(245, 420, 310, 25);
 
     }
 
@@ -63,7 +68,7 @@ public class MenuScene extends Scene {
                 mouseListener.getY() >= playRect.getY() && mouseListener.getY() <= playRect.getY() + playRect.getHeight()) {
             playCurrentImage = playPressed;
             if (mouseListener.isPressed()) {
-                Window.getWindow().changeState(1);
+                cz.ziki.had.Window.getWindow().changeState(1);
             }
         } else {
             playCurrentImage = play;
@@ -73,11 +78,22 @@ public class MenuScene extends Scene {
                 mouseListener.getY() >= exitRect.getY() && mouseListener.getY() <= exitRect.getY() + exitRect.getHeight()) {
             exitCurrentImage = exitPressed;
             if (mouseListener.isPressed()) {
-                Window.getWindow().close();
+                cz.ziki.had.Window.getWindow().close();
             }
         } else {
             exitCurrentImage = exit;
         }
+
+        if (mouseListener.getX() >= editRect.getX() && mouseListener.getX() <= editRect.getX() + editRect.getWidth() &&
+                mouseListener.getY() >= editRect.getY() && mouseListener.getY() <= editRect.getY() + editRect.getHeight()) {
+            editCurrentImage = editModePressed;
+            if (mouseListener.isPressed()) {
+                cz.ziki.had.Window.getWindow().changeState(3);
+            }
+        } else {
+            editCurrentImage = editMode;
+        }
+
 
     }
 
@@ -91,9 +107,11 @@ public class MenuScene extends Scene {
 
         g.setColor(new Color(10, 220, 215));
         g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        g.drawImage(title, (int) titleRect.getX(), (int) titleRect.getY(), (int) titleRect.getWidth(), (int) titleRect.getHeight(), null);
-        g.drawImage(playCurrentImage, (int) playRect.getX(), (int) playRect.getY(), (int) playRect.getWidth(), (int) playRect.getHeight(), null);
-        g.drawImage(exitCurrentImage, (int) exitRect.getX(), (int) exitRect.getY(), (int) exitRect.getWidth(), (int) exitRect.getHeight(), null);
+
+        drawRect(g, titleRect, title);
+        drawRect(g, playRect, playCurrentImage);
+        drawRect(g, exitRect, exitCurrentImage);
+        drawRect(g, editRect, editCurrentImage);
 
         Font font = new Font("Tahoma", Font.BOLD, 18);
         FontMetrics metrics = g.getFontMetrics(font);
@@ -103,5 +121,9 @@ public class MenuScene extends Scene {
         g.setColor(Color.BLACK);
         g.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 50);
 
+    }
+
+    public void drawRect(Graphics g, Rect r, BufferedImage b) {
+        g.drawImage(b, (int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight(), null);
     }
 }

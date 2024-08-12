@@ -1,5 +1,7 @@
 package cz.ziki.had;
 
+import cz.ziki.had.scenes.*;
+
 import javax.swing.JFrame;
 import java.awt.*;
 import java.time.Duration;
@@ -84,6 +86,9 @@ public class Window extends JFrame implements Runnable {
                 break;
             case 2:
                 currentScene = new EndScene(this.lastScore, this.bestScore, keyListener, mouseListener);
+                break;
+            case 3:
+                currentScene = new EditScene(keyListener, mouseListener);
                 break;
             default:
                 System.out.println("Unknown scene.");
