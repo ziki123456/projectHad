@@ -3,8 +3,10 @@ package cz.ziki.had.pawn.food;
 
 import cz.ziki.had.pawn.CommonGameObject;
 import cz.ziki.had.Constants;
+import cz.ziki.had.pawn.Obstacle;
 
 import java.awt.*;
+import java.util.Objects;
 
 public abstract class CommonFood extends CommonGameObject {
 
@@ -56,5 +58,18 @@ public abstract class CommonFood extends CommonGameObject {
             isSpawned = false;
 
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommonFood food = (CommonFood) o;
+        return myPhysicalShape.getX() == food.myPhysicalShape.getX() && myPhysicalShape.getY() == food.myPhysicalShape.getY();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(myPhysicalShape.getX(), myPhysicalShape.getY());
     }
 }

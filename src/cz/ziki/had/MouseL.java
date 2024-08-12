@@ -19,6 +19,11 @@ public class MouseL extends MouseAdapter implements MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
         isPressed = true;
+        int clickX = e.getX();
+        int clickY = e.getY();
+
+        System.out.println("Kliknuto na: X = " + clickX + ", Y = " + clickY);
+        onClickListener.accept(new Point2D.Double(clickX, clickY));
     }
 
     @Override
@@ -33,14 +38,6 @@ public class MouseL extends MouseAdapter implements MouseMotionListener {
     }
 
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        int clickX = e.getX();
-        int clickY = e.getY();
-
-        System.out.println("Kliknuto na: X = " + clickX + ", Y = " + clickY);
-        onClickListener.accept(new Point2D.Double(clickX, clickY));
-    }
 
     public void registerOnClick(Consumer<Point2D> consumer){
         this.onClickListener = consumer;
