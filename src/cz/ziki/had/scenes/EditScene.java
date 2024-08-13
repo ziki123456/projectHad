@@ -5,13 +5,20 @@ import cz.ziki.had.pawn.Obstacle;
 import cz.ziki.had.pawn.food.Food;
 import cz.ziki.had.pawn.food.FoodFactory;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EditScene extends CommonGameScene implements Scene {
+
+    protected final Set<MenuItem> editItems = Collections.synchronizedSet(new HashSet<>());
 
 
 
@@ -19,6 +26,48 @@ public class EditScene extends CommonGameScene implements Scene {
         super(keyListener);
         this.mouseListener = mouseListener;
         mouseListener.registerOnClick(this::toggleOnClick);
+
+        try {
+
+            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakeEditScene.png"));
+
+            editItems.add(
+                    new MenuItemBuilder()
+                            .setSpriteSheet(spritesheet)
+                            .setPassiveImage(0, 0, 179, 48)
+                            .setActiveImage(0, 48, 179, 48)
+                            .setMyPhysicalShape(new Rect(28, 600, 179, 48))
+                            .setAction( () -> cz.ziki.had.Window.getWindow().changeState(1))
+                            .build()
+            );
+
+            editItems.add(
+                    new MenuItemBuilder()
+                            .setSpriteSheet(spritesheet)
+                            .setPassiveImage(0, 96, 179, 48)
+                            .setActiveImage(0, 144, 179, 48)
+                            .setMyPhysicalShape(new Rect(330, 600, 179, 48))
+                            .setAction(()->{})
+                            .build()
+
+            );
+
+            editItems.add(
+                    new MenuItemBuilder()
+                            .setSpriteSheet(spritesheet)
+                            .setPassiveImage(0, 192, 179, 48)
+                            .setActiveImage(0, 240, 179, 48)
+                            .setMyPhysicalShape(new Rect(600, 600, 179, 48))
+                            .setAction( () -> cz.ziki.had.Window.getWindow().close())
+                            .build()
+
+            );
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -29,6 +78,7 @@ public class EditScene extends CommonGameScene implements Scene {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
+        editItems.forEach( item -> item.draw(g) );
     }
 
     private void toggleOnClick(Point2D point2D) {
