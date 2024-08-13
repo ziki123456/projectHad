@@ -48,29 +48,39 @@ public class MenuScene implements Scene {
                     .build()
             );
 
-            MenuItemBuilder titleItemBuilder = new MenuItemBuilder();
-            titleItemBuilder.setSpriteSheet(spritesheet);
-            titleItemBuilder.setPassiveImage(170, 40, 320, 70);
-            titleItemBuilder.setActiveImage(170, 40, 320, 70);
-            titleItemBuilder.setMyPhysicalShape(new Rect(240, 100, 320, 70));
-            titleItemBuilder.setAction(()->{});
-            menuItems.add(titleItemBuilder.build());
+            menuItems.add(
+                    new MenuItemBuilder()
+                    .setSpriteSheet(spritesheet)
+                    .setPassiveImage(170, 40, 320, 70)
+                    .setActiveImage(170, 40, 320, 70)
+                    .setMyPhysicalShape(new Rect(240, 100, 320, 70))
+                    .setAction(()->{})
+                    .build()
 
-            MenuItemBuilder exitItemBuilder = new MenuItemBuilder();
-            exitItemBuilder.setSpriteSheet(spritesheet);
-            exitItemBuilder.setPassiveImage(180, 240, 310, 40);
-            exitItemBuilder.setActiveImage(180, 295, 310, 40);
-            exitItemBuilder.setMyPhysicalShape(new Rect(245, 355, 310, 40));
-            exitItemBuilder.setAction( () -> cz.ziki.had.Window.getWindow().close());
-            menuItems.add(exitItemBuilder.build());
+            );
 
-            MenuItemBuilder editItemBuilder = new MenuItemBuilder();
-            editItemBuilder.setSpriteSheet(spritesheet);
-            editItemBuilder.setPassiveImage(180,335,310,20);
-            editItemBuilder.setActiveImage(180,355,310,20);
-            editItemBuilder.setMyPhysicalShape(new Rect(245, 420, 310, 25));
-            editItemBuilder.setAction( () -> cz.ziki.had.Window.getWindow().changeState(3));
-            menuItems.add(editItemBuilder.build());
+            menuItems.add(
+                    new MenuItemBuilder()
+                            .setSpriteSheet(spritesheet)
+                            .setPassiveImage(180, 240, 310, 40)
+                            .setActiveImage(180, 295, 310, 40)
+                            .setMyPhysicalShape(new Rect(245, 355, 310, 40))
+                            .setAction( () -> cz.ziki.had.Window.getWindow().close())
+                            .build()
+
+            );
+
+            menuItems.add(
+                    new MenuItemBuilder()
+                            .setSpriteSheet(spritesheet)
+                            .setPassiveImage(180,335,310,20)
+                            .setActiveImage(180,355,310,20)
+                            .setMyPhysicalShape(new Rect(245, 420, 310, 25))
+                            .setAction(() -> cz.ziki.had.Window.getWindow().changeState(3))
+                            .build()
+
+            );
+
 
 
         } catch (Exception e) {
