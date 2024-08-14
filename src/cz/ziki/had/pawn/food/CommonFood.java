@@ -6,9 +6,10 @@ import cz.ziki.had.Constants;
 import cz.ziki.had.pawn.Obstacle;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class CommonFood extends CommonGameObject {
+public abstract class CommonFood extends CommonGameObject implements Serializable {
 
 
     public int xPadding;

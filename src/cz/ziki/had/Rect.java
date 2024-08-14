@@ -1,9 +1,11 @@
 package cz.ziki.had;
 
+import java.io.Serializable;
+
 /**
  * Represents a rectangle with a specified position (x, y) and size (width, height).
  */
-public class Rect {
+public class Rect implements Serializable {
 
     private int x, y, width, height;
 

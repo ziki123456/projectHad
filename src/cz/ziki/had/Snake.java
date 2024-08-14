@@ -11,13 +11,14 @@ import java.awt.image.AffineTransformOp;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents the snake in the game.
  */
-public class Snake implements GameObject {
+public class Snake implements GameObject, Serializable {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
 

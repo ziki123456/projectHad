@@ -4,8 +4,9 @@ import cz.ziki.had.Rect;
 import cz.ziki.had.Snake;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public abstract class CommonGameObject implements GameObject{
+public abstract class CommonGameObject implements GameObject, Serializable {
 
     public Rect gameField;
     public Snake snake;

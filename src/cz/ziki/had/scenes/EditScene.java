@@ -8,10 +8,9 @@ import cz.ziki.had.pawn.food.FoodFactory;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +18,8 @@ import java.util.Set;
 public class EditScene extends CommonGameScene implements Scene {
 
     protected final Set<MenuItem> editItems = Collections.synchronizedSet(new HashSet<>());
+    private final int EDIT_ITEM_HEIGTH = 50;
+    private final int EDIT_ITEM_WIDTH = 179;
 
 
 
@@ -31,34 +32,37 @@ public class EditScene extends CommonGameScene implements Scene {
 
             BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakeEditScene.png"));
 
+            //play
             editItems.add(
                     new MenuItemBuilder()
                             .setSpriteSheet(spritesheet)
-                            .setPassiveImage(0, 0, 179, 48)
-                            .setActiveImage(0, 48, 179, 48)
-                            .setMyPhysicalShape(new Rect(28, 600, 179, 48))
+                            .setPassiveImage(0, 0, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
+                            .setActiveImage(0, 50, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
+                            .setMyPhysicalShape(new Rect(28, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
                             .setAction( () -> cz.ziki.had.Window.getWindow().changeState(1))
                             .build()
             );
 
+            //load
             editItems.add(
                     new MenuItemBuilder()
                             .setSpriteSheet(spritesheet)
-                            .setPassiveImage(0, 96, 179, 48)
-                            .setActiveImage(0, 144, 179, 48)
-                            .setMyPhysicalShape(new Rect(330, 600, 179, 48))
-                            .setAction(()->{})
+                            .setPassiveImage(0, 100, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
+                            .setActiveImage(0, 150, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
+                            .setMyPhysicalShape(new Rect(330, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
+                            .setAction(this::loadState)
                             .build()
 
             );
 
+            //save
             editItems.add(
                     new MenuItemBuilder()
                             .setSpriteSheet(spritesheet)
-                            .setPassiveImage(0, 192, 179, 48)
-                            .setActiveImage(0, 240, 179, 48)
-                            .setMyPhysicalShape(new Rect(600, 600, 179, 48))
-                            .setAction( () -> cz.ziki.had.Window.getWindow().close())
+                            .setPassiveImage(0, 200, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
+                            .setActiveImage(0, 250, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
+                            .setMyPhysicalShape(new Rect(600, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
+                            .setAction(this::safeState)
                             .build()
 
             );
@@ -70,9 +74,43 @@ public class EditScene extends CommonGameScene implements Scene {
 
     }
 
+    public void safeState() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("adsds.txt");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(obstacles);
+            objectOutputStream.writeObject(gameObjects);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadState() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("adsds.txt");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            obstacles.clear();
+            gameObjects.clear();
+            obstacles.addAll((Set<Obstacle>) objectInputStream.readObject());
+            gameObjects.addAll((Set<Obstacle>) objectInputStream.readObject());
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void update(double dt) {
-
+        editItems.forEach( item ->
+                {
+                    item.hover(mouseListener.getX(),mouseListener.getY());
+                }
+        );
     }
 
     @Override
@@ -89,6 +127,11 @@ public class EditScene extends CommonGameScene implements Scene {
             toggleObstacle(point2D);
             System.out.println("fdas");
         }
+        editItems.forEach( item ->
+                {
+                    item.click(point2D);
+                }
+        );
 
     }
     private void toggleFood(Point2D point2D) {
