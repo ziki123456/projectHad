@@ -33,7 +33,7 @@ public class EditScene extends CommonGameScene implements Scene {
 
         try {
 
-            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakeEditScene.png"));
+            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("SnakeEditScene.png"));
 
             //play
             editItems.add(
