@@ -2,34 +2,14 @@ package cz.ziki.had;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * A dialog for entering a nickname.
  */
 public class NicknameDialog extends JDialog {
 
-    private JTextField nicknameField;
+    private final JTextField nicknameField;
     private String nickname;
-
-    /**
-     * Gets the text field used for entering the nickname.
-     *
-     * @return the text field for entering the nickname
-     */
-    public JTextField getNicknameField() {
-        return nicknameField;
-    }
-
-    /**
-     * Gets the entered nickname.
-     *
-     * @return the entered nickname
-     */
-    public String getNickname() {
-        return nickname;
-    }
 
     /**
      * Constructs a new NicknameDialog.
@@ -50,31 +30,30 @@ public class NicknameDialog extends JDialog {
         inputPanel.add(promptLabel);
         inputPanel.add(nicknameField);
 
+        JPanel buttonPanel = getOkButton();
+
+        add(inputPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+    }
+
+    private JPanel getOkButton() {
         JButton okButton = new JButton("OK");
-        okButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if (validateNickname()) {
-                    nickname = nicknameField.getText();
-                    setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(NicknameDialog.this,
-                            "Nickname must be up to 20 letters or numbers.",
-                            "Invalid Nickname",
-                            JOptionPane.WARNING_MESSAGE);
-
-                }
+        okButton.addActionListener(_ -> {
+            if (validateNickname()) {
+                nickname = nicknameField.getText();
+                setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(NicknameDialog.this,
+                        "Nickname must be up to 20 letters or numbers.",
+                        "Invalid Nickname",
+                        JOptionPane.WARNING_MESSAGE);
             }
         });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(okButton);
-
-        add(inputPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-
+        return buttonPanel;
     }
 
     /**

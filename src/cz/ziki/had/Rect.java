@@ -7,7 +7,10 @@ import java.io.Serializable;
  */
 public class Rect implements Serializable {
 
-    private int x, y, width, height;
+    private int x;
+    private int y;
+    private final int width;
+    private final int height;
 
     /**
      * Constructs a new rectangle with the specified position and size.
@@ -41,15 +44,8 @@ public class Rect implements Serializable {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
 }

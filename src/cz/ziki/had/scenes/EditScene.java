@@ -17,11 +17,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("ALL")
 public class EditScene extends CommonGameScene implements Scene {
 
     protected final Set<MenuItem> editItems = Collections.synchronizedSet(new HashSet<>());
-    private final int EDIT_ITEM_HEIGTH = 50;
-    private final int EDIT_ITEM_WIDTH = 179;
+    private static final int EDIT_ITEM_HEIGTH = 50;
+    private static final int EDIT_ITEM_WIDTH = 179;
 
 
 

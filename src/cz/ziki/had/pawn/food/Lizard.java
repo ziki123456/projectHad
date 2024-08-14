@@ -7,6 +7,7 @@ import cz.ziki.had.Snake;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 import java.util.Random;
 
 public class Lizard extends CommonFood implements Food{
@@ -40,7 +41,12 @@ public class Lizard extends CommonFood implements Food{
     public void loadImage() {
         try {
 
-            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("jesterka.gif"));
+            BufferedImage foodImages = ImageIO.read(
+                    Objects.
+                            requireNonNull(
+                                    this.getClass().
+                                            getClassLoader().
+                                            getResourceAsStream("jesterka.gif")));
             foodImage =  foodImages;
             Graphics2D g2d = foodImages.createGraphics();
             g2d.drawImage(foodImages, 0, 0, null);

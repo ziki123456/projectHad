@@ -5,9 +5,7 @@ package cz.ziki.had;
  */
 public class BodyPiece {
 
-    public Rect rect;
-
-    public boolean isHead, isTail = false;
+    public final Rect rect;
 
     /**
      * Constructs a new BodyPiece with the specified rectangular area.

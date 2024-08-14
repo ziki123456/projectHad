@@ -3,8 +3,6 @@ package cz.ziki.had.pawn.food;
 import cz.ziki.had.Rect;
 import cz.ziki.had.Snake;
 
-import java.awt.*;
-
 /**
  * Represents the food item in the game.
  */

@@ -7,6 +7,7 @@ import cz.ziki.had.Snake;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class Mouse extends CommonFood implements Food {
 
@@ -39,7 +40,12 @@ public class Mouse extends CommonFood implements Food {
     public void loadImage() {
         try {
 
-            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("mys.gif"));
+            BufferedImage foodImages = ImageIO.read(
+                    Objects.
+                            requireNonNull(
+                                    this.getClass().
+                                            getClassLoader().
+                                            getResourceAsStream("mys.gif")));
             foodImage =  foodImages;
             Graphics2D g2d = foodImages.createGraphics();
             g2d.drawImage(foodImages, 0, 0, null);
@@ -56,9 +62,6 @@ public class Mouse extends CommonFood implements Food {
         randomSpawn();
     }
 
-    private void colisionCheck() {
-
-    }
 
     private boolean intersectLeftBound() {
 

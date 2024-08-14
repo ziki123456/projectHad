@@ -18,7 +18,7 @@ import java.util.Set;
 public class Window extends JFrame implements Runnable {
 
     public int lastScore = 0;
-    public int bestScore = 0;
+    public final int bestScore = 0;
 
     public static Window window = null;
     public boolean isRunning;
@@ -26,8 +26,10 @@ public class Window extends JFrame implements Runnable {
     public int currentState;
     public Scene currentScene;
 
-    public KeyL keyListener = new KeyL();
-    public MouseL mouseListener = new MouseL();
+    public final KeyL keyListener = new KeyL();
+    public final MouseL mouseListener = new MouseL();
+
+    private static final double DELTA_WANTED = 0.02167;
 
     public String nickname;
 
@@ -86,18 +88,18 @@ public class Window extends JFrame implements Runnable {
         switch (currentState) {
 
             case 0:
-                currentScene = new MenuScene(keyListener, mouseListener);
+                currentScene = new MenuScene(mouseListener);
                 break;
             case 1:
 
                 if (gameObjects != null && foods != null && obstacles != null) {
-                    currentScene = new GameScene(keyListener, mouseListener,gameObjects,foods,obstacles);
+                    currentScene = new GameScene(keyListener,gameObjects,foods,obstacles);
                 }else{
-                    currentScene = new GameScene(keyListener, mouseListener);
+                    currentScene = new GameScene(keyListener);
                 }
                 break;
             case 2:
-                currentScene = new EndScene(this.lastScore, this.bestScore, keyListener, mouseListener);
+                currentScene = new EndScene(this.lastScore, this.bestScore, mouseListener);
                 break;
             case 3:
                 currentScene = new EditScene(keyListener, mouseListener);
@@ -131,7 +133,6 @@ public class Window extends JFrame implements Runnable {
      * @param g The graphics context.
      */
     public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
         currentScene.draw(g);
     }
 
@@ -147,12 +148,13 @@ public class Window extends JFrame implements Runnable {
         try {
             while (isRunning) {
                 Instant time = Instant.now();
+                //number of seconds between frames unrounded(0,00001)
                 double deltaTime = Duration.between(lastFrameTime, time).toNanos() * 10E-10;
                 lastFrameTime = Instant.now();
 
-                double deltaWanted = 0.02167;
-                update(deltaWanted);
-                long msToSleep = (long) ((deltaWanted - deltaTime) * 1000);
+                update(DELTA_WANTED);
+
+                long msToSleep = (long) ((DELTA_WANTED - deltaTime) * 1000);
                 if (msToSleep > 0) {
                     Thread.sleep(msToSleep);
                 }

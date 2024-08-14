@@ -20,7 +20,7 @@ public class Obstacle extends CommonGameObject {
 
     public void draw(Graphics2D g) {
         g.setColor(Color.BLUE);
-        g.fillRect((int) myPhysicalShape.getX(), (int) myPhysicalShape.getY(), myPhysicalShape.getWidth(), myPhysicalShape.getHeight());
+        g.fillRect(myPhysicalShape.getX(), myPhysicalShape.getY(), myPhysicalShape.getWidth(), myPhysicalShape.getHeight());
     }
 
     public void update (double dt) {

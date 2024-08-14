@@ -1,11 +1,12 @@
 package cz.ziki.had;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Utility class for handling player score saving and loading operations.
@@ -56,8 +57,8 @@ public class FileUtils {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(getFilePath()))) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                if (line == "") continue;
+            while ( (line = reader.readLine()) != null) {
+                if (line.equals("")) continue;
                 String[] parts = line.split(": ");
                 if (parts.length == 2) {
                     String name = parts[0];
@@ -79,24 +80,11 @@ public class FileUtils {
      * @throws IOException if an I/O error occurs
      */
     public static String getFilePath() throws IOException {
-        URL url = FileUtils.class.getProtectionDomain().getCodeSource().getLocation();
-        if (url != null) {
-            try {
-                URI uri = new URI(URLEncoder.encode(url.toString(), "UTF-8"));
-                String decoded = URLDecoder.decode(uri.toString());
-                String finalString = decoded.substring(6);
-                File file = new File(finalString);
-                File scoreFile = new File(file.getParentFile().getAbsolutePath() + "/" + FILENAME);
-                if (!scoreFile.exists()){
-                    scoreFile.createNewFile();
-                }
-                return scoreFile.getAbsolutePath();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new NullPointerException("URL is null.");
-        }
-        return null;
+        File file = new File(FILENAME);
+
+        file.createNewFile();
+
+        return file.getAbsolutePath();
     }
+
 }

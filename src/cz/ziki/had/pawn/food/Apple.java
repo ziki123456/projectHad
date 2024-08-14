@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@SuppressWarnings("ALL")
 public class Apple  extends CommonFood  implements Food{
 
 

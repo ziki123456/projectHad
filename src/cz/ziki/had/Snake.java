@@ -4,16 +4,14 @@ import cz.ziki.had.pawn.GameObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents the snake in the game.
@@ -22,13 +20,10 @@ public class Snake implements GameObject, Serializable {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
 
-    List<BodyPiece> body = new ArrayList<>();
+    final List<BodyPiece> body = new ArrayList<>();
 
-    BodyPiece headPiece, tailPiece;
-
-    public int bodyWidth, bodyHeight;
-
-    public int size;
+    public final int bodyWidth;
+    public final int bodyHeight;
 
     public boolean shouldGrow = false;
 
@@ -38,7 +33,7 @@ public class Snake implements GameObject, Serializable {
 
     public double waitTimeLeft = ogWaitBetweenUpdates;
 
-    public Rect background;
+    public final Rect background;
 
     public int score = 0;
 
@@ -54,7 +49,6 @@ public class Snake implements GameObject, Serializable {
      */
     public Snake(int size, int startX, int startY, int bodyWidth, int bodyHeight, Rect background) {
 
-        this.size = size;
         this.bodyWidth = bodyWidth;
         this.bodyHeight = bodyHeight;
         this.background = background;
@@ -62,15 +56,20 @@ public class Snake implements GameObject, Serializable {
         for (int i = 0; i <= size; i++) {
 
             BodyPiece bodyPiece = new BodyPiece(new Rect(startX + i * bodyWidth, startY, bodyWidth, bodyHeight));
-            if (i == 0) this.tailPiece = bodyPiece;
-            if (i == size) this.headPiece = bodyPiece;
+
             body.add(bodyPiece);
 
         }
 
         try {
 
-            BufferedImage snakeImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakehead.png"));
+            BufferedImage snakeImages = ImageIO.read(
+                    Objects.
+                            requireNonNull(
+                                    this.getClass().
+                                            getClassLoader().
+                                            getResourceAsStream("snakehead.png")));
+
             Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
             bodyImg = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = bodyImg.createGraphics();
@@ -85,7 +84,7 @@ public class Snake implements GameObject, Serializable {
             g2d.dispose();
 
             AffineTransform tx = new AffineTransform();
-            tx.rotate(3.14 / 2, headE.getWidth() / 2, headE.getHeight() / 2);
+            tx.rotate(3.14 / 2, (double) headE.getWidth() / 2, (double) headE.getHeight() / 2);
 
             AffineTransformOp op = new AffineTransformOp(tx,
                     AffineTransformOp.TYPE_BILINEAR);
@@ -96,28 +95,6 @@ public class Snake implements GameObject, Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Prints information about the snake's body.
-     *
-     * @return A string containing information about the snake's body.
-     */
-    public String printBody() {
-
-        String text = "-------------" + "\n";
-        text += "size :" + body.size() + "\n";
-        text += "head :" + body.get(body.size() - 1) + "\n";
-        text += "tail :" + body.get(0) + "\n";
-
-        for (int i = 0; i < body.size(); i++) {
-
-            text += body.get(i).rect.getX() + " " + body.get(i).rect.getY() + "\n";
-
-        }
-
-        return text;
-
     }
 
     /**
@@ -154,7 +131,7 @@ public class Snake implements GameObject, Serializable {
             return;
 
         }
-        if (intersectingWithSelf()) {
+        if (intersectingWithSelfOrBoundaries()) {
 
             this.die();
 
@@ -165,26 +142,26 @@ public class Snake implements GameObject, Serializable {
         int newY = 0;
 
         if (direction == Direction.RIGHT) {
-            newX = body.get(body.size() - 1).rect.getX() + bodyWidth;
-            newY = body.get(body.size() - 1).rect.getY();
+            newX = body.getLast().rect.getX() + bodyWidth;
+            newY = body.getLast().rect.getY();
 
         } else if (direction == Direction.LEFT) {
-            newX = body.get(body.size() - 1).rect.getX() - bodyWidth;
-            newY = body.get(body.size() - 1).rect.getY();
+            newX = body.getLast().rect.getX() - bodyWidth;
+            newY = body.getLast().rect.getY();
 
         } else if (direction == Direction.UP) {
-            newX = body.get(body.size() - 1).rect.getX();
-            newY = body.get(body.size() - 1).rect.getY() - bodyHeight;
+            newX = body.getLast().rect.getX();
+            newY = body.getLast().rect.getY() - bodyHeight;
 
         } else if (direction == Direction.DOWN) {
-            newX = body.get(body.size() - 1).rect.getX();
-            newY = body.get(body.size() - 1).rect.getY() + bodyHeight;
+            newX = body.getLast().rect.getX();
+            newY = body.getLast().rect.getY() + bodyHeight;
 
         }
 
         if (this.shouldGrow) {
             this.shouldGrow = false;
-        } else body.remove(0);
+        } else body.removeFirst();
 
         BodyPiece bodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
         body.add(bodyPiece);
@@ -194,8 +171,8 @@ public class Snake implements GameObject, Serializable {
     /**
      * Checks if the snake is intersecting with itself.
      */
-    public boolean intersectingWithSelf() {
-        Rect headR = body.get(body.size() - 1).rect;
+    public boolean intersectingWithSelfOrBoundaries() {
+        Rect headR = body.getLast().rect;
         return intersectingWithRect(headR) || intersectingWithScreenBoundaries(headR);
     }
 
@@ -213,16 +190,20 @@ public class Snake implements GameObject, Serializable {
      * Checks if two rectangles are intersecting.
      */
     public boolean intersecting(Rect r1, Rect r2) {
-        return (r1.getX() >= r2.getX() && r1.getX() + r1.getWidth() <= r2.getX() + r2.getWidth() &&
-                r1.getY() >= r2.getY() && r1.getY() + r1.getHeight() <= r2.getY() + r2.getHeight());
+        return (r1.getX() == r2.getX() &&
+                r1.getX() + r1.getWidth() == r2.getX() + r2.getWidth() &&
+                r1.getY() == r2.getY() &&
+                r1.getY() + r1.getHeight() == r2.getY() + r2.getHeight());
     }
 
     /**
      * Checks if the snake is intersecting with the screen boundaries.
      */
     public boolean intersectingWithScreenBoundaries(Rect head) {
-        return (head.getX() < background.getX() || (head.getX() + head.getWidth()) > background.getX() + background.getWidth() ||
-                head.getY() < background.getY() || (head.getY() + head.getHeight()) > background.getY() + background.getHeight());
+        return (head.getX() < background.getX() ||
+                (head.getX() + head.getWidth()) > background.getX() + background.getWidth() ||
+                head.getY() < background.getY() ||
+                (head.getY() + head.getHeight()) > background.getY() + background.getHeight());
     }
 
     /**
@@ -247,22 +228,20 @@ public class Snake implements GameObject, Serializable {
         for (int i = 0; i < body.size(); i++) {
 
             BodyPiece piece = body.get(i);
-            double subWidth = (piece.rect.getWidth() - 6.0) / 2.0;
-            double subHeight = (piece.rect.getHeight() - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
             if (i == body.size() - 1) {
                 if (direction == Direction.RIGHT) {
-                    g2.drawImage(this.headE, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
+                    g2.drawImage(this.headE, piece.rect.getX(), piece.rect.getY(), null);
                 } else if (direction == Direction.LEFT) {
-                    g2.drawImage(this.headW, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
+                    g2.drawImage(this.headW, piece.rect.getX(), piece.rect.getY(), null);
                 } else if (direction == Direction.UP) {
-                    g2.drawImage(this.headN, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
+                    g2.drawImage(this.headN, piece.rect.getX(), piece.rect.getY(), null);
                 } else if (direction == Direction.DOWN) {
-                    g2.drawImage(this.headS, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
+                    g2.drawImage(this.headS, piece.rect.getX(), piece.rect.getY(), null);
                 }
 
-            } else g2.drawImage(this.bodyImg, (int) piece.rect.getX(), (int) piece.rect.getY(), null);
+            } else g2.drawImage(this.bodyImg, piece.rect.getX(), piece.rect.getY(), null);
         }
     }
 

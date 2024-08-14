@@ -2,7 +2,6 @@ package cz.ziki.had.scenes;
 
 import cz.ziki.had.*;
 import cz.ziki.had.Window;
-import cz.ziki.had.pawn.GameObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,6 +9,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -19,24 +19,26 @@ public class MenuScene implements Scene {
 
     protected final Set<MenuItem> menuItems = Collections.synchronizedSet(new HashSet<>());
 
-    public KeyL keyListener;
-    public MouseL mouseListener;
+    public final MouseL mouseListener;
 
     /**
      * Constructs a new MenuScene with the specified key and mouse listeners.
      *
-     * @param keyListener   the key listener for handling keyboard input
      * @param mouseListener the mouse listener for handling mouse input
      */
-    public MenuScene(KeyL keyListener, MouseL mouseListener) {
+    public MenuScene(MouseL mouseListener) {
 
-        this.keyListener = keyListener;
         this.mouseListener = mouseListener;
         mouseListener.registerOnClick(this::toggleOnClick);
 
         try {
 
-            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakeMenuOld.png"));
+            BufferedImage spritesheet = ImageIO.read(
+                    Objects.
+                            requireNonNull(
+                                    this.getClass().
+                                            getClassLoader().
+                                            getResourceAsStream("snakeMenuOld.png")));
 
             menuItems.add(
                     new MenuItemBuilder()
@@ -91,9 +93,7 @@ public class MenuScene implements Scene {
 
     private void toggleOnClick(Point2D point2D) {
         menuItems.forEach( item ->
-            {
-                item.click(point2D);
-            }
+                item.click(point2D)
         );
     }
 
@@ -105,9 +105,7 @@ public class MenuScene implements Scene {
     @Override
     public void update(double dt) {
         menuItems.forEach( item ->
-                {
-                    item.hover(mouseListener.getX(),mouseListener.getY());
-                }
+                item.hover(mouseListener.getX(),mouseListener.getY())
         );
 
 

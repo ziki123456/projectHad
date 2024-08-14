@@ -8,8 +8,8 @@ import java.awt.Graphics;
  */
 public interface Scene {
 
-    public abstract void update(double dt);
+    void update(double dt);
 
-    public abstract void draw(Graphics g);
+    void draw(Graphics g);
 
 }

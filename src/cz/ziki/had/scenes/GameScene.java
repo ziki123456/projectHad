@@ -8,39 +8,36 @@ import cz.ziki.had.pawn.food.FoodFactory;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Represents the game scene where gameplay takes place.
  */
 public class GameScene extends CommonGameScene implements Scene {
 
-    Snake snake;
+    final Snake snake;
 
     /**
      * Constructs a new GameScene with the specified key listener.
      *
-     * @param keyListener   the key listener for handling user input
-     * @param mouseListener
+     * @param keyListener the key listener for handling user input
+     * @param gameObjects
+     * @param foods
+     * @param obstacles
      */
 
-    public GameScene(KeyL keyListener, MouseL mouseListener) {
+    public GameScene(KeyL keyListener) {
 
         super(keyListener);
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.getX(), Constants.TILE_WIDTH * 3 + foreground.getY(), Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
-        gameObjects.add(snake);
+        this.gameObjects.add(snake);
         newFood();
 
     }
 
-    public GameScene(KeyL keyListener, MouseL mouseListener, Set<GameObject> gameObjects, Set<Food> foods, Set<Obstacle> obstacles) {
+    public GameScene(KeyL keyListener, Set<GameObject> gameObjects, Set<Food> foods, Set<Obstacle> obstacles) {
         super(keyListener);
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.getX(), Constants.TILE_WIDTH * 3 + foreground.getY(), Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         gameObjects.add(snake);

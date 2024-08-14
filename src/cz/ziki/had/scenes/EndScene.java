@@ -13,16 +13,14 @@ import java.util.List;
  */
 public class EndScene implements Scene {
 
-    private int lastScore;
+    private final int lastScore;
     private int highScore;
-    public KeyL keyListener;
-    public MouseL mouseListener;
+    public final MouseL mouseListener;
 
-    public EndScene(int score, int highestScore, KeyL keyListener, MouseL mouseListener) {
+    public EndScene(int score, int highestScore, MouseL mouseListener) {
 
         this.lastScore = score;
         this.highScore = highestScore;
-        this.keyListener = keyListener;
         this.mouseListener = mouseListener;
 
     }
@@ -42,7 +40,6 @@ public class EndScene implements Scene {
         Font font = new Font("Tahoma", Font.BOLD, 40);
         FontMetrics metrics = g2.getFontMetrics(font);
         String scoreText = "Score: " + lastScore;
-        String highScoreText = "High score: " + highScore;
         g2.setFont(font);
         g2.setColor(Color.BLACK);
         g2.drawString(scoreText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(scoreText) / 2), Constants.SCREEN_HEIGHT - 500);

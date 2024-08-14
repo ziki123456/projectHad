@@ -3,7 +3,6 @@ package cz.ziki.had.pawn.food;
 
 import cz.ziki.had.pawn.CommonGameObject;
 import cz.ziki.had.Constants;
-import cz.ziki.had.pawn.Obstacle;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -16,14 +15,6 @@ public abstract class CommonFood extends CommonGameObject implements Serializabl
 
     private boolean isSpawned;
 
-    public boolean isSpawned() {
-        return isSpawned;
-    }
-
-    public void setSpawned(boolean spawned) {
-        isSpawned = spawned;
-    }
-
     /**
      * Spawns the food item at a random position on the game background.
      */
@@ -31,14 +22,14 @@ public abstract class CommonFood extends CommonGameObject implements Serializabl
 
         do {
 
-            int tileCountX = (int) gameField.getWidth() / Constants.TILE_WIDTH;
+            int tileCountX = gameField.getWidth() / Constants.TILE_WIDTH;
             int randomTileX = (int) (Math.random() * (tileCountX -1));
 
-            int tileCountY = (int) gameField.getHeight() / Constants.TILE_WIDTH;
+            int tileCountY = gameField.getHeight() / Constants.TILE_WIDTH;
             int randomTileY = (int) (Math.random() * (tileCountY -1));
 
-            this.myPhysicalShape.setX((int) (randomTileX * Constants.TILE_WIDTH + gameField.getX()));
-            this.myPhysicalShape.setY((int) (randomTileY * Constants.TILE_WIDTH + gameField.getY()));;
+            this.myPhysicalShape.setX(randomTileX * Constants.TILE_WIDTH + gameField.getX());
+            this.myPhysicalShape.setY(randomTileY * Constants.TILE_WIDTH + gameField.getY());
         } while (snake.intersectingWithRect(this.myPhysicalShape));
 
         this.isSpawned = true;
@@ -46,7 +37,7 @@ public abstract class CommonFood extends CommonGameObject implements Serializabl
     }
 
     public void drawIfNotEaten(Graphics2D g2) {
-        if (snake == null || !snake.shouldGrow) g2.drawImage(this.foodImage, (int) this.myPhysicalShape.getX() + xPadding, (int) this.myPhysicalShape.getY(), null);
+        if (snake == null || !snake.shouldGrow) g2.drawImage(this.foodImage, this.myPhysicalShape.getX() + xPadding, this.myPhysicalShape.getY(), null);
     }
 
     public void checkIfNotEaten() {
@@ -73,4 +64,9 @@ public abstract class CommonFood extends CommonGameObject implements Serializabl
     public int hashCode() {
         return Objects.hash(myPhysicalShape.getX(), myPhysicalShape.getY());
     }
+
+    public boolean isSpawned() {
+        return isSpawned;
+    }
+
 }

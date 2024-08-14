@@ -7,29 +7,22 @@ import java.awt.image.BufferedImage;
 
 public class MenuItem {
 
-    private BufferedImage activeImage;
-    private BufferedImage passiveImage;
+    private final BufferedImage activeImage;
+    private final BufferedImage passiveImage;
     private boolean isActive;
-    private BufferedImage spriteSheet;
-    private Rect myPhysicalShape;
-    private Runnable action;
+    private final Rect myPhysicalShape;
+    private final Runnable action;
 
     public void runAction(){
         action.run();
     }
 
-    public MenuItem(BufferedImage activeImage, BufferedImage passiveImage, boolean isActive, BufferedImage spriteSheet, Rect myPhysicalShape, Runnable action) {
+    public MenuItem(BufferedImage activeImage, BufferedImage passiveImage, boolean isActive, Rect myPhysicalShape, Runnable action) {
         this.activeImage = activeImage;
         this.passiveImage = passiveImage;
         this.isActive = isActive;
-        this.spriteSheet = spriteSheet;
         this.myPhysicalShape = myPhysicalShape;
         this.action = action;
-    }
-
-    public MenuItem(BufferedImage spritesheet) {
-        this.spriteSheet = spritesheet;
-
     }
 
     public boolean isClicked(Point2D point2D) {

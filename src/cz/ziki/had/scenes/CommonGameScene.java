@@ -7,12 +7,9 @@ import cz.ziki.had.pawn.food.Food;
 import cz.ziki.had.pawn.food.FoodFactory;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -20,13 +17,14 @@ import java.util.Set;
  */
 public abstract class CommonGameScene {
 
-    Rect background, foreground;
+    final Rect background;
+    final Rect foreground;
 
-    KeyL keyListener;
+    final KeyL keyListener;
     MouseL mouseListener;
 
 
-    FoodFactory foodFactory = new FoodFactory();
+    final FoodFactory foodFactory = new FoodFactory();
 
 
     protected final Set<GameObject> gameObjects = Collections.synchronizedSet(new HashSet<>());
@@ -49,7 +47,7 @@ public abstract class CommonGameScene {
 
 
     protected int getNearestTile(double x) {
-        int remainder = 0;
+        int remainder;
         remainder =  ((int)x) % Constants.TILE_WIDTH;
         return (int) (x - remainder) / Constants.TILE_WIDTH;
     }
@@ -95,7 +93,7 @@ public abstract class CommonGameScene {
         gameObjects.forEach(gameObject -> gameObject.draw(g2));
 
         Font font = new Font("Arial", Font.BOLD, 40);
-        FontMetrics metrics = g2.getFontMetrics(font);
+        g2.getFontMetrics(font);
         g2.setFont(font);
         g2.setColor(Color.WHITE);
 
