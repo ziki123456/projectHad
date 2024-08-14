@@ -1,31 +1,29 @@
 package cz.ziki.had;
 
+import cz.ziki.had.pawn.GameObject;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents the snake in the game.
  */
-public class Snake {
+public class Snake implements GameObject, Serializable {
 
     public BufferedImage headN, headS, headE, headW, bodyImg;
 
-    List<BodyPiece> body = new ArrayList<>();
+    final List<BodyPiece> body = new ArrayList<>();
 
-    BodyPiece headPiece, tailPiece;
-
-    public double bodyWidth, bodyHeight;
-
-    public int size;
+    public final int bodyWidth;
+    public final int bodyHeight;
 
     public boolean shouldGrow = false;
 
@@ -35,7 +33,7 @@ public class Snake {
 
     public double waitTimeLeft = ogWaitBetweenUpdates;
 
-    public Rect background;
+    public final Rect background;
 
     public int score = 0;
 
@@ -49,9 +47,8 @@ public class Snake {
      * @param bodyHeight The height of each body piece.
      * @param background The background rectangle of the game.
      */
-    public Snake(int size, double startX, double startY, double bodyWidth, double bodyHeight, Rect background) {
+    public Snake(int size, int startX, int startY, int bodyWidth, int bodyHeight, Rect background) {
 
-        this.size = size;
         this.bodyWidth = bodyWidth;
         this.bodyHeight = bodyHeight;
         this.background = background;
@@ -59,15 +56,20 @@ public class Snake {
         for (int i = 0; i <= size; i++) {
 
             BodyPiece bodyPiece = new BodyPiece(new Rect(startX + i * bodyWidth, startY, bodyWidth, bodyHeight));
-            if (i == 0) this.tailPiece = bodyPiece;
-            if (i == size) this.headPiece = bodyPiece;
+
             body.add(bodyPiece);
 
         }
 
         try {
 
-            BufferedImage snakeImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakehead.png"));
+            BufferedImage snakeImages = ImageIO.read(
+                    Objects.
+                            requireNonNull(
+                                    this.getClass().
+                                            getClassLoader().
+                                            getResourceAsStream("snakehead.png")));
+
             Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
             bodyImg = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = bodyImg.createGraphics();
@@ -82,7 +84,7 @@ public class Snake {
             g2d.dispose();
 
             AffineTransform tx = new AffineTransform();
-            tx.rotate(3.14 / 2, headE.getWidth() / 2, headE.getHeight() / 2);
+            tx.rotate(3.14 / 2, (double) headE.getWidth() / 2, (double) headE.getHeight() / 2);
 
             AffineTransformOp op = new AffineTransformOp(tx,
                     AffineTransformOp.TYPE_BILINEAR);
@@ -93,28 +95,6 @@ public class Snake {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Prints information about the snake's body.
-     *
-     * @return A string containing information about the snake's body.
-     */
-    public String printBody() {
-
-        String text = "-------------" + "\n";
-        text += "size :" + body.size() + "\n";
-        text += "head :" + body.get(body.size() - 1) + "\n";
-        text += "tail :" + body.get(0) + "\n";
-
-        for (int i = 0; i < body.size(); i++) {
-
-            text += body.get(i).rect.x + " " + body.get(i).rect.y + "\n";
-
-        }
-
-        return text;
-
     }
 
     /**
@@ -151,39 +131,37 @@ public class Snake {
             return;
 
         }
-        if (intersectingWithSelf()) {
+        if (intersectingWithSelfOrBoundaries()) {
 
-            Window.getWindow().lastScore = this.score;
-            FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
-            Window.getWindow().changeState(2);
+            this.die();
 
         }
 
         waitTimeLeft = ogWaitBetweenUpdates;
-        double newX = 0;
-        double newY = 0;
+        int newX = 0;
+        int newY = 0;
 
         if (direction == Direction.RIGHT) {
-            newX = body.get(body.size() - 1).rect.x + bodyWidth;
-            newY = body.get(body.size() - 1).rect.y;
+            newX = body.getLast().rect.getX() + bodyWidth;
+            newY = body.getLast().rect.getY();
 
         } else if (direction == Direction.LEFT) {
-            newX = body.get(body.size() - 1).rect.x - bodyWidth;
-            newY = body.get(body.size() - 1).rect.y;
+            newX = body.getLast().rect.getX() - bodyWidth;
+            newY = body.getLast().rect.getY();
 
         } else if (direction == Direction.UP) {
-            newX = body.get(body.size() - 1).rect.x;
-            newY = body.get(body.size() - 1).rect.y - bodyHeight;
+            newX = body.getLast().rect.getX();
+            newY = body.getLast().rect.getY() - bodyHeight;
 
         } else if (direction == Direction.DOWN) {
-            newX = body.get(body.size() - 1).rect.x;
-            newY = body.get(body.size() - 1).rect.y + bodyHeight;
+            newX = body.getLast().rect.getX();
+            newY = body.getLast().rect.getY() + bodyHeight;
 
         }
 
         if (this.shouldGrow) {
             this.shouldGrow = false;
-        } else body.remove(0);
+        } else body.removeFirst();
 
         BodyPiece bodyPiece = new BodyPiece(new Rect(newX, newY, bodyWidth, bodyHeight));
         body.add(bodyPiece);
@@ -193,8 +171,8 @@ public class Snake {
     /**
      * Checks if the snake is intersecting with itself.
      */
-    public boolean intersectingWithSelf() {
-        Rect headR = body.get(body.size() - 1).rect;
+    public boolean intersectingWithSelfOrBoundaries() {
+        Rect headR = body.getLast().rect;
         return intersectingWithRect(headR) || intersectingWithScreenBoundaries(headR);
     }
 
@@ -212,16 +190,20 @@ public class Snake {
      * Checks if two rectangles are intersecting.
      */
     public boolean intersecting(Rect r1, Rect r2) {
-        return (r1.x >= r2.x && r1.x + r1.width <= r2.x + r2.width &&
-                r1.y >= r2.y && r1.y + r1.height <= r2.y + r2.height);
+        return (r1.getX() == r2.getX() &&
+                r1.getX() + r1.getWidth() == r2.getX() + r2.getWidth() &&
+                r1.getY() == r2.getY() &&
+                r1.getY() + r1.getHeight() == r2.getY() + r2.getHeight());
     }
 
     /**
      * Checks if the snake is intersecting with the screen boundaries.
      */
     public boolean intersectingWithScreenBoundaries(Rect head) {
-        return (head.x < background.x || (head.x + head.width) > background.x + background.width ||
-                head.y < background.y || (head.y + head.height) > background.y + background.height);
+        return (head.getX() < background.getX() ||
+                (head.getX() + head.getWidth()) > background.getX() + background.getWidth() ||
+                head.getY() < background.getY() ||
+                (head.getY() + head.getHeight()) > background.getY() + background.getHeight());
     }
 
     /**
@@ -246,22 +228,31 @@ public class Snake {
         for (int i = 0; i < body.size(); i++) {
 
             BodyPiece piece = body.get(i);
-            double subWidth = (piece.rect.width - 6.0) / 2.0;
-            double subHeight = (piece.rect.height - 6.0) / 2.0;
 
             g2.setColor(Color.BLACK);
             if (i == body.size() - 1) {
                 if (direction == Direction.RIGHT) {
-                    g2.drawImage(this.headE, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headE, piece.rect.getX(), piece.rect.getY(), null);
                 } else if (direction == Direction.LEFT) {
-                    g2.drawImage(this.headW, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headW, piece.rect.getX(), piece.rect.getY(), null);
                 } else if (direction == Direction.UP) {
-                    g2.drawImage(this.headN, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headN, piece.rect.getX(), piece.rect.getY(), null);
                 } else if (direction == Direction.DOWN) {
-                    g2.drawImage(this.headS, (int) piece.rect.x, (int) piece.rect.y, null);
+                    g2.drawImage(this.headS, piece.rect.getX(), piece.rect.getY(), null);
                 }
 
-            } else g2.drawImage(this.bodyImg, (int) piece.rect.x, (int) piece.rect.y, null);
+            } else g2.drawImage(this.bodyImg, piece.rect.getX(), piece.rect.getY(), null);
         }
+    }
+
+    @Override
+    public void setSnake(Snake snake) {
+
+    }
+
+    public void die() {
+        Window.getWindow().lastScore = this.score;
+        FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
+        Window.getWindow().changeState(2);
     }
 }

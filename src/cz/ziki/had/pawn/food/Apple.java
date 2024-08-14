@@ -1,4 +1,4 @@
-package cz.ziki.had.FoodObjects;
+package cz.ziki.had.pawn.food;
 
 import cz.ziki.had.Constants;
 import cz.ziki.had.Rect;
@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@SuppressWarnings("ALL")
 public class Apple  extends CommonFood  implements Food{
 
 
@@ -21,12 +22,21 @@ public class Apple  extends CommonFood  implements Food{
      *
      * @param background
      * @param snake
-     * @param width
-     * @param height
-     * @param color
+     * @param x
+     * @param y
      */
-    public Apple(Rect background, Snake snake, int width, int height, Color color) {
+    public Apple(Rect background, Snake snake, int x, int y) {
 
+        loadImage();
+        this.gameField = background;
+        this.snake = snake;
+        this.myPhysicalShape = new Rect(x, y, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
+
+        xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
+    }
+
+    @Override
+    public void loadImage() {
         try {
 
             BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakehead.png"));
@@ -41,14 +51,6 @@ public class Apple  extends CommonFood  implements Food{
             e.printStackTrace();
 
         }
-        this.background = background;
-        this.snake = snake;
-        this.width = width;
-        this.height = height;
-        this.color = color;
-        this.rect = new Rect(0, 0, width, height);
-
-        xPadding = (int) ((Constants.TILE_WIDTH - this.width) / 2.0);
     }
 
 

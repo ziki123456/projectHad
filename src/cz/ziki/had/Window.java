@@ -1,9 +1,15 @@
 package cz.ziki.had;
 
+import cz.ziki.had.pawn.GameObject;
+import cz.ziki.had.pawn.Obstacle;
+import cz.ziki.had.pawn.food.Food;
+import cz.ziki.had.scenes.*;
+
 import javax.swing.JFrame;
 import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Set;
 
 /**
  * Represents the main window of the application.
@@ -12,7 +18,7 @@ import java.time.Instant;
 public class Window extends JFrame implements Runnable {
 
     public int lastScore = 0;
-    public int bestScore = 0;
+    public final int bestScore = 0;
 
     public static Window window = null;
     public boolean isRunning;
@@ -20,8 +26,10 @@ public class Window extends JFrame implements Runnable {
     public int currentState;
     public Scene currentScene;
 
-    public KeyL keyListener = new KeyL();
-    public MouseL mouseListener = new MouseL();
+    public final KeyL keyListener = new KeyL();
+    public final MouseL mouseListener = new MouseL();
+
+    private static final double DELTA_WANTED = 0.02167;
 
     public String nickname;
 
@@ -65,25 +73,36 @@ public class Window extends JFrame implements Runnable {
         isRunning = false;
     }
 
+    public void changeState(int newState) {
+        changeState(newState,null,null,null);
+    }
     /**
      * Changes the state of the game to the specified state.
      *
      * @param newState The new state of the game.
      */
-    public void changeState(int newState) {
+    public void changeState(int newState, Set<GameObject> gameObjects, Set<Food> foods, Set<Obstacle> obstacles) {
 
         currentState = newState;
 
         switch (currentState) {
 
             case 0:
-                currentScene = new MenuScene(keyListener, mouseListener);
+                currentScene = new MenuScene(mouseListener);
                 break;
             case 1:
-                currentScene = new GameScene(keyListener);
+
+                if (gameObjects != null && foods != null && obstacles != null) {
+                    currentScene = new GameScene(keyListener,gameObjects,foods,obstacles);
+                }else{
+                    currentScene = new GameScene(keyListener);
+                }
                 break;
             case 2:
-                currentScene = new EndScene(this.lastScore, this.bestScore, keyListener, mouseListener);
+                currentScene = new EndScene(this.lastScore, this.bestScore, mouseListener);
+                break;
+            case 3:
+                currentScene = new EditScene(keyListener, mouseListener);
                 break;
             default:
                 System.out.println("Unknown scene.");
@@ -114,7 +133,6 @@ public class Window extends JFrame implements Runnable {
      * @param g The graphics context.
      */
     public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
         currentScene.draw(g);
     }
 
@@ -130,12 +148,13 @@ public class Window extends JFrame implements Runnable {
         try {
             while (isRunning) {
                 Instant time = Instant.now();
+                //number of seconds between frames unrounded(0,00001)
                 double deltaTime = Duration.between(lastFrameTime, time).toNanos() * 10E-10;
                 lastFrameTime = Instant.now();
 
-                double deltaWanted = 0.02167;
-                update(deltaWanted);
-                long msToSleep = (long) ((deltaWanted - deltaTime) * 1000);
+                update(DELTA_WANTED);
+
+                long msToSleep = (long) ((DELTA_WANTED - deltaTime) * 1000);
                 if (msToSleep > 0) {
                     Thread.sleep(msToSleep);
                 }

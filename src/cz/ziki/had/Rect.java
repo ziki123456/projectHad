@@ -1,16 +1,21 @@
 package cz.ziki.had;
 
+import java.io.Serializable;
+
 /**
  * Represents a rectangle with a specified position (x, y) and size (width, height).
  */
-public class Rect {
+public class Rect implements Serializable {
 
-    public double x, y, width, height;
+    private int x;
+    private int y;
+    private final int width;
+    private final int height;
 
     /**
      * Constructs a new rectangle with the specified position and size.
      */
-    public Rect(double x, double y, double width, double height) {
+    public Rect(int x, int y, int width, int height) {
 
         this.x = x;
         this.y = y;
@@ -18,4 +23,29 @@ public class Rect {
         this.height = height;
 
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
 }

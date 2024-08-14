@@ -1,4 +1,4 @@
-package cz.ziki.had.FoodObjects;
+package cz.ziki.had.pawn.food;
 
 import cz.ziki.had.Constants;
 import cz.ziki.had.Rect;
@@ -7,6 +7,7 @@ import cz.ziki.had.Snake;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class Mouse extends CommonFood implements Food {
 
@@ -20,15 +21,31 @@ public class Mouse extends CommonFood implements Food {
      *
      * @param background
      * @param snake
-     * @param width
-     * @param height
-     * @param color
+     * @param x
+     * @param y
      */
-    public Mouse(Rect background, Snake snake, int width, int height, Color color) {
+    public Mouse(Rect background, Snake snake, int x, int y) {
 
+        loadImage();
+
+        this.gameField = background;
+        this.snake = snake;
+        this.myPhysicalShape = new Rect(x, y, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
+
+        xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
+
+    }
+
+    @Override
+    public void loadImage() {
         try {
 
-            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("mys.gif"));
+            BufferedImage foodImages = ImageIO.read(
+                    Objects.
+                            requireNonNull(
+                                    this.getClass().
+                                            getClassLoader().
+                                            getResourceAsStream("mys.gif")));
             foodImage =  foodImages;
             Graphics2D g2d = foodImages.createGraphics();
             g2d.drawImage(foodImages, 0, 0, null);
@@ -39,45 +56,32 @@ public class Mouse extends CommonFood implements Food {
             e.printStackTrace();
 
         }
-
-        this.background = background;
-        this.snake = snake;
-        this.width = width;
-        this.height = height;
-        this.color = color;
-        this.rect = new Rect(0, 0, width, height);
-
-        xPadding = (int) ((Constants.TILE_WIDTH - this.width) / 2.0);
-
     }
 
     public void spawn(){
         randomSpawn();
     }
 
-    private void colisionCheck() {
-
-    }
 
     private boolean intersectLeftBound() {
 
-        return (rect.x < background.x + Constants.TILE_WIDTH);
+        return (myPhysicalShape.getX() < gameField.getX() + Constants.TILE_WIDTH);
 
     }
 
     private boolean intersectRightBound() {
 
-        return ((rect.x + rect.width) > background.x + background.width - Constants.TILE_WIDTH);
+        return ((myPhysicalShape.getX() + myPhysicalShape.getWidth()) > gameField.getX() + gameField.getWidth() - Constants.TILE_WIDTH);
 
     }
 
     private boolean intersectUpperBound() {
-        return (rect.y < background.y + Constants.TILE_WIDTH);
+        return (myPhysicalShape.getY() < gameField.getY() + Constants.TILE_WIDTH);
 
     }
 
     private boolean intersectLowerBound() {
-        return ((rect.y + rect.height) > background.y + background.height - Constants.TILE_WIDTH);
+        return ((myPhysicalShape.getY() + myPhysicalShape.getHeight()) > gameField.getY() + gameField.getHeight() - Constants.TILE_WIDTH);
 
     }
 
@@ -93,9 +97,9 @@ public class Mouse extends CommonFood implements Food {
         }
 
 
-        this.rect.x -= (Constants.TILE_WIDTH * velx);
+        this.myPhysicalShape.setX( this.myPhysicalShape.getX() - (Constants.TILE_WIDTH * velx));
 
-        this.rect.y -= (Constants.TILE_WIDTH * vely);
+        this.myPhysicalShape.setY( this.myPhysicalShape.getY() - (Constants.TILE_WIDTH * vely));
 
     }
 
