@@ -26,6 +26,16 @@ public class Apple  extends CommonFood  implements Food{
      */
     public Apple(Rect background, Snake snake, int x, int y) {
 
+        loadImage();
+        this.gameField = background;
+        this.snake = snake;
+        this.myPhysicalShape = new Rect(x, y, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
+
+        xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
+    }
+
+    @Override
+    public void loadImage() {
         try {
 
             BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("snakehead.png"));
@@ -40,11 +50,6 @@ public class Apple  extends CommonFood  implements Food{
             e.printStackTrace();
 
         }
-        this.gameField = background;
-        this.snake = snake;
-        this.myPhysicalShape = new Rect(x, y, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
-
-        xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
     }
 
 

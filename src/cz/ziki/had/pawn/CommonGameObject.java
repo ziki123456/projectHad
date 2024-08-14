@@ -12,7 +12,7 @@ public abstract class CommonGameObject implements GameObject, Serializable {
     public Snake snake;
 
     public Rect myPhysicalShape;
-    public BufferedImage foodImage;
+    public transient BufferedImage foodImage;
 
     public boolean intersectingWithSnake() {
         return snake.intersectingWithRect(myPhysicalShape);

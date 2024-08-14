@@ -25,19 +25,7 @@ public class Mouse extends CommonFood implements Food {
      */
     public Mouse(Rect background, Snake snake, int x, int y) {
 
-        try {
-
-            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("mys.gif"));
-            foodImage =  foodImages;
-            Graphics2D g2d = foodImages.createGraphics();
-            g2d.drawImage(foodImages, x, y, null);
-            g2d.dispose();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
+        loadImage();
 
         this.gameField = background;
         this.snake = snake;
@@ -45,6 +33,23 @@ public class Mouse extends CommonFood implements Food {
 
         xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
 
+    }
+
+    @Override
+    public void loadImage() {
+        try {
+
+            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("mys.gif"));
+            foodImage =  foodImages;
+            Graphics2D g2d = foodImages.createGraphics();
+            g2d.drawImage(foodImages, 0, 0, null);
+            g2d.dispose();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
     }
 
     public void spawn(){

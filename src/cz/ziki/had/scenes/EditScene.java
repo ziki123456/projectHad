@@ -80,6 +80,7 @@ public class EditScene extends CommonGameScene implements Scene {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(obstacles);
             objectOutputStream.writeObject(gameObjects);
+            objectOutputStream.writeObject(foods);
             objectOutputStream.flush();
             objectOutputStream.close();
             fileOutputStream.flush();
@@ -95,8 +96,11 @@ public class EditScene extends CommonGameScene implements Scene {
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             obstacles.clear();
             gameObjects.clear();
+            foods.clear();
             obstacles.addAll((Set<Obstacle>) objectInputStream.readObject());
             gameObjects.addAll((Set<Obstacle>) objectInputStream.readObject());
+            foods.addAll((Set<Food>) objectInputStream.readObject());
+            foods.forEach(Food::loadImage);
 
 
         } catch (Exception e) {
@@ -120,18 +124,18 @@ public class EditScene extends CommonGameScene implements Scene {
     }
 
     private void toggleOnClick(Point2D point2D) {
-        if(keyListener.isKeyPressed(KeyEvent.VK_F)) {
-            System.out.println("asdf");
-            toggleFood(point2D);
-        } else {
-            toggleObstacle(point2D);
-            System.out.println("fdas");
-        }
         editItems.forEach( item ->
                 {
                     item.click(point2D);
                 }
         );
+        if (! ColisionChecker.intersect(point2D, foreground)) return;
+        if(keyListener.isKeyPressed(KeyEvent.VK_F)) {
+            toggleFood(point2D);
+        } else {
+            toggleObstacle(point2D);
+        }
+
 
     }
     private void toggleFood(Point2D point2D) {
@@ -140,6 +144,7 @@ public class EditScene extends CommonGameScene implements Scene {
                 null,
                 getNearestTile(point2D.getX()-foreground.getX()) * Constants.TILE_WIDTH + foreground.getX(),
                 getNearestTile(point2D.getY()-foreground.getY()) * Constants.TILE_WIDTH + foreground.getY());
+
 
         if (foods.contains(clickedFood)) {
 

@@ -26,19 +26,7 @@ public class Lizard extends CommonFood implements Food{
      */
     public Lizard(Rect background, Snake snake, int x, int y) {
 
-        try {
-
-            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("jesterka.gif"));
-            foodImage =  foodImages;
-            Graphics2D g2d = foodImages.createGraphics();
-            g2d.drawImage(foodImages, x, y, null);
-            g2d.dispose();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
+        loadImage();
 
         this.gameField = background;
         this.snake = snake;
@@ -48,6 +36,22 @@ public class Lizard extends CommonFood implements Food{
 
     }
 
+    @Override
+    public void loadImage() {
+        try {
+
+            BufferedImage foodImages = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("jesterka.gif"));
+            foodImage =  foodImages;
+            Graphics2D g2d = foodImages.createGraphics();
+            g2d.drawImage(foodImages, 0, 0, null);
+            g2d.dispose();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+    }
 
 
     @Override

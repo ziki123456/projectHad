@@ -1,5 +1,6 @@
-package cz.ziki.had;
+package cz.ziki.had.tests;
 
+import cz.ziki.had.Time;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
