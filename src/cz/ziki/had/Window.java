@@ -1,11 +1,15 @@
 package cz.ziki.had;
 
+import cz.ziki.had.pawn.GameObject;
+import cz.ziki.had.pawn.Obstacle;
+import cz.ziki.had.pawn.food.Food;
 import cz.ziki.had.scenes.*;
 
 import javax.swing.JFrame;
 import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Set;
 
 /**
  * Represents the main window of the application.
@@ -67,12 +71,15 @@ public class Window extends JFrame implements Runnable {
         isRunning = false;
     }
 
+    public void changeState(int newState) {
+        changeState(newState,null,null,null);
+    }
     /**
      * Changes the state of the game to the specified state.
      *
      * @param newState The new state of the game.
      */
-    public void changeState(int newState) {
+    public void changeState(int newState, Set<GameObject> gameObjects, Set<Food> foods, Set<Obstacle> obstacles) {
 
         currentState = newState;
 
@@ -82,7 +89,12 @@ public class Window extends JFrame implements Runnable {
                 currentScene = new MenuScene(keyListener, mouseListener);
                 break;
             case 1:
-                currentScene = new GameScene(keyListener, mouseListener);
+
+                if (gameObjects != null && foods != null && obstacles != null) {
+                    currentScene = new GameScene(keyListener, mouseListener,gameObjects,foods,obstacles);
+                }else{
+                    currentScene = new GameScene(keyListener, mouseListener);
+                }
                 break;
             case 2:
                 currentScene = new EndScene(this.lastScore, this.bestScore, keyListener, mouseListener);

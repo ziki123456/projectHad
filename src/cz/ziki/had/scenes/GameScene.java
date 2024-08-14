@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Represents the game scene where gameplay takes place.
@@ -36,6 +38,19 @@ public class GameScene extends CommonGameScene implements Scene {
         gameObjects.add(snake);
         newFood();
 
+    }
+
+    public GameScene(KeyL keyListener, MouseL mouseListener, Set<GameObject> gameObjects, Set<Food> foods, Set<Obstacle> obstacles) {
+        super(keyListener);
+        snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.getX(), Constants.TILE_WIDTH * 3 + foreground.getY(), Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
+        gameObjects.add(snake);
+        newFood();
+        this.gameObjects.addAll(gameObjects);
+        this.foods.addAll(foods);
+        this.obstacles.addAll(obstacles);
+        gameObjects.forEach(
+                (o) -> o.setSnake(snake)
+        );
     }
 
     private FoodFactory.FoodType getNextFoodType() {
@@ -63,7 +78,14 @@ public class GameScene extends CommonGameScene implements Scene {
             snake.changeDirecton(Direction.LEFT);
         }
 
-        if (!isFoodRemaining(gameObjects)) {
+        if (
+                foods
+                        .stream()
+                        .noneMatch(
+                                Food::isSpawned
+                        )
+        )
+        {
             newFood();
         }
 
@@ -77,17 +99,10 @@ public class GameScene extends CommonGameScene implements Scene {
     private void newFood() {
         Food newFood = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
         gameObjects.add(newFood);
+        foods.add(newFood);
         newFood.spawn();
     }
 
-    private boolean isFoodRemaining(Set<GameObject> gameObjects) {
-        for (GameObject gameObject : gameObjects) {
-            if (gameObject instanceof Food) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Draws the game scene.

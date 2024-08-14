@@ -17,4 +17,9 @@ public abstract class CommonGameObject implements GameObject, Serializable {
     public boolean intersectingWithSnake() {
         return snake.intersectingWithRect(myPhysicalShape);
     }
+
+    @Override
+    public void setSnake(Snake snake) {
+        this.snake = snake;
+    }
 }

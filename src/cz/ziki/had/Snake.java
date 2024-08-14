@@ -266,6 +266,11 @@ public class Snake implements GameObject, Serializable {
         }
     }
 
+    @Override
+    public void setSnake(Snake snake) {
+
+    }
+
     public void die() {
         Window.getWindow().lastScore = this.score;
         FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);

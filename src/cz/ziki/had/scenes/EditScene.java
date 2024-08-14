@@ -1,6 +1,7 @@
 package cz.ziki.had.scenes;
 
 import cz.ziki.had.*;
+import cz.ziki.had.pawn.GameObject;
 import cz.ziki.had.pawn.Obstacle;
 import cz.ziki.had.pawn.food.Food;
 import cz.ziki.had.pawn.food.FoodFactory;
@@ -14,6 +15,7 @@ import java.io.*;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EditScene extends CommonGameScene implements Scene {
 
@@ -39,7 +41,7 @@ public class EditScene extends CommonGameScene implements Scene {
                             .setPassiveImage(0, 0, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
                             .setActiveImage(0, 50, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
                             .setMyPhysicalShape(new Rect(28, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
-                            .setAction( () -> cz.ziki.had.Window.getWindow().changeState(1))
+                            .setAction( () -> cz.ziki.had.Window.getWindow().changeState(1, gameObjects, foods, obstacles))
                             .build()
             );
 
@@ -78,9 +80,7 @@ public class EditScene extends CommonGameScene implements Scene {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("adsds.txt");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(obstacles);
             objectOutputStream.writeObject(gameObjects);
-            objectOutputStream.writeObject(foods);
             objectOutputStream.flush();
             objectOutputStream.close();
             fileOutputStream.flush();
@@ -97,12 +97,21 @@ public class EditScene extends CommonGameScene implements Scene {
             obstacles.clear();
             gameObjects.clear();
             foods.clear();
-            obstacles.addAll((Set<Obstacle>) objectInputStream.readObject());
-            gameObjects.addAll((Set<Obstacle>) objectInputStream.readObject());
-            foods.addAll((Set<Food>) objectInputStream.readObject());
+            gameObjects.addAll((Set<GameObject>) objectInputStream.readObject());
+            foods.addAll(
+                    gameObjects.stream()
+                            .filter( (o) -> o instanceof Food)
+                            .map( go -> (Food) go )
+                            .collect(Collectors
+                                    .toSet()));
             foods.forEach(Food::loadImage);
 
-
+            obstacles.addAll(
+                    gameObjects.stream()
+                            .filter( (o) -> o instanceof Obstacle)
+                            .map( go -> (Obstacle) go )
+                            .collect(Collectors
+                                    .toSet()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
