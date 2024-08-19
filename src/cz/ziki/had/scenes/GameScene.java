@@ -23,9 +23,6 @@ public class GameScene extends CommonGameScene implements Scene {
      * Constructs a new GameScene with the specified key listener.
      *
      * @param keyListener the key listener for handling user input
-     * @param gameObjects
-     * @param foods
-     * @param obstacles
      */
 
     public GameScene(KeyL keyListener) {
@@ -38,6 +35,7 @@ public class GameScene extends CommonGameScene implements Scene {
     }
 
     public GameScene(KeyL keyListener, Set<GameObject> gameObjects, Set<Food> foods, Set<Obstacle> obstacles) {
+
         super(keyListener);
         snake = new Snake(1, Constants.TILE_WIDTH * 3 + foreground.getX(), Constants.TILE_WIDTH * 3 + foreground.getY(), Constants.TILE_WIDTH, Constants.TILE_WIDTH, foreground);
         gameObjects.add(snake);
@@ -55,7 +53,6 @@ public class GameScene extends CommonGameScene implements Scene {
         int foodTypesNumber = random.nextInt(FoodFactory.FoodType.values().length);
         return FoodFactory.FoodType.values()[foodTypesNumber];
     }
-
 
     /**
      * Updates the game scene based on the elapsed time.
@@ -92,14 +89,12 @@ public class GameScene extends CommonGameScene implements Scene {
 
     }
 
-
     private void newFood() {
         Food newFood = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
         gameObjects.add(newFood);
         foods.add(newFood);
         newFood.spawn();
     }
-
 
     /**
      * Draws the game scene.
@@ -110,7 +105,7 @@ public class GameScene extends CommonGameScene implements Scene {
     public void draw(Graphics g) {
 
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.DARK_GRAY);
         g2.fill(new Rectangle2D.Double(background.getX(), background.getY(), background.getWidth(), background.getHeight()));
 
         g2.setColor(new Color(131, 250, 101));

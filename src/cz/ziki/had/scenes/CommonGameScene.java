@@ -23,9 +23,7 @@ public abstract class CommonGameScene {
     final KeyL keyListener;
     MouseL mouseListener;
 
-
     final FoodFactory foodFactory = new FoodFactory();
-
 
     protected final Set<GameObject> gameObjects = Collections.synchronizedSet(new HashSet<>());
     protected final Set<Obstacle> obstacles = Collections.synchronizedSet(new HashSet<>());
@@ -45,13 +43,11 @@ public abstract class CommonGameScene {
 
     }
 
-
     protected int getNearestTile(double x) {
         int remainder;
         remainder =  ((int)x) % Constants.TILE_WIDTH;
         return (int) (x - remainder) / Constants.TILE_WIDTH;
     }
-
 
     protected void addFood(Food clickedFood) {
         gameObjects.add(clickedFood);
@@ -63,7 +59,6 @@ public abstract class CommonGameScene {
         foods.remove(clickedFood);
     }
 
-
     protected void addObstacle(Obstacle clickedObstacle) {
         gameObjects.add(clickedObstacle);
         obstacles.add(clickedObstacle);
@@ -74,8 +69,6 @@ public abstract class CommonGameScene {
         obstacles.remove(clickedObstacle);
     }
 
-
-
     /**
      * Draws the game scene.
      *
@@ -84,7 +77,7 @@ public abstract class CommonGameScene {
     public void draw(Graphics g) {
 
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.DARK_GRAY);
         g2.fill(new Rectangle2D.Double(background.getX(), background.getY(), background.getWidth(), background.getHeight()));
 
         g2.setColor(new Color(131, 250, 101));
@@ -96,6 +89,5 @@ public abstract class CommonGameScene {
         g2.getFontMetrics(font);
         g2.setFont(font);
         g2.setColor(Color.WHITE);
-
     }
 }

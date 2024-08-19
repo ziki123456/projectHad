@@ -20,7 +20,6 @@ public class MenuItemBuilder {
         return new MenuItem(activeImage,passiveImage, isActive,myPhysicalShape,action);
     }
 
-
     public MenuItemBuilder setSpriteSheet(BufferedImage spriteSheet) {
         this.spriteSheet = spriteSheet;
         return this;

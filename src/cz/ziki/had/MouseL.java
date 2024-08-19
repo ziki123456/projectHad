@@ -6,7 +6,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.util.function.Consumer;
 
-
 /**
  * Handles mouse inputs by implementing the MouseAdapter and MouseMotionListener interfaces.
  */
@@ -21,8 +20,6 @@ public class MouseL extends MouseAdapter implements MouseMotionListener {
         isPressed = true;
         int clickX = e.getX();
         int clickY = e.getY();
-
-        System.out.println("Kliknuto na: X = " + clickX + ", Y = " + clickY);
         onClickListener.accept(new Point2D.Double(clickX, clickY));
     }
 
@@ -36,8 +33,6 @@ public class MouseL extends MouseAdapter implements MouseMotionListener {
         this.x = e.getX();
         this.y = e.getY();
     }
-
-
 
     public void registerOnClick(Consumer<Point2D> consumer){
         this.onClickListener = consumer;

@@ -24,8 +24,6 @@ public class EditScene extends CommonGameScene implements Scene {
     private static final int EDIT_ITEM_HEIGTH = 50;
     private static final int EDIT_ITEM_WIDTH = 179;
 
-
-
     public EditScene(KeyL keyListener, MouseL mouseListener) {
         super(keyListener);
         this.mouseListener = mouseListener;
@@ -42,7 +40,7 @@ public class EditScene extends CommonGameScene implements Scene {
                             .setPassiveImage(0, 0, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
                             .setActiveImage(0, 50, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
                             .setMyPhysicalShape(new Rect(28, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
-                            .setAction( () -> cz.ziki.had.Window.getWindow().changeState(1, gameObjects, foods, obstacles))
+                            .setAction(() -> cz.ziki.had.Window.getWindow().changeState(1, gameObjects, foods, obstacles))
                             .build()
             );
 
@@ -70,7 +68,6 @@ public class EditScene extends CommonGameScene implements Scene {
 
             );
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,7 +76,7 @@ public class EditScene extends CommonGameScene implements Scene {
 
     public void safeState() {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("adsds.txt");
+            FileOutputStream fileOutputStream = new FileOutputStream("editor.sav");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(gameObjects);
             objectOutputStream.flush();
@@ -93,7 +90,7 @@ public class EditScene extends CommonGameScene implements Scene {
 
     public void loadState() {
         try {
-            FileInputStream fileInputStream = new FileInputStream("adsds.txt");
+            FileInputStream fileInputStream = new FileInputStream("editor.sav");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             obstacles.clear();
             gameObjects.clear();
@@ -101,16 +98,16 @@ public class EditScene extends CommonGameScene implements Scene {
             gameObjects.addAll((Set<GameObject>) objectInputStream.readObject());
             foods.addAll(
                     gameObjects.stream()
-                            .filter( (o) -> o instanceof Food)
-                            .map( go -> (Food) go )
+                            .filter((o) -> o instanceof Food)
+                            .map(go -> (Food) go)
                             .collect(Collectors
                                     .toSet()));
             foods.forEach(Food::loadImage);
 
             obstacles.addAll(
                     gameObjects.stream()
-                            .filter( (o) -> o instanceof Obstacle)
-                            .map( go -> (Obstacle) go )
+                            .filter((o) -> o instanceof Obstacle)
+                            .map(go -> (Obstacle) go)
                             .collect(Collectors
                                     .toSet()));
         } catch (Exception e) {
@@ -120,9 +117,9 @@ public class EditScene extends CommonGameScene implements Scene {
 
     @Override
     public void update(double dt) {
-        editItems.forEach( item ->
+        editItems.forEach(item ->
                 {
-                    item.hover(mouseListener.getX(),mouseListener.getY());
+                    item.hover(mouseListener.getX(), mouseListener.getY());
                 }
         );
     }
@@ -130,56 +127,51 @@ public class EditScene extends CommonGameScene implements Scene {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        editItems.forEach( item -> item.draw(g) );
+        editItems.forEach(item -> item.draw(g));
+        String nicknameText = "Click to spawn an obstacle, hold F while clicking to spawn food";
+
+        Font font = new Font("Tahoma", Font.BOLD, 20);
+        g.setColor(Color.BLUE);
+        g.setFont(font);
+        FontMetrics metrics = g.getFontMetrics(font);
+        g.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 15);
     }
 
     private void toggleOnClick(Point2D point2D) {
-        editItems.forEach( item ->
+        editItems.forEach(item ->
                 {
                     item.click(point2D);
                 }
         );
-        if (! ColisionChecker.intersect(point2D, foreground)) return;
-        if(keyListener.isKeyPressed(KeyEvent.VK_F)) {
+        if (!ColisionChecker.intersect(point2D, foreground)) return;
+        if (keyListener.isKeyPressed(KeyEvent.VK_F)) {
             toggleFood(point2D);
         } else {
             toggleObstacle(point2D);
         }
-
-
     }
+
     private void toggleFood(Point2D point2D) {
         Food clickedFood = foodFactory.getFood(FoodFactory.FoodType.APPLE,
                 foreground,
                 null,
-                getNearestTile(point2D.getX()-foreground.getX()) * Constants.TILE_WIDTH + foreground.getX(),
-                getNearestTile(point2D.getY()-foreground.getY()) * Constants.TILE_WIDTH + foreground.getY());
-
+                getNearestTile(point2D.getX() - foreground.getX()) * Constants.TILE_WIDTH + foreground.getX(),
+                getNearestTile(point2D.getY() - foreground.getY()) * Constants.TILE_WIDTH + foreground.getY());
 
         if (foods.contains(clickedFood)) {
-
             removeFood(clickedFood);
         } else {
-
             addFood(clickedFood);
         }
     }
 
-
     private void toggleObstacle(Point2D point2D) {
-        Obstacle clickedObstacle = new Obstacle(foreground,null, getNearestTile(point2D.getX()-foreground.getX()) , getNearestTile(point2D.getY()-foreground.getY()));
+        Obstacle clickedObstacle = new Obstacle(foreground, null, getNearestTile(point2D.getX() - foreground.getX()), getNearestTile(point2D.getY() - foreground.getY()));
 
         if (obstacles.contains(clickedObstacle)) {
-
             removeObstacle(clickedObstacle);
         } else {
-
             addObstacle(clickedObstacle);
         }
     }
-
-
-
-
-
 }

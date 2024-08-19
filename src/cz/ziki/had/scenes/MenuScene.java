@@ -58,7 +58,6 @@ public class MenuScene implements Scene {
                     .setMyPhysicalShape(new Rect(240, 100, 320, 70))
                     .setAction(()->{})
                     .build()
-
             );
 
             menuItems.add(
@@ -69,7 +68,6 @@ public class MenuScene implements Scene {
                             .setMyPhysicalShape(new Rect(245, 355, 310, 40))
                             .setAction( () -> cz.ziki.had.Window.getWindow().close())
                             .build()
-
             );
 
             menuItems.add(
@@ -80,11 +78,7 @@ public class MenuScene implements Scene {
                             .setMyPhysicalShape(new Rect(245, 420, 310, 25))
                             .setAction(() -> cz.ziki.had.Window.getWindow().changeState(3))
                             .build()
-
             );
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,9 +101,6 @@ public class MenuScene implements Scene {
         menuItems.forEach( item ->
                 item.hover(mouseListener.getX(),mouseListener.getY())
         );
-
-
-
     }
 
     /**
@@ -123,7 +114,6 @@ public class MenuScene implements Scene {
         g.setColor(new Color(10, 220, 215));
         g.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-
         menuItems.forEach( item -> item.draw(g) );
 
         Font font = new Font("Tahoma", Font.BOLD, 18);
@@ -133,7 +123,5 @@ public class MenuScene implements Scene {
         g.setFont(font);
         g.setColor(Color.BLACK);
         g.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 50);
-
     }
-
 }
