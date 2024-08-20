@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public abstract class Obstacle extends CommonGameObject {
+public class Obstacle extends CommonGameObject {
 
 
     public Obstacle(Rect background, Snake snake, int x, int y) {

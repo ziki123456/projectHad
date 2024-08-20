@@ -110,6 +110,7 @@ public class EditScene extends CommonGameScene implements Scene {
                             .map(go -> (Obstacle) go)
                             .collect(Collectors
                                     .toSet()));
+            obstacles.forEach(Obstacle::loadImage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
