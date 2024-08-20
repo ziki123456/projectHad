@@ -10,6 +10,7 @@ public abstract class CommonGameObject implements GameObject, Serializable {
 
     public Rect gameField;
     public Snake snake;
+    public int xPadding;
 
     public Rect myPhysicalShape;
     public transient BufferedImage foodImage;
@@ -21,5 +22,8 @@ public abstract class CommonGameObject implements GameObject, Serializable {
     @Override
     public void setSnake(Snake snake) {
         this.snake = snake;
+    }
+
+    void loadImage() {
     }
 }

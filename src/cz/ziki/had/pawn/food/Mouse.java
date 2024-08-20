@@ -105,7 +105,7 @@ public class Mouse extends CommonFood implements Food {
 
     @Override
     public void update(double dt) {
-        //od casovace odectu ubehly cas
+        //od casovace odectu ubehl cas
         waitTimeLeft -= dt;
         //pokud ubehl cas
         if (waitTimeLeft <= 0) {
