@@ -47,5 +47,4 @@ public class Rect implements Serializable {
     public int getHeight() {
         return height;
     }
-
 }

@@ -34,7 +34,6 @@ public class NicknameDialog extends JDialog {
 
         add(inputPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-
     }
 
     private JPanel getOkButton() {
