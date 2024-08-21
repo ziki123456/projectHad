@@ -257,4 +257,5 @@ public class Snake implements GameObject, Serializable {
         FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
         Window.getWindow().changeState(2);
     }
+
 }
