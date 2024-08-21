@@ -8,22 +8,19 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Represents an Apple in the game, which is a type of food that the snake can eat.
+ */
 @SuppressWarnings("ALL")
 public class Apple  extends CommonFood  implements Food{
 
-
-
-
     /**
-     * Constructs a new cz.ziki.had.FoodObjects.Food object with the specified parameters.
-     */
-    /**
-     * Constructs a new cz.ziki.had.FoodObjects.Food object with the specified parameters.
+     * Constructs an Apple object.
      *
-     * @param background
-     * @param snake
-     * @param x
-     * @param y
+     * @param background the game field where the apple will appear
+     * @param snake the snake object that interacts with the apple
+     * @param x the x-coordinate of the apple's initial position
+     * @param y the y-coordinate of the apple's initial position
      */
     public Apple(Rect background, Snake snake, int x, int y) {
 
@@ -35,6 +32,10 @@ public class Apple  extends CommonFood  implements Food{
         xPadding = (int) ((Constants.TILE_WIDTH - this.myPhysicalShape.getWidth()) / 2.0);
     }
 
+    /**
+     * Loads the image for the Apple object.
+     * The image is extracted from a sprite sheet and scaled to fit the tile size.
+     */
     @Override
     public void loadImage() {
         try {
@@ -53,18 +54,19 @@ public class Apple  extends CommonFood  implements Food{
         }
     }
 
-
+    /**
+     * Spawns the apple at a random position on the game field.
+     */
     @Override
     public void spawn() {
         randomSpawn();
     }
 
     /**
-     * Updates the state of the food item.
+     * Updates the apple's state. This method checks if the apple has been eaten by the snake.
      *
-     * @param dt the time elapsed since the last update in seconds
+     * @param dt the time delta, used for time-based updates
      */
-
     public void update(double dt) {
 
         checkIfNotEaten();
@@ -72,11 +74,8 @@ public class Apple  extends CommonFood  implements Food{
     }
 
     /**
-     * Draws the food item on the game screen.
-     *
-     * @param g2 the Graphics2D object used for drawing
+     * Draws the apple on the game field if it hasn't been eaten.
      */
-
     public void draw(Graphics2D g2) {
         drawIfNotEaten(g2);
 

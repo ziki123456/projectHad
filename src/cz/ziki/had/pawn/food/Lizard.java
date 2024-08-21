@@ -10,6 +10,9 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * Represents a lizard food item that moves around the game field.
+ */
 public class Lizard extends CommonFood implements Food{
 
     private static final double lizardMoveTime = 1/4f;
@@ -18,12 +21,12 @@ public class Lizard extends CommonFood implements Food{
     private int vely = 1;
 
     /**
-     * Constructs a new cz.ziki.had.FoodObjects.Food object with the specified parameters.
+     * Creates a Lizard food object.
      *
-     * @param background
-     * @param snake
-     * @param x
-     * @param y
+     * @param background The game field background.
+     * @param snake      The snake object interacting with the lizard.
+     * @param x          The initial x-coordinate.
+     * @param y          The initial y-coordinate.
      */
     public Lizard(Rect background, Snake snake, int x, int y) {
 
@@ -37,6 +40,9 @@ public class Lizard extends CommonFood implements Food{
 
     }
 
+    /**
+     * Loads the lizard's image.
+     */
     @Override
     public void loadImage() {
         try {
@@ -59,7 +65,9 @@ public class Lizard extends CommonFood implements Food{
         }
     }
 
-
+    /**
+     * Spawns the lizard at a random position.
+     */
     @Override
     public void spawn() {
         randomSpawn();
@@ -87,6 +95,11 @@ public class Lizard extends CommonFood implements Food{
 
     }
 
+    /**
+     * Updates the lizard's position and state.
+     *
+     * @param dt Time delta for the update.
+     */
     @Override
     public void update(double dt) {
         waitTimeLeft -= dt;
@@ -129,6 +142,11 @@ public class Lizard extends CommonFood implements Food{
         this.myPhysicalShape.setY( this.myPhysicalShape.getY() - (Constants.TILE_WIDTH * vely));
     }
 
+    /**
+     * Draws the lizard on the screen.
+     *
+     * @param g2 Graphics2D object for rendering.
+     */
     @Override
     public void draw(Graphics2D g2) {
         drawIfNotEaten(g2);

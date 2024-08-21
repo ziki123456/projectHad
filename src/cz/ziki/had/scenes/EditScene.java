@@ -18,12 +18,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("ALL")
+
+/**
+ * Scene for editing game elements, including obstacles and food.
+ */
 public class EditScene extends CommonGameScene implements Scene {
 
     protected final Set<MenuItem> editItems = Collections.synchronizedSet(new HashSet<>());
     private static final int EDIT_ITEM_HEIGTH = 50;
     private static final int EDIT_ITEM_WIDTH = 179;
 
+    /**
+     * Constructs the EditScene and initializes menu items.
+     *
+     * @param keyListener  Listener for keyboard events.
+     * @param mouseListener Listener for mouse events.
+     */
     public EditScene(KeyL keyListener, MouseL mouseListener) {
         super(keyListener);
         this.mouseListener = mouseListener;
@@ -74,6 +84,9 @@ public class EditScene extends CommonGameScene implements Scene {
 
     }
 
+    /**
+     * Saves the current game state to a file.
+     */
     public void safeState() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("editor.sav");
@@ -88,6 +101,9 @@ public class EditScene extends CommonGameScene implements Scene {
         }
     }
 
+    /**
+     * Loads the game state from a file.
+     */
     public void loadState() {
         try {
             FileInputStream fileInputStream = new FileInputStream("editor.sav");
@@ -110,11 +126,17 @@ public class EditScene extends CommonGameScene implements Scene {
                             .map(go -> (Obstacle) go)
                             .collect(Collectors
                                     .toSet()));
+            obstacles.forEach(Obstacle::loadImage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Updates the scene by checking menu item hover state.
+     *
+     * @param dt Time delta for the update.
+     */
     @Override
     public void update(double dt) {
         editItems.forEach(item ->
@@ -124,6 +146,11 @@ public class EditScene extends CommonGameScene implements Scene {
         );
     }
 
+    /**
+     * Draws the scene and menu items.
+     *
+     * @param g Graphics object for rendering.
+     */
     @Override
     public void draw(Graphics g) {
         super.draw(g);
@@ -137,6 +164,11 @@ public class EditScene extends CommonGameScene implements Scene {
         g.drawString(nicknameText, Constants.SCREEN_WIDTH / 2 - (metrics.stringWidth(nicknameText) / 2), Constants.SCREEN_HEIGHT - 15);
     }
 
+    /**
+     * Handles mouse click events to toggle food or obstacle placement.
+     *
+     * @param point2D Coordinates of the click.
+     */
     private void toggleOnClick(Point2D point2D) {
         editItems.forEach(item ->
                 {
@@ -151,6 +183,11 @@ public class EditScene extends CommonGameScene implements Scene {
         }
     }
 
+    /**
+     * Toggles the placement of food at the specified position.
+     *
+     * @param point2D Coordinates of the click.
+     */
     private void toggleFood(Point2D point2D) {
         Food clickedFood = foodFactory.getFood(FoodFactory.FoodType.APPLE,
                 foreground,
@@ -165,6 +202,11 @@ public class EditScene extends CommonGameScene implements Scene {
         }
     }
 
+    /**
+     * Toggles the placement of an obstacle at the specified position.
+     *
+     * @param point2D Coordinates of the click.
+     */
     private void toggleObstacle(Point2D point2D) {
         Obstacle clickedObstacle = new Obstacle(foreground, null, getNearestTile(point2D.getX() - foreground.getX()), getNearestTile(point2D.getY() - foreground.getY()));
 

@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+/**
+ * Represents a mouse food item that moves around the game field.
+ */
 public class Mouse extends CommonFood implements Food {
 
     private static final double mouseMoveTime = 1/3f;
@@ -17,12 +20,12 @@ public class Mouse extends CommonFood implements Food {
     private int vely = 1;
 
     /**
-     * Constructs a new cz.ziki.had.FoodObjects.Food object with the specified parameters.
+     * Creates a Mouse food object.
      *
-     * @param background
-     * @param snake
-     * @param x
-     * @param y
+     * @param background The game field background.
+     * @param snake      The snake object interacting with the mouse.
+     * @param x          The initial x-coordinate.
+     * @param y          The initial y-coordinate.
      */
     public Mouse(Rect background, Snake snake, int x, int y) {
 
@@ -36,6 +39,9 @@ public class Mouse extends CommonFood implements Food {
 
     }
 
+    /**
+     * Loads the mouse's image.
+     */
     @Override
     public void loadImage() {
         try {
@@ -58,6 +64,9 @@ public class Mouse extends CommonFood implements Food {
         }
     }
 
+    /**
+     * Spawns the mouse at a random position.
+     */
     public void spawn(){
         randomSpawn();
     }
@@ -85,6 +94,9 @@ public class Mouse extends CommonFood implements Food {
 
     }
 
+    /**
+     * Moves the mouse based on its velocity and checks for boundaries.
+     */
     public void move() {
 
         if (intersectUpperBound() || intersectLowerBound()) {
@@ -103,6 +115,11 @@ public class Mouse extends CommonFood implements Food {
 
     }
 
+    /**
+     * Updates the mouse's position and state.
+     *
+     * @param dt Time delta for the update.
+     */
     @Override
     public void update(double dt) {
         //od casovace odectu ubehl cas
@@ -119,6 +136,11 @@ public class Mouse extends CommonFood implements Food {
 
     }
 
+    /**
+     * Draws the mouse on the screen.
+     *
+     * @param g2d Graphics2D object for rendering.
+     */
     public void draw(Graphics2D g2d) {
         drawIfNotEaten(g2d);
     }

@@ -9,9 +9,19 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public abstract class Obstacle extends CommonGameObject {
+/**
+ * Represents an obstacle in the game that the snake can collide with.
+ */
+public class Obstacle extends CommonGameObject {
 
-
+    /**
+     * Constructs a new Obstacle with specified parameters.
+     *
+     * @param background The game field background.
+     * @param snake      The snake object interacting with the obstacle.
+     * @param x          The initial x-coordinate (tile-based).
+     * @param y          The initial y-coordinate (tile-based).
+     */
     public Obstacle(Rect background, Snake snake, int x, int y) {
 
         loadImage();
@@ -22,6 +32,9 @@ public abstract class Obstacle extends CommonGameObject {
 
     }
 
+    /**
+     * Loads the image for the obstacle.
+     */
     @Override
     public void loadImage() {
         try {
@@ -44,18 +57,33 @@ public abstract class Obstacle extends CommonGameObject {
         }
     }
 
+    /**
+     * Draws the obstacle on the screen.
+     *
+     * @param g Graphics2D object used for rendering.
+     */
     public void draw(Graphics2D g) {
 
         g.drawImage(this.foodImage, this.myPhysicalShape.getX() + xPadding, this.myPhysicalShape.getY(), null);
     }
 
-
+    /**
+     * Updates the obstacle's state. Checks for collision with the snake.
+     *
+     * @param dt Time delta for the update.
+     */
     public void update (double dt) {
         if (intersectingWithSnake()) {
             snake.die();
         }
     }
 
+    /**
+     * Compares this obstacle to another object for equality.
+     *
+     * @param o The object to compare with.
+     * @return True if the objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,6 +92,11 @@ public abstract class Obstacle extends CommonGameObject {
         return myPhysicalShape.getX() == obstacle.myPhysicalShape.getX() && myPhysicalShape.getY() == obstacle.myPhysicalShape.getY();
     }
 
+    /**
+     * Returns a hash code value for the obstacle.
+     *
+     * @return The hash code value.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(myPhysicalShape.getX(), myPhysicalShape.getY());
