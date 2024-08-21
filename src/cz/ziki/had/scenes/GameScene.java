@@ -34,6 +34,14 @@ public class GameScene extends CommonGameScene implements Scene {
 
     }
 
+    /**
+     * Constructs a GameScene with specified game objects, foods, and obstacles.
+     *
+     * @param keyListener the key listener for handling user input.
+     * @param gameObjects the set of game objects in the scene.
+     * @param foods the set of food objects in the scene.
+     * @param obstacles the set of obstacle objects in the scene.
+     */
     public GameScene(KeyL keyListener, Set<GameObject> gameObjects, Set<Food> foods, Set<Obstacle> obstacles) {
 
         super(keyListener);
@@ -48,6 +56,11 @@ public class GameScene extends CommonGameScene implements Scene {
         );
     }
 
+    /**
+     * Randomly selects a food type from the available food types.
+     *
+     * @return the randomly selected food type.
+     */
     private FoodFactory.FoodType getNextFoodType() {
         Random random = new Random();
         int foodTypesNumber = random.nextInt(FoodFactory.FoodType.values().length);
@@ -89,6 +102,9 @@ public class GameScene extends CommonGameScene implements Scene {
 
     }
 
+    /**
+     * Creates and adds a new food object to the game scene.
+     */
     private void newFood() {
         Food newFood = foodFactory.getFood(getNextFoodType(), foreground, snake, Constants.TILE_WIDTH, Constants.TILE_WIDTH);
         gameObjects.add(newFood);

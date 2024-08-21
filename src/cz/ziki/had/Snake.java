@@ -247,9 +247,11 @@ public class Snake implements GameObject, Serializable {
 
     @Override
     public void setSnake(Snake snake) {
-
     }
 
+    /**
+     * Handles the snake's death, records the score, and changes the game state.
+     */
     public void die() {
         Window.getWindow().lastScore = this.score;
         FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);

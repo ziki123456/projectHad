@@ -22,7 +22,7 @@ public class MenuScene implements Scene {
     public final MouseL mouseListener;
 
     /**
-     * Constructs a new MenuScene with the specified key and mouse listeners.
+     * Constructs a new MenuScene with the specified mouse listener.
      *
      * @param mouseListener the mouse listener for handling mouse input
      */
@@ -85,6 +85,11 @@ public class MenuScene implements Scene {
 
     }
 
+    /**
+     * Handles mouse click events and triggers actions for menu items.
+     *
+     * @param point2D the point where the mouse was clicked
+     */
     private void toggleOnClick(Point2D point2D) {
         menuItems.forEach( item ->
                 item.click(point2D)

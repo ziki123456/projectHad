@@ -17,6 +17,13 @@ public class EndScene implements Scene {
     private int highScore;
     public final MouseL mouseListener;
 
+    /**
+     * Initializes the end scene with the given scores and mouse listener.
+     *
+     * @param score        The player's final score.
+     * @param highestScore The current highest score.
+     * @param mouseListener Listener for mouse events.
+     */
     public EndScene(int score, int highestScore, MouseL mouseListener) {
 
         this.lastScore = score;
