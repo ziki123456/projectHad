@@ -14,7 +14,7 @@ public class TimeTest {
 
         try {
             Thread.sleep(100);
-        } catch (InterruptedException _) {
+        } catch (InterruptedException ignored) {
         }
 
         double elapsedTime = Time.getTime();

@@ -38,7 +38,7 @@ public class NicknameDialog extends JDialog {
 
     private JPanel getOkButton() {
         JButton okButton = new JButton("OK");
-        okButton.addActionListener(_ -> {
+        okButton.addActionListener((i) -> {
             if (validateNickname()) {
                 nickname = nicknameField.getText();
                 setVisible(false);

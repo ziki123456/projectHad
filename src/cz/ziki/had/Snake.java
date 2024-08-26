@@ -49,10 +49,13 @@ public class Snake implements GameObject, Serializable {
     }
 
     /**
-     * Speed difficulty
+     * Number of speed increases.
      */
     private int speedLevel = 1;
 
+    /**
+     * Speed multiplier for each increase of speed.
+     */
     private final double speedDifficulty = 0.9f;
 
     public double waitTimeLeft = ogWaitBetweenUpdates;
@@ -94,17 +97,17 @@ public class Snake implements GameObject, Serializable {
                                             getClassLoader().
                                             getResourceAsStream("snakehead.png")));
 
-            Image tmp = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
+            Image snakeBodySubImage = snakeImages.getSubimage(245, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
             bodyImg = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = bodyImg.createGraphics();
-            g2d.drawImage(tmp, 0, 0, null);
+            g2d.drawImage(snakeBodySubImage, 0, 0, null);
             g2d.dispose();
 
-            tmp = snakeImages.getSubimage(0, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
+            Image snakeHeadSubImage = snakeImages.getSubimage(0, 0, 230, 190).getScaledInstance(Constants.TILE_WIDTH, Constants.TILE_WIDTH, Image.SCALE_SMOOTH);
             headE = new BufferedImage(Constants.TILE_WIDTH, Constants.TILE_WIDTH, BufferedImage.TYPE_INT_ARGB);
 
             g2d = headE.createGraphics();
-            g2d.drawImage(tmp, 0, 0, null);
+            g2d.drawImage(snakeHeadSubImage, 0, 0, null);
             g2d.dispose();
 
             AffineTransform tx = new AffineTransform();
@@ -205,15 +208,15 @@ public class Snake implements GameObject, Serializable {
      */
     public boolean intersectingWithRect(Rect rect) {
         for (int i = 0; i < body.size() - 1; i++) {
-            if (intersecting(rect, body.get(i).rect)) return true;
+            if (isIdentical(rect, body.get(i).rect)) return true;
         }
         return false;
     }
 
     /**
-     * Checks if two rectangles are intersecting.
+     * Checks if two rectangles are identical.
      */
-    public boolean intersecting(Rect r1, Rect r2) {
+    public boolean isIdentical(Rect r1, Rect r2) {
         return (r1.getX() == r2.getX() &&
                 r1.getX() + r1.getWidth() == r2.getX() + r2.getWidth() &&
                 r1.getY() == r2.getY() &&

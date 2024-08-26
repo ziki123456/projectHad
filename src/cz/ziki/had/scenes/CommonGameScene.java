@@ -34,7 +34,6 @@ public abstract class CommonGameScene {
      *
      * @param keyListener   the key listener for handling user input
      */
-
     public CommonGameScene(KeyL keyListener) {
 
         background = new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
