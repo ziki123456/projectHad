@@ -14,10 +14,10 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("ALL")
 
 /**
  * Scene for editing game elements, including obstacles and food.
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class EditScene extends CommonGameScene implements Scene {
 
     protected final Set<MenuItem> editItems = Collections.synchronizedSet(new HashSet<>());
-    private static final int EDIT_ITEM_HEIGTH = 50;
+    private static final int EDIT_ITEM_HEIGHT = 50;
     private static final int EDIT_ITEM_WIDTH = 179;
 
     /**
@@ -41,26 +41,24 @@ public class EditScene extends CommonGameScene implements Scene {
 
         try {
 
-            BufferedImage spritesheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("SnakeEditScene.png"));
+            BufferedImage spritesheet = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("SnakeEditScene.png")));
 
             //play
             editItems.add(
-                    new MenuItemBuilder()
-                            .setSpriteSheet(spritesheet)
-                            .setPassiveImage(0, 0, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
-                            .setActiveImage(0, 50, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
-                            .setMyPhysicalShape(new Rect(28, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
+                    new MenuItemBuilder(spritesheet)
+                            .setPassiveImage(0, 0, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT)
+                            .setActiveImage(0, 50, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT)
+                            .setMyPhysicalShape(new Rect(28, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT))
                             .setAction(() -> cz.ziki.had.Window.getWindow().changeState(1, gameObjects, foods, obstacles))
                             .build()
             );
 
             //load
             editItems.add(
-                    new MenuItemBuilder()
-                            .setSpriteSheet(spritesheet)
-                            .setPassiveImage(0, 100, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
-                            .setActiveImage(0, 150, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
-                            .setMyPhysicalShape(new Rect(330, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
+                    new MenuItemBuilder(spritesheet)
+                            .setPassiveImage(0, 100, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT)
+                            .setActiveImage(0, 150, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT)
+                            .setMyPhysicalShape(new Rect(330, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT))
                             .setAction(this::loadState)
                             .build()
 
@@ -68,11 +66,10 @@ public class EditScene extends CommonGameScene implements Scene {
 
             //save
             editItems.add(
-                    new MenuItemBuilder()
-                            .setSpriteSheet(spritesheet)
-                            .setPassiveImage(0, 200, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
-                            .setActiveImage(0, 250, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH)
-                            .setMyPhysicalShape(new Rect(600, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGTH))
+                    new MenuItemBuilder(spritesheet)
+                            .setPassiveImage(0, 200, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT)
+                            .setActiveImage(0, 250, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT)
+                            .setMyPhysicalShape(new Rect(600, 600, EDIT_ITEM_WIDTH, EDIT_ITEM_HEIGHT))
                             .setAction(this::safeState)
                             .build()
 
@@ -175,7 +172,7 @@ public class EditScene extends CommonGameScene implements Scene {
                     item.click(point2D);
                 }
         );
-        if (!ColisionChecker.intersect(point2D, foreground)) return;
+        if (!CollisionChecker.intersect(point2D, foreground)) return;
         if (keyListener.isKeyPressed(KeyEvent.VK_F)) {
             toggleFood(point2D);
         } else {

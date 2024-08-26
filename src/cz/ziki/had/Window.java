@@ -113,7 +113,7 @@ public class Window extends JFrame implements Runnable {
     }
 
     /**
-     * Updates the game logic.
+     * Updates the game logic and draws the scene.
      *
      * @param dt The time elapsed since the last frame.
      */
@@ -144,17 +144,21 @@ public class Window extends JFrame implements Runnable {
     public void run() {
 
         this.nickname = NicknameDialog.showDialog(this);
-        Instant lastFrameTime = Instant.now();
+        Instant updateStartTime = Instant.now();
         try {
             while (isRunning) {
-                Instant time = Instant.now();
-                //number of seconds between frames unrounded(0,00001)
-                double deltaTime = Duration.between(lastFrameTime, time).toNanos() * 10E-10;
-                lastFrameTime = Instant.now();
+
+                updateStartTime = Instant.now();
 
                 update(DELTA_WANTED);
 
-                long msToSleep = (long) ((DELTA_WANTED - deltaTime) * 1000);
+                Instant updateEndTime = Instant.now();
+
+                //number of seconds between frames unrounded(0,00001)
+                double updateDuration = Duration.between(updateStartTime, updateEndTime).toNanos() * 10E-10;
+
+
+                long msToSleep = (long) ((DELTA_WANTED - updateDuration) * 1000);
                 if (msToSleep > 0) {
                     Thread.sleep(msToSleep);
                 }

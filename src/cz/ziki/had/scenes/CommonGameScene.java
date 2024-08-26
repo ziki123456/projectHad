@@ -49,21 +49,37 @@ public abstract class CommonGameScene {
         return (int) (x - remainder) / Constants.TILE_WIDTH;
     }
 
+    /**
+     * Adds food if not exists at the coordinates.
+     * @param clickedFood represent coordinates for addition.
+     */
     protected void addFood(Food clickedFood) {
         gameObjects.add(clickedFood);
         foods.add(clickedFood);
     }
 
+    /**
+     * Removes food at same coordinates from the game field.
+     * @param clickedFood represent coordinates from removal.
+     */
     protected void removeFood(Food clickedFood) {
         gameObjects.remove(clickedFood);
         foods.remove(clickedFood);
     }
 
+    /**
+     * Adds obstacle if not exists at the coordinates.
+     * @param clickedObstacle represent coordinates for addition.
+     */
     protected void addObstacle(Obstacle clickedObstacle) {
         gameObjects.add(clickedObstacle);
         obstacles.add(clickedObstacle);
     }
 
+    /**
+     * Removes obstacle at same coordinates from the game field.
+     * @param clickedObstacle represent coordinates from removal.
+     */
     protected void removeObstacle(Obstacle clickedObstacle) {
         gameObjects.remove(clickedObstacle);
         obstacles.remove(clickedObstacle);

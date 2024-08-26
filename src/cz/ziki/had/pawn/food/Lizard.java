@@ -15,10 +15,13 @@ import java.util.Random;
  */
 public class Lizard extends CommonFood implements Food{
 
-    private static final double lizardMoveTime = 1/4f;
+    private static final double lizardBaseSpeed = 1/2f;
+    private double lizardMoveTime;
+
     private double waitTimeLeft;
     private int velx = 1;
     private int vely = 1;
+    private final double speedDifficulty = 0.94f;
 
     /**
      * Creates a Lizard food object.
@@ -31,7 +34,7 @@ public class Lizard extends CommonFood implements Food{
     public Lizard(Rect background, Snake snake, int x, int y) {
 
         loadImage();
-
+        this.lizardMoveTime = lizardBaseSpeed * (Math.pow(speedDifficulty,snake.getSpeedLevel()));
         this.gameField = background;
         this.snake = snake;
         this.myPhysicalShape = new Rect(x, y, Constants.TILE_WIDTH, Constants.TILE_WIDTH);

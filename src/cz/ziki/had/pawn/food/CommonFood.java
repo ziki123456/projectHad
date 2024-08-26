@@ -15,8 +15,9 @@ public abstract class CommonFood extends CommonGameObject implements Serializabl
 
     /**
      * Padding for positioning the food image correctly within the tile.
+     * @deprecated
      */
-    public int xPadding;
+    protected int xPadding;
 
     /**
      * Indicates whether the food has been spawned on the game field.

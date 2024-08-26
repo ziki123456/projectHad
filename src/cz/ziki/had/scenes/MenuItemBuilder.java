@@ -16,8 +16,11 @@ public class MenuItemBuilder {
 
     /**
      * Creates a new instance of MenuItemBuilder.
+     * @param spriteSheet the image containing all frames
      */
-    public MenuItemBuilder(){
+    public MenuItemBuilder(BufferedImage spriteSheet){
+        this.spriteSheet = spriteSheet;
+
     }
 
     /**
@@ -30,16 +33,6 @@ public class MenuItemBuilder {
         return new MenuItem(activeImage,passiveImage, isActive,myPhysicalShape,action);
     }
 
-    /**
-     * Sets the sprite sheet image that contains all the frames for the menu item.
-     *
-     * @param spriteSheet the image containing all frames
-     * @return the current instance of MenuItemBuilder
-     */
-    public MenuItemBuilder setSpriteSheet(BufferedImage spriteSheet) {
-        this.spriteSheet = spriteSheet;
-        return this;
-    }
 
     /**
      * Sets the physical area of the menu item.
