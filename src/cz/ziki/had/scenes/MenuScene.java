@@ -41,28 +41,25 @@ public class MenuScene implements Scene {
                                             getResourceAsStream("snakeMenuOld.png")));
 
             menuItems.add(
-                    new MenuItemBuilder()
-                    .setSpriteSheet(spritesheet)
-                    .setPassiveImage(130, 130, 410, 40)
-                    .setActiveImage(130, 185, 410, 40)
-                    .setMyPhysicalShape(new Rect(195, 280, 410, 40))
-                    .setAction( () -> cz.ziki.had.Window.getWindow().changeState(1))
-                    .build()
+                    new MenuItemBuilder(spritesheet)
+                        .setPassiveImage(130, 130, 410, 40)
+                        .setActiveImage(130, 185, 410, 40)
+                        .setMyPhysicalShape(new Rect(195, 280, 410, 40))
+                        .setAction( () -> cz.ziki.had.Window.getWindow().changeState(1))
+                        .build()
             );
 
             menuItems.add(
-                    new MenuItemBuilder()
-                    .setSpriteSheet(spritesheet)
-                    .setPassiveImage(170, 40, 320, 70)
-                    .setActiveImage(170, 40, 320, 70)
-                    .setMyPhysicalShape(new Rect(240, 100, 320, 70))
-                    .setAction(()->{})
-                    .build()
+                    new MenuItemBuilder(spritesheet)
+                        .setPassiveImage(170, 40, 320, 70)
+                        .setActiveImage(170, 40, 320, 70)
+                        .setMyPhysicalShape(new Rect(240, 100, 320, 70))
+                        .setAction(()->{})
+                        .build()
             );
 
             menuItems.add(
-                    new MenuItemBuilder()
-                            .setSpriteSheet(spritesheet)
+                    new MenuItemBuilder(spritesheet)
                             .setPassiveImage(180, 240, 310, 40)
                             .setActiveImage(180, 295, 310, 40)
                             .setMyPhysicalShape(new Rect(245, 355, 310, 40))
@@ -71,8 +68,7 @@ public class MenuScene implements Scene {
             );
 
             menuItems.add(
-                    new MenuItemBuilder()
-                            .setSpriteSheet(spritesheet)
+                    new MenuItemBuilder(spritesheet)
                             .setPassiveImage(180,335,310,20)
                             .setActiveImage(180,355,310,20)
                             .setMyPhysicalShape(new Rect(245, 420, 310, 25))

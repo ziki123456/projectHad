@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class Snake implements GameObject, Serializable {
 
+    /**
+     * Different images for different directions of the snake head.
+     */
     public BufferedImage headN, headS, headE, headW, bodyImg;
 
     final List<BodyPiece> body = new ArrayList<>();
@@ -29,7 +32,28 @@ public class Snake implements GameObject, Serializable {
 
     public Direction direction = Direction.RIGHT;
 
-    public double ogWaitBetweenUpdates = 1/2f;
+    /**
+     * Initial velocity of the snake. Increase to slow the snake down.
+     */
+
+    private final double defaultSpeed = 1/4f;
+    public double ogWaitBetweenUpdates;
+
+    public int getSpeedLevel() {
+        return speedLevel;
+    }
+
+    public Snake setSpeedLevel(int speedLevel) {
+        this.speedLevel = speedLevel;
+        return this;
+    }
+
+    /**
+     * Speed difficulty
+     */
+    private int speedLevel = 1;
+
+    private final double speedDifficulty = 0.9f;
 
     public double waitTimeLeft = ogWaitBetweenUpdates;
 
@@ -48,7 +72,7 @@ public class Snake implements GameObject, Serializable {
      * @param background The background rectangle of the game.
      */
     public Snake(int size, int startX, int startY, int bodyWidth, int bodyHeight, Rect background) {
-
+        this.ogWaitBetweenUpdates = defaultSpeed;
         this.bodyWidth = bodyWidth;
         this.bodyHeight = bodyHeight;
         this.background = background;
@@ -213,7 +237,8 @@ public class Snake implements GameObject, Serializable {
     public void grow() {
 
         this.shouldGrow = true;
-        this.ogWaitBetweenUpdates *= 0.9;
+        speedLevel++;
+        this.ogWaitBetweenUpdates = defaultSpeed * (Math.pow(speedDifficulty,speedLevel));
         this.score++;
 
     }
@@ -257,5 +282,4 @@ public class Snake implements GameObject, Serializable {
         FileUtils.savePlayerScore(Window.getWindow().nickname, this.score);
         Window.getWindow().changeState(2);
     }
-
 }

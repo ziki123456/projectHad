@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"cz.ziki.had"},{"l":"cz.ziki.had.pawn"},{"l":"cz.ziki.had.pawn.food"},{"l":"cz.ziki.had.scenes"},{"l":"cz.ziki.had.tests"}];updateSearchResults();

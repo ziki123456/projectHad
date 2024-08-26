@@ -14,7 +14,11 @@ import java.util.Objects;
  */
 public class Mouse extends CommonFood implements Food {
 
-    private static final double mouseMoveTime = 1/3f;
+    private static final double moseBaseSpeed = 1/2f;
+    private double mouseMoveTime;
+    private final double speedDifficulty = 0.94f;
+
+
     private double waitTimeLeft;
     private int velx = 1;
     private int vely = 1;
@@ -30,7 +34,7 @@ public class Mouse extends CommonFood implements Food {
     public Mouse(Rect background, Snake snake, int x, int y) {
 
         loadImage();
-
+        this.mouseMoveTime = moseBaseSpeed * (Math.pow(speedDifficulty,snake.getSpeedLevel()));
         this.gameField = background;
         this.snake = snake;
         this.myPhysicalShape = new Rect(x, y, Constants.TILE_WIDTH, Constants.TILE_WIDTH);

@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 /**
  * Provides methods for collision detection between geometric shapes.
  */
-public class ColisionChecker {
+public class CollisionChecker {
 
     /**
      * Checks if a given point intersects with a specified rectangle.
